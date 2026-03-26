@@ -1,0 +1,81 @@
+# User requested ignores
+Document/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+._*
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Node.js / Javascript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Build & Distribution
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+
+# IDE & Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# Logs and Temporary Files
+*.log
+*.tmp
+tmp/
+temp/
+
+# Database
+*.sql.gz
+*.dump
+*.sqlite
+*.sqlite3
+
+# Project Specific
+.demo-product-id
+
+# Biometric Data (do not commit - privacy sensitive)
+ZTIZEN/experimental/data/real-biometric-data.json
+ZTIZEN/experimental/data/collected/*.json
+ZTIZEN/experimental/data/*-embeddings.json
+
+# FaceScrub dataset (raw images and embeddings - do not commit)
+ZTIZEN/experimental/data/facescrub/images/
+ZTIZEN/experimental/data/facescrub/*.txt
+ZTIZEN/experimental/data/facescrub/*.log
+ZTIZEN/experimental/data/facescrub/*-embeddings.json
+
+# VGGFace2 dataset (if used)
+ZTIZEN/experimental/data/vggface2/
+
+# Legacy paths (deprecated but keep for backward compatibility)
+ZTIZEN/vite-demo/experiments/real-biometric-data.json
+ZTIZEN/vite-demo/experiments/data/facescrub/images/
+ZTIZEN/vite-demo/experiments/data/facescrub-embeddings.json
