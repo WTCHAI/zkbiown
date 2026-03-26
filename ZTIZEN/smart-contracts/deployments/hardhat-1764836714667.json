@@ -1,0 +1,14 @@
+{
+  "network": "hardhat",
+  "chainId": 11155111,
+  "deployer": "0x41649a1f8b2499e2f7884184d062639cef9d0601",
+  "timestamp": "2025-12-04T08:25:14.665Z",
+  "contracts": {
+    "HonkVerifier": "0xcB80852fDF30F4ae407814B4c98f57a4A6c45121",
+    "ZTIZEN": "0xc9f616222bf3fb07f7cad4673cb1a5e75e07a364"
+  },
+  "config": {
+    "oracle": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "admin": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+  }
+}
