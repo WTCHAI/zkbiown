@@ -1,0 +1,27 @@
+{
+  "name": "@zkbiown/product-service",
+  "version": "1.0.0",
+  "description": "Simulated business provider using ZTIZEN for authentication",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "PORT=5503 node --watch src/index.js",
+    "db:setup": "node src/db/setup.js"
+  },
+  "keywords": [
+    "ztizen",
+    "biometric",
+    "authentication"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "uuid": "^9.0.1",
+    "viem": "^2.41.2"
+  }
+}

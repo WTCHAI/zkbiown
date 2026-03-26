@@ -1,0 +1,53 @@
+# Dependencies (installed fresh in Docker)
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist
+build
+
+# Environment files (secrets passed via docker-compose)
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+CHANGELOG.md
+docs
+
+# Tests
+tests
+*.test.js
+*.spec.js
+coverage
+.nyc_output
+
+# Docker files (don't copy into image)
+Dockerfile*
+docker-compose*
+.dockerignore
+Makefile
+
+# Logs
+*.log
+
+# SQL down migrations (not needed in production)
+sql/migrations/*.down.sql
