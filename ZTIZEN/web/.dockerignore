@@ -1,0 +1,67 @@
+# Dependencies
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+
+# Build outputs (we build fresh in Docker)
+dist
+build
+
+# Environment files (keep .env for dev, exclude secrets for production)
+# .env is needed for Vite to read at dev server startup
+.env.local
+.env.*.local
+.env.production
+
+# IDE and editor files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+CHANGELOG.md
+docs
+
+# Tests
+tests
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+coverage
+.nyc_output
+
+# Docker files
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Storybook
+.storybook
+storybook-static
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Vite cache
+.vite
+
+# Circuit and research files (large, not needed for frontend)
+circuit
+research
+
+# Archive/unused files
+src/archive
+src/dev-tools
+src/examples

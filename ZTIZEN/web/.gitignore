@@ -1,0 +1,64 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Noir
+circuit/target/
+circuit/proofs/
+circuit/Prover.toml
+circuit/Verifier.toml
+
+# Face-api models (download separately)
+public/models/*
+!public/models/.gitkeep
+
+# =============================================================================
+# PRIVACY PROTECTION - Biometric Data (CRITICAL FOR PUBLIC REPO)
+# =============================================================================
+
+# Real face images - NEVER commit actual face photos
+python-embeddings/sample_faces/*.jpg
+python-embeddings/sample_faces/*.jpeg
+python-embeddings/sample_faces/*.png
+python-embeddings/sample_faces/*.webp
+python-embeddings/sample_faces/P*/*.jpg
+python-embeddings/sample_faces/P*/*.jpeg
+python-embeddings/sample_faces/P*/*.png
+# Keep the README with instructions
+!python-embeddings/sample_faces/README.md
+
+# Real biometric embeddings - Contains facial feature vectors
+experiments/data/real-biometric-data.json
+experiments/data/celeba-embeddings.json
+experiments/data/three-lib-comparison.json
+# Keep the README with instructions
+!experiments/data/README.md
+
+# Python virtual environment
+python-embeddings/venv/
