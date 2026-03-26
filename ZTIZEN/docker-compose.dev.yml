@@ -1,0 +1,141 @@
+# ZTIZEN Docker Compose - Development Stack
+#
+# This file is optimized for LOCAL DEVELOPMENT:
+# - Databases run in Docker (persistent, isolated)
+# - Services run LOCALLY with hot-reload (faster iteration)
+#
+# Recommended workflow:
+#   1. docker-compose -f docker-compose.dev.yml up -d    # Start DBs
+#   2. make dev-ztizen     (Terminal 1)
+#   3. make dev-product    (Terminal 2)
+#   4. make dev-frontend   (Terminal 3)
+#
+# Alternative: Run everything in Docker (slower but consistent)
+#   docker-compose -f docker-compose.dev.yml --profile all up
+
+services:
+  # ============================================
+  # Database Services (Always in Docker)
+  # ============================================
+
+  ztizen-db:
+    image: postgres:16-alpine
+    container_name: ztizen-db
+    environment:
+      POSTGRES_DB: ztizen
+      POSTGRES_USER: ztizen
+      POSTGRES_PASSWORD: ztizen_dev_password
+    ports:
+      - "5504:5432"
+    volumes:
+      - ztizen-db-data:/var/lib/postgresql/data
+      - ./ztizen-service/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ztizen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ztizen-dev-network
+
+  ztizen-product-db:
+    image: postgres:16-alpine
+    container_name: ztizen-product-db
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: product
+      POSTGRES_PASSWORD: product_dev_password
+    ports:
+      - "5505:5432"
+    volumes:
+      - ztizen-product-db-data:/var/lib/postgresql/data
+      - ./product-service/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U product"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ztizen-dev-network
+
+  # ============================================
+  # Optional: Services in Docker (use --profile all)
+  # ============================================
+
+  ztizen-api-dev:
+    profiles: ["all", "backend"]
+    build:
+      context: ./ztizen-service
+      dockerfile: Dockerfile
+    container_name: ztizen-api-dev
+    environment:
+      NODE_ENV: development
+      PORT: 5502
+      DATABASE_URL: postgresql://ztizen:ztizen_dev_password@ztizen-db:5432/ztizen
+      ZTIZEN_PARTIAL_KEY: ${ZTIZEN_PARTIAL_KEY}
+      PRODUCT_API_URL: http://ztizen-product-api-dev:5503
+    ports:
+      - "5502:5502"
+    volumes:
+      # Mount source code for hot-reload
+      - ./ztizen-service/src:/app/src:ro
+    depends_on:
+      ztizen-db:
+        condition: service_healthy
+    networks:
+      - ztizen-dev-network
+
+  ztizen-product-api-dev:
+    profiles: ["all", "backend"]
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    container_name: ztizen-product-api-dev
+    environment:
+      NODE_ENV: development
+      PORT: 5503
+      DATABASE_URL: postgresql://product:product_dev_password@ztizen-product-db:5432/product
+      ZTIZEN_API_URL: http://ztizen-api-dev:5502
+    ports:
+      - "5503:5503"
+    volumes:
+      # Mount source code for hot-reload
+      - ./product-service/src:/app/src:ro
+    depends_on:
+      ztizen-product-db:
+        condition: service_healthy
+      ztizen-api-dev:
+        condition: service_started
+    networks:
+      - ztizen-dev-network
+
+  vite-demo-dev:
+    profiles: ["all", "frontend"]
+    build:
+      context: ./vite-demo
+      dockerfile: Dockerfile.dev
+    container_name: vite-demo-dev
+    environment:
+      NODE_ENV: development
+      # Vite requires VITE_ prefix for client-side env vars
+      VITE_PRIVY_APP_ID: ${VITE_PRIVY_APP_ID:-cmimz8kc104bil50djt827e5g}
+      VITE_ZTIZEN_SERVICE_URL: http://localhost:5502
+      VITE_PRODUCT_API_URL: http://localhost:5503
+    ports:
+      - "5501:5501"
+    volumes:
+      # Mount source code for hot-reload
+      - ./vite-demo/src:/app/src
+      - ./vite-demo/public:/app/public
+      # Exclude node_modules (use container's node_modules)
+      - /app/node_modules
+    networks:
+      - ztizen-dev-network
+
+networks:
+  ztizen-dev-network:
+    driver: bridge
+
+volumes:
+  ztizen-db-data:
+  ztizen-product-db-data:

@@ -1,0 +1,141 @@
+# ZTIZEN Docker Compose - Production Stack
+#
+# Architecture: 3 Separate Images (Best Practice)
+# ├── vite-demo       (Frontend)   → Port 5501
+# ├── ztizen-api      (Service)    → Port 5502
+# ├── ztizen-product-api (Service) → Port 5503
+# ├── ztizen-db       (Database)   → Port 5504
+# └── ztizen-product-db (Database) → Port 5505
+#
+# Usage:
+#   docker-compose up --build           # Start all services
+#   docker-compose up -d                # Start in background
+#   docker-compose logs -f              # View logs
+#   docker-compose down                 # Stop all services
+#   docker-compose down -v              # Stop and remove volumes
+
+services:
+  # ============================================
+  # Database Services
+  # ============================================
+
+  ztizen-db:
+    image: postgres:16-alpine
+    container_name: ztizen-db
+    environment:
+      POSTGRES_DB: ztizen
+      POSTGRES_USER: ztizen
+      POSTGRES_PASSWORD: ztizen_dev_password
+    ports:
+      - "5504:5432"
+    volumes:
+      - ztizen-db-data:/var/lib/postgresql/data
+      - ./ztizen-service/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ztizen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ztizen-network
+
+  ztizen-product-db:
+    image: postgres:16-alpine
+    container_name: ztizen-product-db
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: product
+      POSTGRES_PASSWORD: product_dev_password
+    ports:
+      - "5505:5432"
+    volumes:
+      - ztizen-product-db-data:/var/lib/postgresql/data
+      - ./product-service/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U product"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ztizen-network
+
+  # ============================================
+  # Backend API Services
+  # ============================================
+
+  ztizen-api:
+    build:
+      context: ./ztizen-service
+      dockerfile: Dockerfile
+    container_name: ztizen-api
+    environment:
+      NODE_ENV: production
+      PORT: 5502
+      DATABASE_URL: postgresql://ztizen:ztizen_dev_password@ztizen-db:5432/ztizen
+      # ZTIZEN_PARTIAL_KEY loaded from .env file
+      ZTIZEN_PARTIAL_KEY: ${ZTIZEN_PARTIAL_KEY}
+      # Service-to-service communication (Docker DNS)
+      PRODUCT_API_URL: http://ztizen-product-api:5503
+      FRONTEND_URL: http://vite-demo:80
+    ports:
+      - "5502:5502"
+    depends_on:
+      ztizen-db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ztizen-network
+
+  ztizen-product-api:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    container_name: ztizen-product-api
+    environment:
+      NODE_ENV: production
+      PORT: 5503
+      DATABASE_URL: postgresql://product:product_dev_password@ztizen-product-db:5432/product
+      # Service-to-service communication (Docker DNS)
+      ZTIZEN_API_URL: http://ztizen-api:5502
+      FRONTEND_URL: http://vite-demo:80
+    ports:
+      - "5503:5503"
+    depends_on:
+      ztizen-product-db:
+        condition: service_healthy
+      ztizen-api:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - ztizen-network
+
+  # ============================================
+  # Frontend Service
+  # ============================================
+
+  vite-demo:
+    build:
+      context: ./vite-demo
+      dockerfile: Dockerfile
+      args:
+        # Build-time arguments for API URLs
+        # These are baked into the static build
+        VITE_ZTIZEN_API_URL: http://localhost:5502
+        VITE_PRODUCT_API_URL: http://localhost:5503
+    container_name: vite-demo
+    ports:
+      - "5501:80"
+    depends_on:
+      - ztizen-api
+      - ztizen-product-api
+    restart: unless-stopped
+    networks:
+      - ztizen-network
+
+networks:
+  ztizen-network:
+    driver: bridge
+
+volumes:
+  ztizen-db-data:
+  ztizen-product-db-data:
