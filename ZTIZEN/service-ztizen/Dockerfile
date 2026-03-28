@@ -1,5 +1,5 @@
 # ZTIZEN Service Dockerfile
-# Simplified single-stage build (avoids Docker buildkit cache issues)
+# Workspace-aware build for pnpm monorepo
 
 FROM node:20-alpine
 
@@ -12,14 +12,20 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 ztizen
 
-# Copy package files
-COPY package.json pnpm-lock.yaml* ./
+# Copy workspace package files first (for better layer caching)
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install dependencies
+# Copy service-specific package.json
+COPY service-ztizen/package.json ./service-ztizen/
+
+# Install dependencies for entire workspace
 RUN pnpm install --frozen-lockfile --prod
 
-# Copy application code
-COPY . .
+# Copy service-ztizen application code
+COPY service-ztizen ./service-ztizen
+
+# Set working directory to service
+WORKDIR /app/service-ztizen
 
 # Set ownership
 RUN chown -R ztizen:nodejs /app

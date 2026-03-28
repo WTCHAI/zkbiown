@@ -1,5 +1,6 @@
 # ZTIZEN Frontend Dockerfile
 # Production-ready multi-stage build with nginx
+# Workspace-aware build for pnpm monorepo
 
 # ============================================
 # Stage 1: Dependencies
@@ -11,8 +12,11 @@ WORKDIR /app
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy package files
-COPY package.json pnpm-lock.yaml* ./
+# Copy workspace package files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Copy web package.json
+COPY web/package.json ./web/
 
 # Install all dependencies (including devDependencies for build)
 RUN pnpm install --frozen-lockfile
@@ -29,9 +33,16 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/web/node_modules ./web/node_modules
 
-# Copy source code
-COPY . .
+# Copy workspace files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Copy web source code
+COPY web ./web
+
+# Set working directory to web
+WORKDIR /app/web
 
 # Build arguments for API URLs (can be overridden at build time)
 ARG VITE_ZTIZEN_API_URL=http://localhost:5502
@@ -52,15 +63,15 @@ FROM nginx:alpine AS runner
 # Remove default nginx config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx config from web directory
+COPY web/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built assets from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/web/dist /usr/share/nginx/html
 
 # Copy public assets (models, circuits, etc.)
 # These are large files that should be served directly
-COPY --from=builder /app/public /usr/share/nginx/html
+COPY --from=builder /app/web/public /usr/share/nginx/html
 
 # Create non-root user for security (nginx runs as nginx user by default)
 # But we need to ensure proper permissions
