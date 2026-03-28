@@ -1,0 +1,132 @@
+{
+  "timestamp": "2026-03-27T17:55:13.202Z",
+  "description": "Step 4: Poseidon Commitment Timing (CORRECT Algorithm)",
+  "algorithm": "Gaussian + Gram-Schmidt (Teoh et al. 2006)",
+  "source": "web/src/lib/cancelableBiometric.ts",
+  "dataSource": "facescrub-embeddings.json → CORRECTLY BioHashed",
+  "note": "Uses production-grade BioHashing with orthogonalization (not simplified version)",
+  "configuration": {
+    "templateBits": 128,
+    "poseidonInputs": 8,
+    "hashesPerCommitment": 128
+  },
+  "results": [
+    {
+      "library": "facenet",
+      "sampleSize": 100,
+      "templateDim": 128,
+      "statistics": {
+        "field_conversion": {
+          "mean": 0.03223419000000831,
+          "std": 0.0077795794945999626,
+          "min": 0.01741700000002311,
+          "max": 0.06124999999883585,
+          "p50": 0.03316699999959383,
+          "p95": 0.04366699999991397,
+          "p99": 0.06124999999883585
+        },
+        "hash_computation": {
+          "mean": 46.601235490000036,
+          "std": 2.8287894980392485,
+          "min": 41.958708000000115,
+          "max": 53.32137500000135,
+          "p50": 47.44537499999933,
+          "p95": 50.760292000000845,
+          "p99": 53.32137500000135
+        },
+        "total": {
+          "mean": 46.63346968000005,
+          "std": 2.828992321297683,
+          "min": 41.98020799999995,
+          "max": 53.36354200000096,
+          "p50": 47.47908400000051,
+          "p95": 50.78833400000076,
+          "p99": 53.36354200000096
+        }
+      },
+      "verification": {
+        "totalCommitments": 100,
+        "uniqueCommitments": 100,
+        "allUnique": true
+      }
+    },
+    {
+      "library": "facenet512",
+      "sampleSize": 100,
+      "templateDim": 128,
+      "statistics": {
+        "field_conversion": {
+          "mean": 0.028266249999978753,
+          "std": 0.009690834292766346,
+          "min": 0.014542000004439615,
+          "max": 0.05629200000112178,
+          "p50": 0.026958999998896616,
+          "p95": 0.04416700000001583,
+          "p99": 0.05629200000112178
+        },
+        "hash_computation": {
+          "mean": 46.83440919000008,
+          "std": 3.760473031674839,
+          "min": 42.09254100000544,
+          "max": 72.4207499999975,
+          "p50": 47.60070799999812,
+          "p95": 50.53691700000127,
+          "p99": 72.4207499999975
+        },
+        "total": {
+          "mean": 46.86267544000006,
+          "std": 3.7632215948991496,
+          "min": 42.111708000004,
+          "max": 72.44766600000003,
+          "p50": 47.63787500000035,
+          "p95": 50.57691700000214,
+          "p99": 72.44766600000003
+        }
+      },
+      "verification": {
+        "totalCommitments": 100,
+        "uniqueCommitments": 100,
+        "allUnique": true
+      }
+    },
+    {
+      "library": "arcface",
+      "sampleSize": 100,
+      "templateDim": 128,
+      "statistics": {
+        "field_conversion": {
+          "mean": 0.02701415999996243,
+          "std": 0.009458961324393044,
+          "min": 0.013458000001264736,
+          "max": 0.05200000000331784,
+          "p50": 0.026666999998269603,
+          "p95": 0.04449999999633292,
+          "p99": 0.05200000000331784
+        },
+        "hash_computation": {
+          "mean": 47.15840369000012,
+          "std": 3.6135168266666606,
+          "min": 41.79862499999581,
+          "max": 69.14720800000214,
+          "p50": 47.866792000000714,
+          "p95": 51.07887499999924,
+          "p99": 69.14720800000214
+        },
+        "total": {
+          "mean": 47.185417850000086,
+          "std": 3.6145413791634615,
+          "min": 41.81658400000015,
+          "max": 69.18683299999975,
+          "p50": 47.88429200000246,
+          "p95": 51.10112500000105,
+          "p99": 69.18683299999975
+        }
+      },
+      "verification": {
+        "totalCommitments": 100,
+        "uniqueCommitments": 100,
+        "allUnique": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "timestamp": "2026-03-28T07:31:46.562Z",
+  "description": "Step 2: Key Combination (SHA256) Timing Measurements",
+  "configuration": {
+    "sampleSize": 100,
+    "numUserKeys": 3,
+    "totalOperations": 300
+  },
+  "statistics": {
+    "concatenation": {
+      "mean": 0.00008304000000047533,
+      "std": 0.00011444605017178777,
+      "min": 0,
+      "max": 0.0012080000000196378
+    },
+    "sha256": {
+      "mean": 0.0013887666666654278,
+      "std": 0.006512007550073903,
+      "min": 0.0005409999999983484,
+      "max": 0.11199999999999477
+    },
+    "hex_digest": {
+      "mean": 0.00031359666666730846,
+      "std": 0.0006554275861265663,
+      "min": 0.00012499999999704414,
+      "max": 0.011167000000000371
+    },
+    "total": {
+      "mean": 0.0017854033333332116,
+      "std": 0.0071988168421852905,
+      "min": 0.0007080000000030395,
+      "max": 0.12408400000001052
+    }
+  },
+  "verification": {
+    "totalKeys": 300,
+    "uniqueKeys": 3,
+    "allUnique": false
+  },
+  "sampleResults": [
+    {
+      "personId": "aaron_eckhart",
+      "userKeyIndex": 0,
+      "combinedKey": "edeb189a63963002144ba9c2b274eac94c6f0921af8c6f53d32f8e52c4ac84d0",
+      "timing": {
+        "concatenation_ms": 0.0009170000000153777,
+        "sha256_hash_ms": 0.11199999999999477,
+        "hex_digest_ms": 0.011167000000000371,
+        "total_ms": 0.12408400000001052
+      }
+    },
+    {
+      "personId": "aaron_eckhart",
+      "userKeyIndex": 1,
+      "combinedKey": "08a68494df444f2c9b4bd6315d8993514ff8c6410841e2eb8fe8209c67c6b114",
+      "timing": {
+        "concatenation_ms": 0.00020800000001486296,
+        "sha256_hash_ms": 0.0037919999999758147,
+        "hex_digest_ms": 0.0007080000000030395,
+        "total_ms": 0.004707999999993717
+      }
+    },
+    {
+      "personId": "aaron_eckhart",
+      "userKeyIndex": 2,
+      "combinedKey": "a6ba62f04d44c80429e2b6a72adf416fc98108ec8472fbaee5392d5c4bc40f2b",
+      "timing": {
+        "concatenation_ms": 0.0007909999999924366,
+        "sha256_hash_ms": 0.002208999999993466,
+        "hex_digest_ms": 0.0005830000000059954,
+        "total_ms": 0.0035829999999918982
+      }
+    },
+    {
+      "personId": "adam_brody",
+      "userKeyIndex": 0,
+      "combinedKey": "edeb189a63963002144ba9c2b274eac94c6f0921af8c6f53d32f8e52c4ac84d0",
+      "timing": {
+        "concatenation_ms": 0.00016700000000469117,
+        "sha256_hash_ms": 0.0013749999999959073,
+        "hex_digest_ms": 0.0004160000000013042,
+        "total_ms": 0.0019580000000019027
+      }
+    },
+    {
+      "personId": "adam_brody",
+      "userKeyIndex": 1,
+      "combinedKey": "08a68494df444f2c9b4bd6315d8993514ff8c6410841e2eb8fe8209c67c6b114",
+      "timing": {
+        "concatenation_ms": 0.00016700000000469117,
+        "sha256_hash_ms": 0.0015829999999823485,
+        "hex_digest_ms": 0.00037500000001955414,
+        "total_ms": 0.002125000000006594
+      }
+    },
+    {
+      "personId": "adam_brody",
+      "userKeyIndex": 2,
+      "combinedKey": "a6ba62f04d44c80429e2b6a72adf416fc98108ec8472fbaee5392d5c4bc40f2b",
+      "timing": {
+        "concatenation_ms": 0.00016600000000721593,
+        "sha256_hash_ms": 0.0029169999999965057,
+        "hex_digest_ms": 0.0005419999999958236,
+        "total_ms": 0.0036249999999995453
+      }
+    },
+    {
+      "personId": "adam_mckay",
+      "userKeyIndex": 0,
+      "combinedKey": "edeb189a63963002144ba9c2b274eac94c6f0921af8c6f53d32f8e52c4ac84d0",
+      "timing": {
+        "concatenation_ms": 0.0002089999999839165,
+        "sha256_hash_ms": 0.0020409999999912998,
+        "hex_digest_ms": 0.00037500000001955414,
+        "total_ms": 0.0026249999999947704
+      }
+    },
+    {
+      "personId": "adam_mckay",
+      "userKeyIndex": 1,
+      "combinedKey": "08a68494df444f2c9b4bd6315d8993514ff8c6410841e2eb8fe8209c67c6b114",
+      "timing": {
+        "concatenation_ms": 0.00020799999998644125,
+        "sha256_hash_ms": 0.001082999999994172,
+        "hex_digest_ms": 0.00041699999999877946,
+        "total_ms": 0.0017079999999793927
+      }
+    },
+    {
+      "personId": "adam_mckay",
+      "userKeyIndex": 2,
+      "combinedKey": "a6ba62f04d44c80429e2b6a72adf416fc98108ec8472fbaee5392d5c4bc40f2b",
+      "timing": {
+        "concatenation_ms": 0.00012499999999704414,
+        "sha256_hash_ms": 0.003250000000008413,
+        "hex_digest_ms": 0.0005419999999958236,
+        "total_ms": 0.003917000000001281
+      }
+    },
+    {
+      "personId": "adam_sandler",
+      "userKeyIndex": 0,
+      "combinedKey": "edeb189a63963002144ba9c2b274eac94c6f0921af8c6f53d32f8e52c4ac84d0",
+      "timing": {
+        "concatenation_ms": 0.0004999999999881766,
+        "sha256_hash_ms": 0.008125000000006821,
+        "hex_digest_ms": 0.0014170000000035543,
+        "total_ms": 0.010041999999998552
+      }
+    }
+  ]
+}

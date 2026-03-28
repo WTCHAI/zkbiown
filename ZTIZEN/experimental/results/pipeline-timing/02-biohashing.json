@@ -1,0 +1,169 @@
+{
+  "timestamp": "2026-03-27T17:53:27.058Z",
+  "description": "Step 3: BioHashing Transformation Timing (CORRECT Algorithm)",
+  "algorithm": "Gaussian + Gram-Schmidt (Teoh et al. 2006)",
+  "source": "web/src/lib/cancelableBiometric.ts",
+  "dataSource": "facescrub-embeddings.json",
+  "note": "Uses production-grade algorithm with orthogonalization (not simplified version)",
+  "results": [
+    {
+      "library": "facenet",
+      "sampleSize": 100,
+      "inputDim": 128,
+      "outputDim": 128,
+      "algorithm": "Gaussian + Gram-Schmidt (Teoh et al. 2006)",
+      "statistics": {
+        "matrix_generation": {
+          "mean": 28.58911974600001,
+          "std": 3.327540763481536,
+          "min": 23.556700199999796,
+          "max": 44.974950000000014,
+          "p50": 30.170299799999974,
+          "p95": 32.01754980000005,
+          "p99": 44.974950000000014
+        },
+        "projection": {
+          "mean": 16.6769865185,
+          "std": 1.9410654453642293,
+          "min": 13.74140844999988,
+          "max": 26.235387500000005,
+          "p50": 17.599341549999984,
+          "p95": 18.67690405000003,
+          "p99": 26.235387500000005
+        },
+        "binarization": {
+          "mean": 2.382426645500002,
+          "std": 0.2772950636234614,
+          "min": 1.963058349999983,
+          "max": 3.7479125000000013,
+          "p50": 2.514191649999998,
+          "p95": 2.6681291500000044,
+          "p99": 3.7479125000000013
+        },
+        "total": {
+          "mean": 47.64853291000003,
+          "std": 5.545901272469227,
+          "min": 39.26116699999966,
+          "max": 74.95825000000002,
+          "p50": 50.28383299999996,
+          "p95": 53.362583000000086,
+          "p99": 74.95825000000002
+        }
+      },
+      "verification": {
+        "avgOnesPerTemplate": 66.9,
+        "percentageOnes": 52.26562500000001,
+        "determinismTest": {
+          "similarity": 100,
+          "passed": true
+        }
+      }
+    },
+    {
+      "library": "facenet512",
+      "sampleSize": 100,
+      "inputDim": 512,
+      "outputDim": 128,
+      "algorithm": "Gaussian + Gram-Schmidt (Teoh et al. 2006)",
+      "statistics": {
+        "matrix_generation": {
+          "mean": 112.57214275800003,
+          "std": 11.688105287805495,
+          "min": 92.52532500000015,
+          "max": 150.15565020000068,
+          "p50": 114.85615019999986,
+          "p95": 125.82940020000024,
+          "p99": 150.15565020000068
+        },
+        "projection": {
+          "mean": 65.66708327550008,
+          "std": 6.818061417886537,
+          "min": 53.973106250000086,
+          "max": 87.59079595000038,
+          "p50": 66.99942094999992,
+          "p95": 73.40048345000014,
+          "p99": 87.59079595000038
+        },
+        "binarization": {
+          "mean": 9.381011896500002,
+          "std": 0.9740087739837913,
+          "min": 7.710443750000014,
+          "max": 12.512970850000057,
+          "p50": 9.57134584999999,
+          "p95": 10.48578335000002,
+          "p99": 12.512970850000057
+        },
+        "total": {
+          "mean": 187.62023793000014,
+          "std": 19.480175479675825,
+          "min": 154.20887500000026,
+          "max": 250.25941700000112,
+          "p50": 191.42691699999978,
+          "p95": 209.7156670000004,
+          "p99": 250.25941700000112
+        }
+      },
+      "verification": {
+        "avgOnesPerTemplate": 64.87,
+        "percentageOnes": 50.6796875,
+        "determinismTest": {
+          "similarity": 100,
+          "passed": true
+        }
+      }
+    },
+    {
+      "library": "arcface",
+      "sampleSize": 100,
+      "inputDim": 512,
+      "outputDim": 128,
+      "algorithm": "Gaussian + Gram-Schmidt (Teoh et al. 2006)",
+      "statistics": {
+        "matrix_generation": {
+          "mean": 114.550751772,
+          "std": 14.726788466569536,
+          "min": 92.52707460000092,
+          "max": 171.8835000000021,
+          "p50": 118.9616754000017,
+          "p95": 130.54894979999952,
+          "p99": 171.8835000000021
+        },
+        "projection": {
+          "mean": 66.821271867,
+          "std": 8.590626605498896,
+          "min": 53.97412685000054,
+          "max": 100.26537500000121,
+          "p50": 69.39431065000099,
+          "p95": 76.15355404999973,
+          "p99": 100.26537500000121
+        },
+        "binarization": {
+          "mean": 9.545895981,
+          "std": 1.227232372214128,
+          "min": 7.710589550000077,
+          "max": 14.323625000000176,
+          "p50": 9.913472950000141,
+          "p95": 10.879079149999962,
+          "p99": 14.323625000000176
+        },
+        "total": {
+          "mean": 190.91791961999996,
+          "std": 24.54464744428256,
+          "min": 154.21179100000154,
+          "max": 286.4725000000035,
+          "p50": 198.26945900000283,
+          "p95": 217.58158299999923,
+          "p99": 286.4725000000035
+        }
+      },
+      "verification": {
+        "avgOnesPerTemplate": 64.21,
+        "percentageOnes": 50.16406249999999,
+        "determinismTest": {
+          "similarity": 100,
+          "passed": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@zkbiown/experimental",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experimental validation scripts for ZK BIOWN research",
+  "type": "module",
+  "scripts": {
+    "step2": "tsx pipeline/01-key-combination.ts",
+    "step3": "tsx pipeline/02-biohashing.ts",
+    "step4": "tsx pipeline/03-poseidon-hash.ts",
+    "step5": "tsx pipeline/04-four-scenario-validation.ts",
+    "pipeline": "npm run step2 && npm run step3 && npm run step4 && npm run step5",
+    "validate": "tsx 00-validate-data.ts",
+    "clean": "rm -rf results/pipeline-timing",
+    "clean:all": "rm -rf results node_modules",
+    "verify": "find results -name '*.json' | wc -l"
+  },
+  "dependencies": {
+    "@types/node": "^22.18.11",
+    "poseidon-lite": "^0.3.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.8.3"
+  }
+}
