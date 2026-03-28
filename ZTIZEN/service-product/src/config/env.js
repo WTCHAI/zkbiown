@@ -4,7 +4,16 @@
  */
 
 import dotenv from 'dotenv';
-dotenv.config();
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Get directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load .env.local first (higher priority), then .env
+dotenv.config({ path: join(__dirname, '../../.env.local') });
+dotenv.config({ path: join(__dirname, '../../.env') });
 
 export const ENV = {
   // Server
