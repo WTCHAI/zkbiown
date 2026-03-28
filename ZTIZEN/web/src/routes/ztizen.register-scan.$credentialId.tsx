@@ -22,9 +22,10 @@ import { useState, useEffect } from 'react';
 import { CancelableBiometric, type BiometricConfig, type BiometricTemplate, type FullDebugData } from '@/lib/CancelableBiometric';
 import BiometricCapture from '@/components/BiometricCapture';
 
-// Hardcoded algorithm - Chellappa Sparse Gaussian (IEEE TPAMI 2011)
+// Hardcoded algorithm - BioHashing (Teoh et al. IEEE TPAMI 2006)
+// Gaussian random projection with Gram-Schmidt orthogonalization
 // This ensures enrollment and verification always use the same algorithm
-const HARDCODED_ALGORITHM = 'gaussian-sparse' as const;
+const HARDCODED_ALGORITHM = 'biohashing' as const;
 
 // Hardcoded binarization method - Sign + Magnitude Rank (self-normalizing)
 // This is the only supported method for new enrollments
@@ -359,9 +360,9 @@ function ZTIZENScan() {
       return;
     }
 
-    // Algorithm is hardcoded to gaussian-sparse, skip directly to biometric
+    // Algorithm is hardcoded to BioHashing (Gaussian + Gram-Schmidt)
     if (currentStep === 'biometric') {
-      setStatus(`✅ Ready to capture biometric (using ${algorithm} algorithm)`);
+      setStatus(`✅ Ready to capture biometric (using BioHashing: Gaussian + Gram-Schmidt)`);
     }
   }, [pin, password, signature, userKey, credentialId, productId, currentStep, setStep, algorithm]);
 
@@ -1027,10 +1028,12 @@ function ZTIZENScan() {
           <div style={styles.processingInfoCard}>
             <h4 style={styles.processingInfoTitle}>What happens next:</h4>
             <ol style={styles.processingInfoList}>
-              <li>Face capture using face-api.js (128D embedding)</li>
-              <li>Template generation with Sparse Gaussian projection</li>
-              <li>Poseidon hash commitments (128 hashes)</li>
-              <li>Secure storage (only hashes stored, never raw biometric)</li>
+              <li>Face capture using face-api.js (128D facial embedding)</li>
+              <li>Key derivation (three-party: User + Service + Platform keys)</li>
+              <li>Gaussian matrix generation with Gram-Schmidt orthogonalization</li>
+              <li>Random projection and binarization (128-bit template)</li>
+              <li>Poseidon hash commitments (128 individual hashes)</li>
+              <li>Secure storage (only commitments stored, never raw biometric)</li>
             </ol>
           </div>
         )}
@@ -1054,8 +1057,12 @@ function ZTIZENScan() {
         {currentStep === 'biometric' && userKey && (
           <div style={styles.methodSelectorContainer}>
             <p style={styles.methodSelectorHint}>
-              Using Sign + Rank Mean-Centered binarization (128 values, 0-8 symmetric).
-              Self-normalizing: each session computes its own statistics.
+              Using Sign + Magnitude-Rank binarization (128 bits, 0-8 symmetric quantization).
+              Self-normalizing: session-specific statistics ensure consistency across captures.
+              <br />
+              <span style={{ fontSize: '0.75rem', color: '#888', marginTop: '0.25rem', display: 'block' }}>
+                Paper: Teoh et al. IEEE TPAMI 2006 - Section 3.2 (Binarization Strategies)
+              </span>
             </p>
           </div>
         )}

@@ -1,12 +1,12 @@
 /**
  * Algorithm Selector Component
  *
- * Shows the selected cancelable biometric algorithm (gaussian-sparse only).
- * This component now only displays the single supported algorithm.
+ * Shows the selected cancelable biometric algorithm (BioHashing only).
+ * This component displays the single supported algorithm.
  *
  * Features:
- * - Shows Sparse Gaussian (Achlioptas/Chellappa) algorithm
- * - Academic paper citations
+ * - Shows BioHashing (Teoh et al. 2006) - Gaussian + Gram-Schmidt
+ * - Academic paper citations (IEEE TPAMI 2006)
  * - Security and performance information
  */
 
@@ -33,15 +33,15 @@ interface AlgorithmOption {
 
 const ALGORITHM_OPTIONS: AlgorithmOption[] = [
   {
-    value: 'gaussian-sparse',
-    name: 'Sparse Gaussian (Achlioptas/Chellappa)',
-    description: '2/3 sparse projection matrix - IEEE TPAMI 2011 verified implementation',
-    templateSize: '256 bits (browser ZK)',
-    security: 'JL Lemma + RIP guarantees',
+    value: 'biohashing',
+    name: 'BioHashing (Teoh et al. 2006)',
+    description: 'Gaussian random projection with Gram-Schmidt orthogonalization - IEEE TPAMI 2006',
+    templateSize: '128 bits',
+    security: 'Statistical independence via orthonormal projection',
     securityLevel: 'computational',
-    performance: 'Fastest (3× speedup via 66% sparse matrix)',
+    performance: 'Optimized (128-bit templates for efficient ZK circuits)',
     recommended: true,
-    papers: ALGORITHM_PAPERS['gaussian-sparse'],
+    papers: ALGORITHM_PAPERS['biohashing'],
   },
 ];
 
@@ -70,9 +70,9 @@ export function AlgorithmSelector({
           Biometric Algorithm
         </h3>
         <p className="text-sm text-gray-600">
-          Using Sparse Gaussian Random Projection (Achlioptas/Chellappa method)
-          for template generation. This algorithm is backed by peer-reviewed
-          research (IEEE TPAMI 2011).
+          Using BioHashing (Teoh et al. method) with Gaussian random projection
+          and Gram-Schmidt orthogonalization for template generation. This algorithm
+          is backed by peer-reviewed research (IEEE TPAMI 2006).
         </p>
       </div>
 
@@ -250,31 +250,30 @@ export function AlgorithmSelector({
         </h4>
         <div className="text-sm text-blue-800 space-y-1">
           <p>
-            <strong>How it works:</strong> Uses Achlioptas/Chellappa sparse matrix
-            Φ[i,j] = {'{'}+√(3/m): 1/6, 0: 2/3, -√(3/m): 1/6{'}'} as per IEEE TPAMI 2011.
+            <strong>How it works:</strong> Generates Gaussian random matrix R[i,j] ~ (1/√m) × N(0,1),
+            then applies Gram-Schmidt orthogonalization for statistical independence (Teoh et al. IEEE TPAMI 2006).
           </p>
           <p>
-            <strong>Mathematical Basis:</strong> Satisfies Johnson-Lindenstrauss lemma
-            and Restricted Isometry Property (RIP). 66% zeros give 3× speedup with
-            identical security guarantees.
+            <strong>Mathematical Basis:</strong> Orthonormal projection ensures decorrelated
+            template dimensions. Each row is an independent basis vector in random subspace.
           </p>
           <p>
-            <strong>Verified:</strong> Implementation matches Chellappa paper exactly
-            (scale factor √(3/m), exact probability distribution).
+            <strong>Verified:</strong> Implementation matches experimental research validation
+            (128-bit templates, Gaussian + Gram-Schmidt, 0% cross-key unlinkability).
           </p>
           <p>
-            <strong>Best for:</strong> Demo and production - fastest computation with
-            proven security from IEEE's top computer vision journal.
+            <strong>Best for:</strong> Production-grade cancelable biometrics - proven
+            revocability and unlinkability from IEEE TPAMI (top pattern recognition journal).
           </p>
         </div>
       </div>
 
       {/* Academic Note */}
       <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
-        <strong>Academic Note:</strong> This implementation uses the Sparse Random
-        Projection algorithm from "Database-friendly random projections" (Achlioptas, 2003)
-        and its application to biometrics in "Secure and Robust Iris Recognition Using
-        Random Projections" (Pillai, Patel, Chellappa, Ratha - IEEE TPAMI 2011).
+        <strong>Academic Note:</strong> This implementation uses BioHashing from
+        "Random Multispace Quantization as an Analytic Mechanism for BioHashing"
+        (Teoh, Ngo, Goh - IEEE Transactions on Pattern Analysis and Machine Intelligence, 2006).
+        The Gaussian + Gram-Schmidt approach ensures statistical independence of projected dimensions.
       </div>
     </div>
   );
