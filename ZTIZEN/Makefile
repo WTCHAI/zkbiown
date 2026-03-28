@@ -69,15 +69,15 @@ install:
 	@echo "$(GREEN)📦 Installing dependencies...$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Installing ZTIZEN Service dependencies...$(NC)"
-	cd ztizen-service && pnpm install
+	cd service-ztizen && pnpm install
 	@echo "$(GREEN)✅ ZTIZEN Service dependencies installed$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Installing Product Service dependencies...$(NC)"
-	cd product-service && pnpm install
+	cd service-product && pnpm install
 	@echo "$(GREEN)✅ Product Service dependencies installed$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Installing Frontend dependencies...$(NC)"
-	cd vite-demo && pnpm install
+	cd web && pnpm install
 	@echo "$(GREEN)✅ Frontend dependencies installed$(NC)"
 	@echo ""
 	@echo "$(GREEN)🎉 All dependencies installed!$(NC)"
@@ -119,7 +119,7 @@ migrate: docker-up
 	@echo "$(GREEN)✅ Product database ready$(NC)"
 	@echo ""
 	@echo "$(YELLOW)🌱 Seeding Demo Data...$(NC)"
-	@docker exec -i ztizen-product-db psql -U product -d product < product-service/sql/seed.sql 2>&1 | grep -v "NOTICE" || true
+	@docker exec -i ztizen-product-db psql -U product -d product < service-product/sql/seed.sql 2>&1 | grep -v "NOTICE" || true
 	@echo "$(GREEN)✅ Demo data seeded$(NC)"
 	@echo ""
 	@echo "$(GREEN)🎉 Databases ready! Schemas auto-loaded from docker-compose volumes$(NC)"
@@ -149,7 +149,7 @@ dev-product: docker-up migrate
 
 dev-frontend:
 	@echo "$(GREEN)🚀 Starting Frontend (Port 5501)...$(NC)"
-	cd vite-demo && pnpm dev
+	cd web && pnpm dev
 
 clean-volumes: docker-down
 	@echo "$(YELLOW)🗑️  Removing Docker volumes...$(NC)"
@@ -217,8 +217,8 @@ db-check:
 # Clear Vite cache
 clear-cache:
 	@echo "$(YELLOW)🧹 Clearing Vite cache...$(NC)"
-	rm -rf vite-demo/node_modules/.vite
-	rm -rf vite-demo/dist
+	rm -rf web/node_modules/.vite
+	rm -rf web/dist
 	@echo "$(GREEN)✅ Vite cache cleared$(NC)"
 	@echo "Restart your frontend: make dev-frontend"
 
@@ -264,8 +264,8 @@ ZTIZEN_DB=ztizen
 
 # Project paths
 PROJECT_ROOT=$(shell pwd)
-PRODUCT_MIGRATIONS=$(PROJECT_ROOT)/product-service/sql/migrations
-ZTIZEN_MIGRATIONS=$(PROJECT_ROOT)/ztizen-service/sql/migrations
+PRODUCT_MIGRATIONS=$(PROJECT_ROOT)/service-product/sql/migrations
+ZTIZEN_MIGRATIONS=$(PROJECT_ROOT)/service-ztizen/sql/migrations
 
 # Terminate all database connections
 db-terminate:
@@ -433,10 +433,10 @@ cleanup: kill-all-ports
 		echo "$(YELLOW)Docker not running - skipping container cleanup$(NC)"; \
 	fi
 	@echo "$(YELLOW)Cleaning build artifacts...$(NC)"
-	@rm -rf vite-demo/node_modules/.vite 2>/dev/null || true
-	@rm -rf vite-demo/dist 2>/dev/null || true
-	@rm -rf ztizen-service/dist 2>/dev/null || true
-	@rm -rf product-service/dist 2>/dev/null || true
+	@rm -rf web/node_modules/.vite 2>/dev/null || true
+	@rm -rf web/dist 2>/dev/null || true
+	@rm -rf service-ztizen/dist 2>/dev/null || true
+	@rm -rf service-product/dist 2>/dev/null || true
 	@echo "$(GREEN)✅ Complete cleanup done!$(NC)"
 	@echo ""
 	@echo "$(YELLOW)To start fresh, run:$(NC)"
@@ -452,9 +452,9 @@ ensure-setup: check-docker cleanup
 	@echo "=========================================="
 	@echo ""
 	@echo "$(YELLOW)1️⃣  Installing dependencies...$(NC)"
-	@cd ztizen-service && pnpm install > /dev/null 2>&1
-	@cd product-service && pnpm install > /dev/null 2>&1
-	@cd vite-demo && pnpm install > /dev/null 2>&1
+	@cd service-ztizen && pnpm install > /dev/null 2>&1
+	@cd service-product && pnpm install > /dev/null 2>&1
+	@cd web && pnpm install > /dev/null 2>&1
 	@echo "   $(GREEN)✓$(NC) Dependencies installed"
 	@echo ""
 	@echo "$(YELLOW)2️⃣  Starting Docker containers...$(NC)"
@@ -493,15 +493,15 @@ docker-build:
 	@echo "$(GREEN)🔨 Building all Docker images...$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Building ZTIZEN API...$(NC)"
-	docker build -t ztizen-api:latest ./ztizen-service
+	docker build -t ztizen-api:latest ./service-ztizen
 	@echo "$(GREEN)✅ ZTIZEN API built$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Building Product API...$(NC)"
-	docker build -t ztizen-product-api:latest ./product-service
+	docker build -t ztizen-product-api:latest ./service-product
 	@echo "$(GREEN)✅ Product API built$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Building Frontend...$(NC)"
-	docker build -t vite-demo:latest ./vite-demo
+	docker build -t web:latest ./web
 	@echo "$(GREEN)✅ Frontend built$(NC)"
 	@echo ""
 	@echo "$(GREEN)🎉 All images built successfully!$(NC)"
@@ -511,7 +511,7 @@ docker-prod:
 	@echo "$(GREEN)🚀 Starting ZTIZEN Production Stack...$(NC)"
 	@echo ""
 	@echo "Architecture:"
-	@echo "  ├── vite-demo       (Frontend)   → Port 5501"
+	@echo "  ├── web             (Frontend)   → Port 5501"
 	@echo "  ├── ztizen-api      (Service)    → Port 5502"
 	@echo "  ├── ztizen-product-api (Service) → Port 5503"
 	@echo "  ├── ztizen-db       (Database)   → Port 5504"

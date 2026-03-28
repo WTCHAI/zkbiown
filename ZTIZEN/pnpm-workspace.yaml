@@ -1,0 +1,6 @@
+packages:
+  - 'web'
+  - 'service-product'
+  - 'service-ztizen'
+  - 'smart-contracts'
+  - 'experimental'

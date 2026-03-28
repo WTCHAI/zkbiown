@@ -15,21 +15,6 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  ZTIZEN/experimental:
-    dependencies:
-      '@types/node':
-        specifier: ^22.18.11
-        version: 22.19.15
-      poseidon-lite:
-        specifier: ^0.2.1
-        version: 0.2.1
-      tsx:
-        specifier: ^4.7.0
-        version: 4.21.0
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
   ZTIZEN/service-product:
     dependencies:
       cors:
@@ -4710,9 +4695,6 @@ packages:
         optional: true
       wagmi:
         optional: true
-
-  poseidon-lite@0.2.1:
-    resolution: {integrity: sha512-xIr+G6HeYfOhCuswdqcFpSX47SPhm0EpisWJ6h7fHlWwaVIvH3dLnejpatrtw6Xc6HaLrpq05y7VRfvDmDGIog==}
 
   poseidon-lite@0.3.0:
     resolution: {integrity: sha512-ilJj4MIve4uBEG7SrtPqUUNkvpJ/pLVbndxa0WvebcQqeIhe+h72JR4g0EvwchUzm9sOQDlOjiDNmRAgxNZl4A==}
@@ -12454,8 +12436,6 @@ snapshots:
       - immer
       - use-sync-external-store
     optional: true
-
-  poseidon-lite@0.2.1: {}
 
   poseidon-lite@0.3.0: {}
 
