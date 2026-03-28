@@ -115,7 +115,7 @@ export interface FileRoutesByFullPath {
   '/product/verify-demo': typeof ProductVerifyDemoRoute
   '/ztizen/me': typeof ZtizenMeRoute
   '/ztizen/verify': typeof ZtizenVerifyRouteWithChildren
-  '/product': typeof ProductIndexRoute
+  '/product/': typeof ProductIndexRoute
   '/product/service/$serviceName': typeof ProductServiceServiceNameRoute
   '/ztizen/me-add/$credentialId': typeof ZtizenMeAddCredentialIdRoute
   '/ztizen/register-scan/$credentialId': typeof ZtizenRegisterScanCredentialIdRoute
@@ -169,7 +169,7 @@ export interface FileRouteTypes {
     | '/product/verify-demo'
     | '/ztizen/me'
     | '/ztizen/verify'
-    | '/product'
+    | '/product/'
     | '/product/service/$serviceName'
     | '/ztizen/me-add/$credentialId'
     | '/ztizen/register-scan/$credentialId'
@@ -263,7 +263,7 @@ declare module '@tanstack/react-router' {
     '/product/': {
       id: '/product/'
       path: '/product'
-      fullPath: '/product'
+      fullPath: '/product/'
       preLoaderRoute: typeof ProductIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
