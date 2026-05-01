@@ -1,0 +1,38 @@
+REFERENCES
+================================================================================
+[1] Q. N. Tran, B. P. Turnbull, J. Hu, "Biometrics and Privacy-Preservation: How Do They Evolve?", in IEEE Open Journal of the Computer Society, vol. 2, pp. 179-191, 2021. [Online]. Available: https://doi.org/10.1109/OJCS.2021.3068385
+
+[2] V. M. Patel, N. K. Ratha, R. Chellappa, "Cancelable Biometrics: A Review", in IEEE Signal Processing Magazine, vol. 32, no. 5, pp. 54-65, 2015. [Online]. Available: https://doi.org/10.1109/MSP.2015.2434151
+
+[3] A. B. J. Teoh, A. Goh, D. C. L. Ngo, "Random Multispace Quantization as an Analytic Mechanism for BioHashing of Biometric and Random Identity Inputs", in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 28, no. 12, pp. 1892-1901, 2006. [Online]. Available: https://doi.org/10.1109/TPAMI.2006.250
+
+[4] A. T. B. Jin, D. N. C. Ling, A. Goh, "BioHashing: Two Factor Authentication Featuring Fingerprint Data and Tokenised Random Number", in Pattern Recognition, vol. 37, no. 11, pp. 2245-2255, 2004. [Online]. Available: https://doi.org/10.1016/j.patcog.2004.04.011
+
+[5] L. Grassi, D. Khovratovich, C. Rechberger, A. Roy, M. Schofnegger, "Poseidon: A New Hash Function for Zero-Knowledge Proof Systems", in Proceedings of the 30th USENIX Security Symposium, pp. 519-535, 2021. [Online]. Available: https://www.usenix.org/conference/usenixsecurity21/presentation/grassi
+
+[6] C. Hudson, "poseidon-lite: Lightweight JavaScript implementation of Poseidon hash", 2024. [Online]. Available: https://github.com/chancehudson/poseidon-lite
+
+[7] J. Groth, "On the Size of Pairing-Based Non-Interactive Arguments", in Advances in Cryptology – EUROCRYPT 2016, LNCS, vol. 9666, pp. 305-326, 2016. [Online]. Available: https://doi.org/10.1007/978-3-662-49896-5_11
+
+[8] B. Bünz, J. Bootle, D. Boneh, A. Poelstra, P. Wuille, G. Maxwell, "Bulletproofs: Short Proofs for Confidential Transactions and More", in 2018 IEEE Symposium on Security and Privacy (SP), pp. 315-334, 2018. [Online]. Available: https://doi.org/10.1109/SP.2018.00020
+
+[9] A. Gabizon, Z. J. Williamson, O. Ciobotaru, "PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge", in Cryptology ePrint Archive, Report 2019/953, 2019. [Online]. Available: https://eprint.iacr.org/2019/953
+
+[10] E. Ben-Sasson, I. Bentov, Y. Horesh, M. Riabzev, "Scalable Zero Knowledge with No Trusted Setup", in Advances in Cryptology – CRYPTO 2019, LNCS, vol. 11694, pp. 701-732, 2019. [Online]. Available: https://doi.org/10.1007/978-3-030-26954-8_23
+
+[11] Aztec Protocol, "Noir: A Domain Specific Language for SNARK Proving Systems", 2024. [Online]. Available: https://github.com/noir-lang/noir
+
+[12] H. Ng, S. Winkler, "A Data-Driven Approach to Cleaning Large Face Datasets", in 2014 IEEE International Conference on Image Processing (ICIP), pp. 343-347, 2014. [Online]. Available: https://doi.org/10.1109/ICIP.2014.7025068
+
+[13] F. Schroff, D. Kalenichenko, J. Philbin, "FaceNet: A Unified Embedding for Face Recognition and Clustering", in 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 815-823, 2015. [Online]. Available: https://doi.org/10.1109/CVPR.2015.7298682
+
+[14] J. Deng, J. Guo, N. Xue, S. Zafeiriou, "ArcFace: Additive Angular Margin Loss for Deep Face Recognition", in 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4690-4699, 2019. [Online]. Available: https://doi.org/10.1109/CVPR.2019.00482
+
+[15] V. Mühler, "face-api.js: JavaScript API for Face Recognition in the Browser with tensorflow.js", 2024. [Online]. Available: https://github.com/justadudewhohacks/face-api.js
+
+[16] D. Hopwood, S. Bowe, T. Hornby, N. Wilcox, "Zcash Protocol Specification, Version 2020.1.14 [Overwinter+Sapling+Blossom+Heartwood+Canopy]", in Zerocoin Electric Coin Company, 2020. [Online]. Available: https://github.com/zcash/zips/blob/master/protocol/protocol.pdf
+
+[17] A. Aly, T. Ashur, E. Ben-Sasson, S. Dhooghe, A. Szepieniec, "Design of Symmetric-Key Primitives for Advanced Cryptographic Protocols", in Cryptology ePrint Archive, Report 2019/426, 2019. [Online]. Available: https://eprint.iacr.org/2019/426
+
+[18] Y. Dodis, L. Reyzin, A. Smith, "Fuzzy Extractors: How to Generate Strong Keys from Biometrics and Other Noisy Data", in Advances in Cryptology – EUROCRYPT 2004, LNCS, vol. 3027, pp. 523-540, 2004. [Online]. Available: https://doi.org/10.1007/978-3-540-24676-3_31
+

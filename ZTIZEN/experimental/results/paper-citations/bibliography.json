@@ -1,0 +1,299 @@
+[
+  {
+    "id": "tran2021biometrics",
+    "type": "paper",
+    "category": "Cancelable Biometrics",
+    "authors": [
+      "Q. N. Tran",
+      "B. P. Turnbull",
+      "J. Hu"
+    ],
+    "title": "Biometrics and Privacy-Preservation: How Do They Evolve?",
+    "venue": "IEEE Open Journal of the Computer Society",
+    "year": 2021,
+    "volume": "2",
+    "pages": "179-191",
+    "doi": "10.1109/OJCS.2021.3068385",
+    "notes": "PRIMARY survey paper. Comprehensive taxonomy of privacy-preserving biometrics: Non-invertible Transformation, Direct Biometric Key Generation, Information Hiding, Protocol-based Protection. Provides theoretical foundation for ZKBIOWN approach. References ISO/IEC 24745 standard for template protection."
+  },
+  {
+    "id": "patel2015cancelable",
+    "type": "paper",
+    "category": "Cancelable Biometrics",
+    "authors": [
+      "V. M. Patel",
+      "N. K. Ratha",
+      "R. Chellappa"
+    ],
+    "title": "Cancelable Biometrics: A Review",
+    "venue": "IEEE Signal Processing Magazine",
+    "year": 2015,
+    "volume": "32",
+    "number": "5",
+    "pages": "54-65",
+    "doi": "10.1109/MSP.2015.2434151",
+    "notes": "Alternative survey paper (older but well-cited). Good for historical context of cancelable biometrics development."
+  },
+  {
+    "id": "teoh2006random",
+    "type": "paper",
+    "category": "BioHashing",
+    "authors": [
+      "A. B. J. Teoh",
+      "A. Goh",
+      "D. C. L. Ngo"
+    ],
+    "title": "Random Multispace Quantization as an Analytic Mechanism for BioHashing of Biometric and Random Identity Inputs",
+    "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+    "year": 2006,
+    "volume": "28",
+    "number": "12",
+    "pages": "1892-1901",
+    "doi": "10.1109/TPAMI.2006.250",
+    "notes": "⭐ PRIMARY BioHashing citation - MATCHES YOUR CODE IMPLEMENTATION! Your experimental/utils/biohashing.ts explicitly implements this methodology: Gaussian random projection with Gram-Schmidt orthogonalization. Code comments reference \"Teoh, Ngo, Goh (IEEE TPAMI 2006)\". This is THE paper to cite for your methodology section."
+  },
+  {
+    "id": "jin2004biohashing",
+    "type": "paper",
+    "category": "BioHashing",
+    "authors": [
+      "A. T. B. Jin",
+      "D. N. C. Ling",
+      "A. Goh"
+    ],
+    "title": "BioHashing: Two Factor Authentication Featuring Fingerprint Data and Tokenised Random Number",
+    "venue": "Pattern Recognition",
+    "year": 2004,
+    "volume": "37",
+    "number": "11",
+    "pages": "2245-2255",
+    "doi": "10.1016/j.patcog.2004.04.011",
+    "notes": "Original BioHashing paper (fingerprint-based). Cite for historical context, but Teoh 2006 is the primary methodology reference."
+  },
+  {
+    "id": "grassi2021poseidon",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "L. Grassi",
+      "D. Khovratovich",
+      "C. Rechberger",
+      "A. Roy",
+      "M. Schofnegger"
+    ],
+    "title": "Poseidon: A New Hash Function for Zero-Knowledge Proof Systems",
+    "venue": "Proceedings of the 30th USENIX Security Symposium",
+    "year": 2021,
+    "pages": "519-535",
+    "url": "https://www.usenix.org/conference/usenixsecurity21/presentation/grassi",
+    "notes": "⭐ PRIMARY Poseidon citation. ZK-friendly hashing optimized for R1CS constraints. Achieves 0.2-0.5 constraints/bit vs Pedersen Hash (1.68 constraints/bit). Provides performance benchmarks for Groth16, Bulletproofs, PLONK, STARKs. Critical for explaining computational efficiency of ZKBIOWN."
+  },
+  {
+    "id": "poseidon-lite",
+    "type": "software",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "C. Hudson"
+    ],
+    "title": "poseidon-lite: Lightweight JavaScript implementation of Poseidon hash",
+    "venue": "GitHub",
+    "year": 2024,
+    "url": "https://github.com/chancehudson/poseidon-lite",
+    "notes": "Poseidon8 implementation used in ZKBIOWN for field element hashing (BN254 field). Cite as software dependency."
+  },
+  {
+    "id": "groth2016size",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "J. Groth"
+    ],
+    "title": "On the Size of Pairing-Based Non-Interactive Arguments",
+    "venue": "Advances in Cryptology – EUROCRYPT 2016, LNCS",
+    "year": 2016,
+    "volume": "9666",
+    "pages": "305-326",
+    "publisher": "Springer",
+    "doi": "10.1007/978-3-662-49896-5_11",
+    "notes": "Groth16 SNARK system - the most widely used ZK proof system. Cite for explaining ZK proof generation/verification in ZKBIOWN."
+  },
+  {
+    "id": "bunz2018bulletproofs",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "B. Bünz",
+      "J. Bootle",
+      "D. Boneh",
+      "A. Poelstra",
+      "P. Wuille",
+      "G. Maxwell"
+    ],
+    "title": "Bulletproofs: Short Proofs for Confidential Transactions and More",
+    "venue": "2018 IEEE Symposium on Security and Privacy (SP)",
+    "year": 2018,
+    "pages": "315-334",
+    "doi": "10.1109/SP.2018.00020",
+    "notes": "Bulletproofs - no trusted setup alternative to Groth16. Good for comparison in related work section."
+  },
+  {
+    "id": "gabizon2019plonk",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "A. Gabizon",
+      "Z. J. Williamson",
+      "O. Ciobotaru"
+    ],
+    "title": "PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge",
+    "venue": "Cryptology ePrint Archive, Report 2019/953",
+    "year": 2019,
+    "url": "https://eprint.iacr.org/2019/953",
+    "notes": "PLONK - universal setup SNARK system. Alternative to Groth16 with different tradeoffs. Good for related work comparison."
+  },
+  {
+    "id": "bensasson2019starks",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "E. Ben-Sasson",
+      "I. Bentov",
+      "Y. Horesh",
+      "M. Riabzev"
+    ],
+    "title": "Scalable Zero Knowledge with No Trusted Setup",
+    "venue": "Advances in Cryptology – CRYPTO 2019, LNCS",
+    "year": 2019,
+    "volume": "11694",
+    "pages": "701-732",
+    "publisher": "Springer",
+    "doi": "10.1007/978-3-030-26954-8_23",
+    "notes": "STARKs - post-quantum secure, no trusted setup. Good for discussing future-proofing in discussion section."
+  },
+  {
+    "id": "noir-lang",
+    "type": "software",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "Aztec Protocol"
+    ],
+    "title": "Noir: A Domain Specific Language for SNARK Proving Systems",
+    "venue": "GitHub",
+    "year": 2024,
+    "url": "https://github.com/noir-lang/noir",
+    "notes": "Noir DSL - domain-specific language for writing ZK circuits. Cite if discussing implementation tools."
+  },
+  {
+    "id": "ng2014facescrub",
+    "type": "dataset",
+    "category": "Face Recognition",
+    "authors": [
+      "H. Ng",
+      "S. Winkler"
+    ],
+    "title": "A Data-Driven Approach to Cleaning Large Face Datasets",
+    "venue": "2014 IEEE International Conference on Image Processing (ICIP)",
+    "year": 2014,
+    "pages": "343-347",
+    "doi": "10.1109/ICIP.2014.7025068",
+    "url": "https://malea.winkler.site/facescrub.html",
+    "notes": "FaceScrub dataset - 530 persons, 100k+ faces. ZKBIOWN uses filtered subset: 437 persons (≥2 captures per person) for intra-person validation. Baseline similarity: 63.94% same-person cosine similarity establishes dataset quality ceiling."
+  },
+  {
+    "id": "schroff2015facenet",
+    "type": "paper",
+    "category": "Face Recognition",
+    "authors": [
+      "F. Schroff",
+      "D. Kalenichenko",
+      "J. Philbin"
+    ],
+    "title": "FaceNet: A Unified Embedding for Face Recognition and Clustering",
+    "venue": "2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+    "year": 2015,
+    "pages": "815-823",
+    "doi": "10.1109/CVPR.2015.7298682",
+    "notes": "FaceNet - 128D and 512D embeddings used in ZKBIOWN experiments. Triplet loss training for face recognition. Implementation: https://github.com/davidsandberg/facenet"
+  },
+  {
+    "id": "deng2019arcface",
+    "type": "paper",
+    "category": "Face Recognition",
+    "authors": [
+      "J. Deng",
+      "J. Guo",
+      "N. Xue",
+      "S. Zafeiriou"
+    ],
+    "title": "ArcFace: Additive Angular Margin Loss for Deep Face Recognition",
+    "venue": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+    "year": 2019,
+    "pages": "4690-4699",
+    "doi": "10.1109/CVPR.2019.00482",
+    "notes": "ArcFace - 512D embeddings. State-of-the-art face recognition using additive angular margin loss. Implementation: https://github.com/deepinsight/insightface"
+  },
+  {
+    "id": "faceapi-js",
+    "type": "software",
+    "category": "Face Recognition",
+    "authors": [
+      "V. Mühler"
+    ],
+    "title": "face-api.js: JavaScript API for Face Recognition in the Browser with tensorflow.js",
+    "venue": "GitHub",
+    "year": 2024,
+    "url": "https://github.com/justadudewhohacks/face-api.js",
+    "notes": "face-api.js - 128D embeddings. Browser-based face recognition library used in ZKBIOWN experiments."
+  },
+  {
+    "id": "hopwood2020zcash",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "D. Hopwood",
+      "S. Bowe",
+      "T. Hornby",
+      "N. Wilcox"
+    ],
+    "title": "Zcash Protocol Specification, Version 2020.1.14 [Overwinter+Sapling+Blossom+Heartwood+Canopy]",
+    "venue": "Zerocoin Electric Coin Company",
+    "year": 2020,
+    "url": "https://github.com/zcash/zips/blob/master/protocol/protocol.pdf",
+    "notes": "Pedersen Hash - traditional ZK-friendly hash (1.68 constraints/bit). Cite for performance comparison with Poseidon (0.2-0.5 constraints/bit)."
+  },
+  {
+    "id": "aly2019rescue",
+    "type": "paper",
+    "category": "Zero-Knowledge Proofs",
+    "authors": [
+      "A. Aly",
+      "T. Ashur",
+      "E. Ben-Sasson",
+      "S. Dhooghe",
+      "A. Szepieniec"
+    ],
+    "title": "Design of Symmetric-Key Primitives for Advanced Cryptographic Protocols",
+    "venue": "Cryptology ePrint Archive, Report 2019/426",
+    "year": 2019,
+    "url": "https://eprint.iacr.org/2019/426",
+    "notes": "Rescue Hash - alternative ZK-friendly hash using both x^5 and x^(1/5) S-boxes. Slower than Poseidon. Optional comparison baseline."
+  },
+  {
+    "id": "dodis2004fuzzy",
+    "type": "paper",
+    "category": "Cancelable Biometrics",
+    "authors": [
+      "Y. Dodis",
+      "L. Reyzin",
+      "A. Smith"
+    ],
+    "title": "Fuzzy Extractors: How to Generate Strong Keys from Biometrics and Other Noisy Data",
+    "venue": "Advances in Cryptology – EUROCRYPT 2004, LNCS",
+    "year": 2004,
+    "volume": "3027",
+    "pages": "523-540",
+    "publisher": "Springer",
+    "doi": "10.1007/978-3-540-24676-3_31",
+    "notes": "Fuzzy Extractors - alternative biometric template protection. ONLY cite if explaining why NOT used (ZKBIOWN uses BioHashing instead)."
+  }
+]

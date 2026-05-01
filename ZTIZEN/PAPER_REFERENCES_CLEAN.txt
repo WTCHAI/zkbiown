@@ -1,0 +1,59 @@
+================================================================================
+ZKBIOWN PAPER - FINAL REFERENCES
+================================================================================
+Generated: 2026-03-31
+Total: 17 citations
+================================================================================
+
+REFERENCES
+
+[1]    Q. N. Tran, B. P. Turnbull, J. Hu, "Biometrics and Privacy-Preservation: How Do They Evolve?", in IEEE Open Journal of the Computer Society, vol. 2, pp. 179-191, 2021. [Online]. Available: https://doi.org/10.1109/OJCS.2021.3068385
+
+[2]    V. M. Patel, N. K. Ratha, R. Chellappa, "Cancelable Biometrics: A Review", in IEEE Signal Processing Magazine, vol. 32, no. 5, pp. 54-65, 2015. [Online]. Available: https://doi.org/10.1109/MSP.2015.2434151
+
+[3]    A. B. J. Teoh, A. Goh, D. C. L. Ngo, "Random Multispace Quantization as an Analytic Mechanism for BioHashing of Biometric and Random Identity Inputs", in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 28, no. 12, pp. 1892-1901, 2006. [Online]. Available: https://doi.org/10.1109/TPAMI.2006.250
+
+[4]    A. T. B. Jin, D. N. C. Ling, A. Goh, "BioHashing: Two Factor Authentication Featuring Fingerprint Data and Tokenised Random Number", in Pattern Recognition, vol. 37, no. 11, pp. 2245-2255, 2004. [Online]. Available: https://doi.org/10.1016/j.patcog.2004.04.011
+
+[5]    L. Grassi, D. Khovratovich, C. Rechberger, A. Roy, M. Schofnegger, "Poseidon: A New Hash Function for Zero-Knowledge Proof Systems", in Proceedings of the 30th USENIX Security Symposium, pp. 519-535, 2021. [Online]. Available: https://www.usenix.org/conference/usenixsecurity21/presentation/grassi
+
+[6]    C. Hudson, "poseidon-lite: Lightweight JavaScript implementation of Poseidon hash", 2024. [Online]. Available: https://github.com/chancehudson/poseidon-lite
+
+[7]    J. Deng, J. Guo, N. Xue, S. Zafeiriou, "ArcFace: Additive Angular Margin Loss for Deep Face Recognition", in 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4690-4699, 2019. [Online]. Available: https://doi.org/10.1109/CVPR.2019.00482
+
+[8]    J. Guo et al., "InsightFace: 2D and 3D Face Analysis Project", 2024. [Online]. Available: https://github.com/deepinsight/insightface
+
+[9]    F. Schroff, D. Kalenichenko, J. Philbin, "FaceNet: A Unified Embedding for Face Recognition and Clustering", in 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 815-823, 2015. [Online]. Available: https://doi.org/10.1109/CVPR.2015.7298682
+
+[10]   S. I. Serengil, A. Ozpinar, "LightFace: A Hybrid Deep Face Recognition Framework", in 2020 Innovations in Intelligent Systems and Applications Conference (ASYU), pp. 1-5, 2020. [Online]. Available: https://doi.org/10.1109/ASYU50717.2020.9259802
+
+
+[12]   V. Muhler, "face-api.js: JavaScript API for Face Recognition in the Browser with tensorflow.js", 2024. [Online]. Available: https://github.com/justadudewhohacks/face-api.js
+
+[13]   J. Deng, J. Guo, E. Ververas, I. Kotsia, S. Zafeiriou, "RetinaFace: Single-Shot Multi-Level Face Localisation in the Wild", in 2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 5203-5212, 2020. [Online]. Available: https://doi.org/10.1109/CVPR42600.2020.00525
+
+
+[15]   G. Bradski, "The OpenCV Library", in Dr. Dobb's Journal of Software Tools, 2000. [Online]. Available: https://opencv.org/
+
+
+[17]   H. Ng, S. Winkler, "FaceScrub Dataset", 2014. [Online]. Available: https://malea.winkler.site/facescrub.html
+
+
+[14]   S. I. Serengil, "retinaface: RetinaFace Face Detection for Python", 2024. [Online]. Available: https://github.com/serengil/retinaface
+[11]   S. I. Serengil, "deepface: A Lightweight Face Recognition and Facial Attribute Analysis Framework for Python", 2024. [Online]. Available: https://github.com/serengil/deepface
+[16]   OpenCV Team, "OpenCV: Open Source Computer Vision Library", 2024. [Online]. Available: https://github.com/opencv/opencv
+
+================================================================================
+QUICK REFERENCE - GITHUB DEPENDENCIES
+================================================================================
+
+| Library      | GitHub URL                                    | Citation |
+|--------------|-----------------------------------------------|----------|
+| ArcFace      | https://github.com/deepinsight/insightface    | [8]      |
+| DeepFace     | https://github.com/serengil/deepface          | [11]     |
+| face-api.js  | https://github.com/justadudewhohacks/face-api.js | [12]  |
+| RetinaFace   | https://github.com/serengil/retinaface        | [14]     |
+| OpenCV       | https://github.com/opencv/opencv              | [16]     |
+| poseidon-lite| https://github.com/chancehudson/poseidon-lite | [6]      |
+
+================================================================================
