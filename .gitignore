@@ -71,6 +71,11 @@ ZTIZEN/experimental/data/facescrub/images/
 ZTIZEN/experimental/data/facescrub/*.txt
 ZTIZEN/experimental/data/facescrub/*.log
 ZTIZEN/experimental/data/facescrub/*-embeddings.json
+ZTIZEN/experimental/data/facescrub/*.backup.json
+
+# Precomputed Templates (large generated files 56-88MB - can be regenerated)
+# Run: npx tsx ZTIZEN/experimental/pipeline/00-prepare-templates.ts
+ZTIZEN/experimental/data/precomputed-templates/
 
 # VGGFace2 dataset (if used)
 ZTIZEN/experimental/data/vggface2/
