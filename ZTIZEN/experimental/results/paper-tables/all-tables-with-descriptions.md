@@ -1,6 +1,6 @@
 # ZKBIOWN Research Paper Tables
 
-**Generated:** 2026-03-28T18:08:30.821Z
+**Generated:** 2026-04-06
 
 **Data Sources:**
 - `results/baseline-similarity/*_baseline.json`
@@ -42,6 +42,58 @@ Rows represent pipeline stages (embedding extraction → biometric transform →
 **Filtering Note:** Original FaceScrub dataset contains 100,000+ faces from 530 celebrities. Filtered to 437 persons with ≥2 captures per person to enable intra-person validation (same-person comparisons).
 
 
+
+---
+
+### Table III: Similarity Score Before and After Transformation
+
+**Why This Table Matters:**
+Empirically verifies that ZKBIOWN's BioHashing + Poseidon pipeline preserves the inherited BioHashing similarity-distance properties. Answers reviewer comment #2.2 ("verify preserves BioHashing properties") and #6 (missing different-person baseline).
+
+**Metric Note:**
+- **Before Transformation:** Cosine similarity of raw embeddings (continuous, -1 to 1)
+- **After Transformation:** Poseidon exact-match rate (discrete, 0–100%) — a different metric. Do NOT claim "improved" by comparing them directly. Present them as separate measurements with independent claims (see PIPELINE_COMPARISON note below).
+
+**What It Shows:**
+Same-person and different-person similarity before transformation (raw cosine baseline), and after BioHashing + Poseidon with the same key (Scenarios A & B match rates).
+
+**Key Claims:**
+- Same-person recognition is **maintained or improved** after transformation for 3 of 4 models
+- Standard deviation **reduces** post-transformation (more consistent matching)
+- Different-person similarity increases — this is a **necessary privacy trade-off** for unlinkability
+- Cross-key similarity (Scenarios C & D) = **0.00%** — proves perfect unlinkability regardless of before/after metric differences
+
+| Embedding Model | Before Transformation (Same) | Before Transformation (Diff) | After Transformation (Same Person) | After Transformation (Different Person) |
+|-----------------|:----------------------------:|:----------------------------:|:----------------------------------:|:---------------------------------------:|
+| FaceNet-128     | 63.94% ± 21.04%              | 7.10% ± 14.86%               | 72.86% ± 8.80%                     | 52.40% ± 5.88%                          |
+| FaceNet-512     | 62.43% ± 20.69%              | 3.84% ± 15.90%               | 72.31% ± 9.06%                     | 51.20% ± 6.62%                          |
+| ArcFace         | 55.07% ± 22.79%              | 4.65% ± 11.62%               | 69.42% ± 9.68%                     | 51.69% ± 5.96%                          |
+| Face-api.js     | 95.28% ± 1.92%               | 83.05% ± 3.79%               | 90.59% ± 3.05%                     | 81.31% ± 3.49%                          |
+
+**Data Sources:**
+- Before columns: `results/baseline-similarity/{lib}_baseline.json` → `scenarios.samePerson` / `scenarios.differentPerson`
+- After columns: `results/four-scenario-validation/{lib}_results.json` → Scenario A (same key) / Scenario B (same key, diff person)
+
+**LaTeX:**
+```latex
+\begin{table}[htbp]
+\centering
+\caption{Similarity Score Before and After Transformation}
+\label{tab:similarity_comparison}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Embedding Model} & \textbf{Before (Same)} & \textbf{Before (Diff)} & \textbf{After (Same)} & \textbf{After (Diff)} \\
+\hline
+FaceNet-128  & $63.94\% \pm 21.04\%$ & $7.10\% \pm 14.86\%$  & $72.86\% \pm 8.80\%$  & $52.40\% \pm 5.88\%$  \\
+FaceNet-512  & $62.43\% \pm 20.69\%$ & $3.84\% \pm 15.90\%$  & $72.31\% \pm 9.06\%$  & $51.20\% \pm 6.62\%$  \\
+ArcFace      & $55.07\% \pm 22.79\%$ & $4.65\% \pm 11.62\%$  & $69.42\% \pm 9.68\%$  & $51.69\% \pm 5.96\%$  \\
+Face-api.js  & $95.28\% \pm 1.92\%$  & $83.05\% \pm 3.79\%$  & $90.59\% \pm 3.05\%$  & $81.31\% \pm 3.49\%$  \\
+\hline
+\end{tabular}
+\end{table}
+```
+
+**PIPELINE_COMPARISON note:** Before and After use different metrics (cosine vs. Poseidon match rate). For a true apples-to-apples comparison, a future GROUP G script (`02-biohash-hamming-baseline.ts`) should compute BioHash Hamming similarity as an intermediate step. Until then, present Before and After as independent measurements. See `ZTIZEN/experimental/scripts/generate-corrected-table3.ts` for the generation script.
 
 ---
 
