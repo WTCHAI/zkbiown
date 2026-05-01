@@ -1,0 +1,56 @@
+%% ZKBIOWN Three-Party Key Distribution Protocol
+%% Paste this into: https://mermaid.live/
+
+sequenceDiagram
+    participant U as 👤 User Device
+    participant P as 🏢 Product Service
+    participant Z as 🟢 ZTIZEN Service
+    participant B as ⛓️ Blockchain
+
+    %% PHASE 1: KEY GENERATION & PROVISIONING
+    rect rgb(255, 250, 205)
+        Note over U,B: 🔐 PHASE 1: KEY GENERATION & PROVISIONING
+
+        Note over U: Generate User Key<br/>Ku = random(32 bytes)<br/>Store in localStorage
+
+        U->>+P: GET /api/product-key?productId={id}
+        Note over P: Retrieve Platform Key<br/>from Product Database
+        P-->>-U: 200 OK {productKey: Kp}
+
+        U->>+Z: GET /api/ztizen-key
+        Note over Z: Retrieve ZTIZEN Key<br/>from ZTIZEN Database
+        Z-->>-U: 200 OK {ztizenKey: Kz}
+    end
+
+    %% PHASE 2: COMPOSITE KEY DERIVATION
+    rect rgb(224, 242, 241)
+        Note over U,B: 🔒 PHASE 2: COMPOSITE KEY DERIVATION (Client-Side)
+
+        Note over U: SHA-256 Computation<br/>━━━━━━━━━━━━━━━<br/>Input:<br/>  • Kp (platform key)<br/>  • Kz (ZTIZEN key)<br/>  • Ku (user key)<br/><br/>Process:<br/>  K_composite = SHA256(Kp ‖ Kz ‖ Ku)<br/><br/>Output:<br/>  K_composite (32 bytes)
+
+        Note over U: Seed BioHashing RNG<br/>CryptoRNG.create(K_composite)<br/>→ HMAC-DRBG initialized
+    end
+
+    %% PHASE 3: TEMPLATE GENERATION & STORAGE
+    rect rgb(232, 245, 233)
+        Note over U,B: 🔄 PHASE 3: TEMPLATE GENERATION & STORAGE
+
+        Note over U: Run BioHashing Pipeline<br/>1. Generate Gaussian Matrix (Φ)<br/>2. Gram-Schmidt Orthogonalization<br/>3. Random Projection (y = Φ·x)<br/>4. Binarization (B)<br/>→ Binary Template (128 bits)
+
+        Note over U: Compute Poseidon Hash<br/>H = Poseidon(B)<br/>→ Hash Commitment
+
+        U->>+B: registerCredential(H, credentialId)<br/>(Smart Contract Call)
+        Note over B: Execute Smart Contract<br/>Store Commitment On-Chain<br/>Mint NFT Credential
+        B-->>-U: ✅ Transaction Confirmed<br/>NFT tokenId: {tokenId}<br/>Credential Metadata
+    end
+
+    %% SECURITY PROPERTIES
+    rect rgb(243, 229, 245)
+        Note over U,B: 🛡️ SECURITY PROPERTIES
+
+        Note over U: ♻️ CANCELABILITY<br/>Change any key (Kp, Kz, or Ku)<br/>→ New K_composite → New Template<br/>Old template cannot be reused
+
+        Note over U: 🔗 UNLINKABILITY<br/>Different keys → Different templates<br/>0% cross-key correlation<br/>(Experimentally validated)
+
+        Note over U: 🔐 THREE-PARTY CONTROL<br/>All three parties required:<br/>  Platform (Kp) + Service (Kz) + User (Ku)<br/>No single party can generate template alone
+    end

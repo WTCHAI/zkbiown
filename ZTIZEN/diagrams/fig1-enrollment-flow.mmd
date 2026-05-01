@@ -1,0 +1,74 @@
+%% ZKBIOWN Enrollment Flow - Mermaid Diagram
+%% Paste this into: https://mermaid.live/ or use in Markdown
+
+flowchart TB
+    %% Styling
+    classDef userStyle fill:#F0F0F0,stroke:#333,stroke-width:2px
+    classDef keyStyle fill:#FFE6CC,stroke:#F5A623,stroke-width:2px
+    classDef bioStyle fill:#E6D5FF,stroke:#9013FE,stroke-width:2px
+    classDef hashStyle fill:#B3E5FC,stroke:#0288D1,stroke-width:2px
+    classDef blockStyle fill:#C8E6C9,stroke:#388E3C,stroke-width:2px
+    classDef processStyle fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px
+
+    %% Step 1: Face Capture & Embedding
+    subgraph S1["📸 STEP 1: FACE CAPTURE & EMBEDDING EXTRACTION"]
+        User["👤 User"]
+        Camera["📷 Face Capture"]
+        Detection["🔍 Face Detection<br/>(face-api.js)"]
+        Embedding["🧠 Embedding Extraction<br/>FaceNet 512D / ArcFace 512D<br/>x ∈ ℝ⁵¹²"]
+
+        User --> Camera --> Detection --> Embedding
+    end
+
+    %% Step 2: Three-Party Key Derivation
+    subgraph S2["🔐 STEP 2: THREE-PARTY KEY DERIVATION"]
+        Kp["🔑 Platform Key (Kp)<br/>Product Service"]
+        Kz["🔑 ZTIZEN Key (Kz)<br/>ZTIZEN Service"]
+        Ku["🔑 User Key (Ku)<br/>User Device (32 bytes)"]
+        SHA["🔒 SHA-256<br/>K = SHA256(Kp ‖ Kz ‖ Ku)<br/>→ 32-byte composite key"]
+
+        Kp -.-> SHA
+        Kz -.-> SHA
+        Ku -.-> SHA
+    end
+
+    %% Step 3: BioHashing Transformation
+    subgraph S3["🔄 STEP 3: BIOHASHING TRANSFORMATION"]
+        Matrix["📊 Gaussian Matrix<br/>Generation<br/>Φ ∈ ℝ^(m×n)<br/>R[i,j] ~ 1/√m × N(0,1)"]
+        GramSchmidt["⊥ Gram-Schmidt<br/>Orthogonalization<br/>⟨rᵢ, rⱼ⟩ = δᵢⱼ"]
+        Projection["✖️ Random Projection<br/>y = Φ⊥ · x"]
+        Binarize["📊 Binarization (τ=0)<br/>B[i] = 1 if y[i] > 0<br/>→ 128 bits"]
+
+        Matrix --> GramSchmidt --> Projection --> Binarize
+    end
+
+    %% Step 4: Poseidon Hashing
+    subgraph S4["# STEP 4: POSEIDON HASHING"]
+        Field["🔢 Field Conversion<br/>Binary → BN254 field"]
+        Poseidon["🔐 Poseidon Hash<br/>HADES design<br/>0.2-0.5 constraints/bit<br/>→ H (commitment)"]
+
+        Field --> Poseidon
+    end
+
+    %% Step 5: Blockchain Storage
+    subgraph S5["⛓️ STEP 5: BLOCKCHAIN STORAGE"]
+        SmartContract["📜 Smart Contract<br/>registerCredential(H, credID)"]
+        NFT["🎫 NFT Credential<br/>Minted (ERC-721)"]
+        Blockchain["⛓️ Blockchain Ledger<br/>{credID, H, owner, timestamp}<br/>Immutable Storage"]
+
+        SmartContract --> NFT --> Blockchain
+    end
+
+    %% Main Flow Connections
+    Embedding ==> SHA
+    SHA ==> Matrix
+    Binarize ==> Field
+    Poseidon ==> SmartContract
+
+    %% Apply Styles
+    class User,Camera,Detection,Embedding userStyle
+    class Kp,Kz,Ku keyStyle
+    class Matrix,GramSchmidt,Projection,Binarize bioStyle
+    class Field,Poseidon hashStyle
+    class SmartContract,NFT,Blockchain blockStyle
+    class SHA processStyle

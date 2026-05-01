@@ -1,0 +1,86 @@
+%% ZKBIOWN System Architecture Overview
+%% Paste this into: https://mermaid.live/
+
+flowchart TB
+    %% Styling
+    classDef userLayer fill:#FFF9E6,stroke:#F57F17,stroke-width:2px
+    classDef appLayer fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    classDef backendLayer fill:#F5F5F5,stroke:#616161,stroke-width:2px
+    classDef blockchainLayer fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+    classDef keyLayer fill:#FFE6CC,stroke:#F5A623,stroke-width:2px
+
+    %% LAYER 1: USER LAYER
+    subgraph L1["👥 LAYER 1: USER LAYER"]
+        Users["👤👤👤 End Users<br/>Enroll | Verify | Manage Credentials"]
+        Devices["📱💻 User Devices<br/>Browser / Mobile App<br/>Camera | Face API | Local Computation"]
+
+        Users <--> Devices
+    end
+
+    %% LAYER 2: APPLICATION LAYER (Client-Side)
+    subgraph L2["🖥️ LAYER 2: APPLICATION LAYER (Client-Side)"]
+        WebApp["🌐 Web Application<br/>React + TanStack Router<br/>• Face Capture UI<br/>• Enrollment Wizard<br/>• Verification Interface<br/>• NFT Credential Management"]
+
+        BioEngine["⚙️ BioHashing Engine<br/>(TypeScript)<br/>• Face Detection (face-api.js)<br/>• Embedding (FaceNet/ArcFace)<br/>• Gaussian Matrix Generation<br/>• Gram-Schmidt Orthogonalization<br/>• Binarization"]
+
+        ZKEngine["🔐 ZK Proof Engine<br/>(snarkjs / Groth16)<br/>• Proof Generation<br/>• Witness Computation<br/>• Circuit Constraints (R1CS)"]
+
+        PoseidonLib["# Poseidon Hash<br/>(poseidon-lite)<br/>ZK-Friendly Hashing"]
+
+        WebApp --> BioEngine
+        BioEngine --> PoseidonLib
+        PoseidonLib --> ZKEngine
+    end
+
+    %% LAYER 3: BACKEND SERVICES
+    subgraph L3["🔧 LAYER 3: BACKEND SERVICES"]
+        ZTIZENService["🟢 ZTIZEN Service API<br/>(Express + PostgreSQL)<br/>• GET /api/ztizen-key<br/>• POST /api/credentials<br/>• GET /api/credentials/:id"]
+
+        ProductService["🟠 Product Service API<br/>(Express + PostgreSQL)<br/>• GET /api/product-key<br/>• POST /api/products<br/>• GET /api/products/:id"]
+
+        Database["🗄️ PostgreSQL Database<br/>• credentials (metadata)<br/>• products (platform keys)<br/>• audit_logs"]
+
+        ZTIZENService <--> Database
+        ProductService <--> Database
+    end
+
+    %% LAYER 4: BLOCKCHAIN LAYER
+    subgraph L4["⛓️ LAYER 4: BLOCKCHAIN LAYER"]
+        SmartContract["📜 ZTIZEN Smart Contract<br/>(Solidity)<br/>• registerCredential(hash, credID)<br/>• verifyWithProof(credID, proof)<br/>• getCredential(credID)<br/>• updateCredential(credID, newHash)"]
+
+        BlockchainNet["🌐 Ethereum / Polygon<br/>(EVM-Compatible)<br/>• Decentralized Storage<br/>• Immutability<br/>• Public Verifiability"]
+
+        NFTCreds["🎫 NFT Credentials<br/>(ERC-721)<br/>{tokenID, owner, credID, hash, timestamp}"]
+
+        SmartContract --> BlockchainNet
+        BlockchainNet --> NFTCreds
+    end
+
+    %% LAYER 5: KEY MANAGEMENT
+    subgraph L5["🔑 LAYER 5: KEY MANAGEMENT (Three-Party System)"]
+        Kp["🔑 Platform Keys (Kp)<br/>Product Service<br/>Product-Specific Keys"]
+        Kz["🔑 ZTIZEN Keys (Kz)<br/>ZTIZEN Service<br/>Service-Specific Keys"]
+        Ku["🔑 User Keys (Ku)<br/>Client-Side<br/>localStorage / Secure Enclave<br/>32-byte Random Secrets"]
+    end
+
+    %% INTER-LAYER CONNECTIONS
+    Devices -.->|"User Input"| WebApp
+
+    WebApp <-->|"API Calls"| ZTIZENService
+    WebApp <-->|"API Calls"| ProductService
+    WebApp <-->|"Web3 Calls"| SmartContract
+
+    Kp -.->|"Key Provisioning"| BioEngine
+    Kz -.->|"Key Provisioning"| BioEngine
+    Ku -.->|"Local Storage"| BioEngine
+
+    %% Data Flow Annotations
+    EnrollFlow["📘 Enrollment Flow<br/>User → WebApp → BioEngine → Poseidon → SmartContract → Blockchain"]
+    VerifyFlow["📗 Verification Flow<br/>User → WebApp → BioEngine → ZKEngine → SmartContract → Blockchain"]
+
+    %% Apply Styles
+    class Users,Devices userLayer
+    class WebApp,BioEngine,ZKEngine,PoseidonLib appLayer
+    class ZTIZENService,ProductService,Database backendLayer
+    class SmartContract,BlockchainNet,NFTCreds blockchainLayer
+    class Kp,Kz,Ku keyLayer

@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Key Distribution" id="key-dist">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Top Row: Inputs -->
+        <mxCell id="pin" value="Pin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="120" y="60" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="credVersion" value="Credential Version" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#ffffff;strokeColor=#4A90E2;strokeWidth=2;dashed=1;dashPattern=5 5;" vertex="1" parent="1">
+          <mxGeometry x="340" y="60" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="password" value="Password" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="560" y="60" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Keypairs Sign Signature -->
+        <mxCell id="keypairs" value="Keypairs&#xa;Sign Signature" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="340" y="220" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows to Keypairs -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="pin" target="keypairs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="credVersion" target="keypairs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="password" target="keypairs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Second Row: Partial Keys -->
+        <mxCell id="productKey" value="Product Partial Key" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fillColor=#FFE6CC;strokeColor=#F5A623;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="120" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="userKey" value="User's Partial Key" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fillColor=#B3E5FC;strokeColor=#0288D1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="340" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="zkbiownKey" value="ZKBIOWN Partial Key" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fillColor=#C8E6C9;strokeColor=#388E3C;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="560" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow from Keypairs -->
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="keypairs" target="userKey">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- SHA256 -->
+        <mxCell id="sha256" value="SHA256" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#FFF9C4;strokeColor=#FBC02D;strokeWidth=2;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="340" y="540" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows to SHA256 -->
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="productKey" target="sha256">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="userKey" target="sha256">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="zkbiownKey" target="sha256">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Composite Key -->
+        <mxCell id="compositeKey" value="Composite Key&#xa;(32 bytes)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#E1BEE7;strokeColor=#7B1FA2;strokeWidth=2;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="340" y="700" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow to Composite Key -->
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="sha256" target="compositeKey">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

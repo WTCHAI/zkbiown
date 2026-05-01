@@ -1,0 +1,78 @@
+%% ZKBIOWN Verification Flow with Zero-Knowledge Proof
+%% Paste this into: https://mermaid.live/
+
+flowchart TB
+    %% Styling
+    classDef proverStyle fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    classDef verifierStyle fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
+    classDef privateStyle fill:#FFEBEE,stroke:#D32F2F,stroke-width:3px,stroke-dasharray: 5 5
+    classDef publicStyle fill:#F1F8E9,stroke:#689F38,stroke-width:2px
+    classDef zkStyle fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+
+    %% PROVER SIDE (User Device)
+    subgraph PROVER["🔐 PROVER (User Device) - Client-Side Computation"]
+        direction TB
+
+        P1["👤 User Login Attempt"]
+        P2["📷 Face Capture"]
+        P3["🧠 Embedding Extraction<br/>x' ∈ ℝ⁵¹²"]
+        P4["🔄 BioHashing<br/>(Same Keys: Kp ‖ Kz ‖ Ku)<br/>→ B' (128 bits)"]
+        P5["# Poseidon Hash<br/>H' = Poseidon(B')"]
+
+        P6["📥 Retrieve Enrolled<br/>Template Hash<br/>H_enrolled (from blockchain)"]
+
+        P7["🔢 Hamming Distance<br/>dₕ = |B' ⊕ B_enrolled|<br/>🔒 PRIVATE"]
+
+        P8{"dₕ ≤ τ?<br/>(τ = 26 bits<br/>79.7% threshold)"}
+
+        P9["🔐 ZK Proof Generation<br/>(Groth16)<br/>Prove: dₕ ≤ τ<br/>WITHOUT revealing B' or B_enrolled<br/>→ π (proof)"]
+
+        Reject1["❌ Reject<br/>Authentication Failed"]
+
+        P1 --> P2 --> P3 --> P4 --> P5
+        P4 --> P6
+        P6 --> P7
+        P7 --> P8
+        P8 -->|No| Reject1
+        P8 -->|Yes| P9
+    end
+
+    %% VERIFIER SIDE (Blockchain)
+    subgraph VERIFIER["✅ VERIFIER (Blockchain / Server) - Public Verification"]
+        direction TB
+
+        V1["📨 Receive ZK Proof<br/>π + Public Inputs<br/>(H', H_enrolled, τ)"]
+
+        V2["⛓️ Query Blockchain<br/>Get On-Chain Commitment<br/>credentialID → H_enrolled"]
+
+        V3["🔍 Groth16 Proof<br/>Verification<br/>Pairing Check:<br/>e(π_A, π_B) = e(π_C, vk)"]
+
+        V4{"Proof Valid?"}
+
+        V5a["✅ Access Granted<br/>User Authenticated"]
+        V5b["❌ Access Denied<br/>Invalid Proof"]
+
+        V1 --> V2 --> V3 --> V4
+        V4 -->|Valid| V5a
+        V4 -->|Invalid| V5b
+    end
+
+    %% Data Exchange
+    P9 -.->|"ZK Proof π<br/>+ Public Inputs"| V1
+    V5a -.->|"Access Decision"| P1
+    V5b -.->|"Access Decision"| P1
+
+    %% Private Data Annotation
+    PrivateData["🔒 PRIVATE DATA<br/>(Never Leaves Prover)<br/>• B' (current template)<br/>• B_enrolled (stored template)<br/>• dₕ (Hamming distance)"]
+
+    PublicData["🌐 PUBLIC DATA<br/>(Transmitted)<br/>• H' (fresh hash)<br/>• H_enrolled (on-chain hash)<br/>• τ (threshold)<br/>• π (ZK proof)"]
+
+    PrivateData -.->|"Zero-Knowledge<br/>Templates Hidden"| P9
+    PublicData -.-> V1
+
+    %% Apply Styles
+    class P1,P2,P3,P4,P5,P6,P9 proverStyle
+    class V1,V2,V3,V5a,V5b verifierStyle
+    class P7,PrivateData privateStyle
+    class PublicData publicStyle
+    class P8,V4 zkStyle
