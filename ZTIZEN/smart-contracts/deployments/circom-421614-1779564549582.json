@@ -1,0 +1,17 @@
+{
+  "network": "421614",
+  "deployer": "0x976e6aa697f860af7771c22c630cc843107e6dee",
+  "timestamp": "2026-05-23T19:29:09.582Z",
+  "contracts": {
+    "CircomVerifier": "0x2da55f4c1eceb0ceeb93ee598e852bf24abb8fce",
+    "ZTIZENCircom": "0xd2b1dd269c90873d5a4ef92cf9104b63941997df"
+  },
+  "deployTxs": {
+    "CircomVerifier": "0xf004186accbb88d4a02e525843cb5d9b508deb187c155440e45237bc4117b6f8",
+    "ZTIZENCircom": "0x3dd6b5f5d3e9ddf250d735abb598b1431d08a1a3f750c1c482a4683a43a106ce"
+  },
+  "deployGas": {
+    "CircomVerifier": "5206969",
+    "ZTIZENCircom": "1465140"
+  }
+}
