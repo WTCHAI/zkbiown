@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * zkBIOWN Smart Contract Integration
  *

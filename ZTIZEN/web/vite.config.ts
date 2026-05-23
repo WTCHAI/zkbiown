@@ -53,10 +53,14 @@ export default defineConfig({
   build: {
     target: 'esnext',
     rollupOptions: {
+      external: ['snarkjs'],
       output: {
         manualChunks: {
           'noir': ['@noir-lang/noir_js', '@noir-lang/backend_barretenberg'],
           'face-api': ['face-api.js'],
+        },
+        globals: {
+          snarkjs: 'snarkjs',
         },
       },
     },

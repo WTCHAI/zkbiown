@@ -9,9 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProofDemoRouteImport } from './routes/proof-demo'
+import { Route as ParallelBenchRouteImport } from './routes/parallel-bench'
+import { Route as NoirTestRouteImport } from './routes/noir-test'
 import { Route as LfwExtractRouteImport } from './routes/lfw-extract'
 import { Route as FacescrubExtractRouteImport } from './routes/facescrub-extract'
 import { Route as CollectRouteImport } from './routes/collect'
+import { Route as CircomTestRouteImport } from './routes/circom-test'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIndexRouteImport } from './routes/product.index'
 import { Route as ZtizenVerifyRouteImport } from './routes/ztizen.verify'
@@ -25,6 +29,21 @@ import { Route as ZtizenRegisterScanCredentialIdRouteImport } from './routes/zti
 import { Route as ZtizenMeAddCredentialIdRouteImport } from './routes/ztizen.me-add.$credentialId'
 import { Route as ProductServiceServiceNameRouteImport } from './routes/product.service.$serviceName'
 
+const ProofDemoRoute = ProofDemoRouteImport.update({
+  id: '/proof-demo',
+  path: '/proof-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParallelBenchRoute = ParallelBenchRouteImport.update({
+  id: '/parallel-bench',
+  path: '/parallel-bench',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoirTestRoute = NoirTestRouteImport.update({
+  id: '/noir-test',
+  path: '/noir-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LfwExtractRoute = LfwExtractRouteImport.update({
   id: '/lfw-extract',
   path: '/lfw-extract',
@@ -38,6 +57,11 @@ const FacescrubExtractRoute = FacescrubExtractRouteImport.update({
 const CollectRoute = CollectRouteImport.update({
   id: '/collect',
   path: '/collect',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CircomTestRoute = CircomTestRouteImport.update({
+  id: '/circom-test',
+  path: '/circom-test',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -109,9 +133,13 @@ const ProductServiceServiceNameRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/circom-test': typeof CircomTestRoute
   '/collect': typeof CollectRoute
   '/facescrub-extract': typeof FacescrubExtractRoute
   '/lfw-extract': typeof LfwExtractRoute
+  '/noir-test': typeof NoirTestRoute
+  '/parallel-bench': typeof ParallelBenchRoute
+  '/proof-demo': typeof ProofDemoRoute
   '/product/verify-demo': typeof ProductVerifyDemoRoute
   '/ztizen/me': typeof ZtizenMeRoute
   '/ztizen/verify': typeof ZtizenVerifyRouteWithChildren
@@ -126,9 +154,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/circom-test': typeof CircomTestRoute
   '/collect': typeof CollectRoute
   '/facescrub-extract': typeof FacescrubExtractRoute
   '/lfw-extract': typeof LfwExtractRoute
+  '/noir-test': typeof NoirTestRoute
+  '/parallel-bench': typeof ParallelBenchRoute
+  '/proof-demo': typeof ProofDemoRoute
   '/product/verify-demo': typeof ProductVerifyDemoRoute
   '/ztizen/me': typeof ZtizenMeRoute
   '/ztizen/verify': typeof ZtizenVerifyRouteWithChildren
@@ -144,9 +176,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/circom-test': typeof CircomTestRoute
   '/collect': typeof CollectRoute
   '/facescrub-extract': typeof FacescrubExtractRoute
   '/lfw-extract': typeof LfwExtractRoute
+  '/noir-test': typeof NoirTestRoute
+  '/parallel-bench': typeof ParallelBenchRoute
+  '/proof-demo': typeof ProofDemoRoute
   '/product/verify-demo': typeof ProductVerifyDemoRoute
   '/ztizen/me': typeof ZtizenMeRoute
   '/ztizen/verify': typeof ZtizenVerifyRouteWithChildren
@@ -163,9 +199,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/circom-test'
     | '/collect'
     | '/facescrub-extract'
     | '/lfw-extract'
+    | '/noir-test'
+    | '/parallel-bench'
+    | '/proof-demo'
     | '/product/verify-demo'
     | '/ztizen/me'
     | '/ztizen/verify'
@@ -180,9 +220,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/circom-test'
     | '/collect'
     | '/facescrub-extract'
     | '/lfw-extract'
+    | '/noir-test'
+    | '/parallel-bench'
+    | '/proof-demo'
     | '/product/verify-demo'
     | '/ztizen/me'
     | '/ztizen/verify'
@@ -197,9 +241,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/circom-test'
     | '/collect'
     | '/facescrub-extract'
     | '/lfw-extract'
+    | '/noir-test'
+    | '/parallel-bench'
+    | '/proof-demo'
     | '/product/verify-demo'
     | '/ztizen/me'
     | '/ztizen/verify'
@@ -215,9 +263,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CircomTestRoute: typeof CircomTestRoute
   CollectRoute: typeof CollectRoute
   FacescrubExtractRoute: typeof FacescrubExtractRoute
   LfwExtractRoute: typeof LfwExtractRoute
+  NoirTestRoute: typeof NoirTestRoute
+  ParallelBenchRoute: typeof ParallelBenchRoute
+  ProofDemoRoute: typeof ProofDemoRoute
   ProductVerifyDemoRoute: typeof ProductVerifyDemoRoute
   ZtizenMeRoute: typeof ZtizenMeRoute
   ZtizenVerifyRoute: typeof ZtizenVerifyRouteWithChildren
@@ -232,6 +284,27 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/proof-demo': {
+      id: '/proof-demo'
+      path: '/proof-demo'
+      fullPath: '/proof-demo'
+      preLoaderRoute: typeof ProofDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parallel-bench': {
+      id: '/parallel-bench'
+      path: '/parallel-bench'
+      fullPath: '/parallel-bench'
+      preLoaderRoute: typeof ParallelBenchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noir-test': {
+      id: '/noir-test'
+      path: '/noir-test'
+      fullPath: '/noir-test'
+      preLoaderRoute: typeof NoirTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lfw-extract': {
       id: '/lfw-extract'
       path: '/lfw-extract'
@@ -251,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/collect'
       fullPath: '/collect'
       preLoaderRoute: typeof CollectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circom-test': {
+      id: '/circom-test'
+      path: '/circom-test'
+      fullPath: '/circom-test'
+      preLoaderRoute: typeof CircomTestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -354,9 +434,13 @@ const ZtizenVerifyRouteWithChildren = ZtizenVerifyRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CircomTestRoute: CircomTestRoute,
   CollectRoute: CollectRoute,
   FacescrubExtractRoute: FacescrubExtractRoute,
   LfwExtractRoute: LfwExtractRoute,
+  NoirTestRoute: NoirTestRoute,
+  ParallelBenchRoute: ParallelBenchRoute,
+  ProofDemoRoute: ProofDemoRoute,
   ProductVerifyDemoRoute: ProductVerifyDemoRoute,
   ZtizenMeRoute: ZtizenMeRoute,
   ZtizenVerifyRoute: ZtizenVerifyRouteWithChildren,
