@@ -1188,7 +1188,7 @@ export class CancelableBiometric {
   }
 
   // ---------------------------------------------------------------------------
-  // 3-BIT SIGN-MAGNITUDE BINARIZATION (For signmag128 circuit)
+  // 3-BIT SIGN-MAGNITUDE BINARIZATION (legacy, not used with biohash128 circuit)
   // ---------------------------------------------------------------------------
 
   /**
@@ -1469,7 +1469,7 @@ export class CancelableBiometric {
    *
    * Benefits:
    *   - Smaller output: 128 values × 3 bits = 384 bits (48 bytes)
-   *   - Compatible with signmag128 Noir circuit
+   *   - Legacy method - biohash128 circuit uses binary (0/1) encoding
    *   - Preserves both sign and magnitude information
    *
    * Output: 128 values, each 0-7
@@ -1706,7 +1706,7 @@ export class CancelableBiometric {
 
       case 'signmag3bit':
         // 3-bit sign-magnitude: 128 values, each 0-7
-        // Compatible with signmag128 Noir circuit
+        // Legacy method - biohash128 circuit uses binary (0/1) encoding
         template = this.signMagnitude3Bit(projections);
         templateBytes = this.pack3BitToBytes(template);
         break;

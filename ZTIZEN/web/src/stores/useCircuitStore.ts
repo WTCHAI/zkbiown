@@ -5,7 +5,7 @@
  * on each page load. However, we cache the circuit JSON (11MB) in IndexedDB to
  * avoid network fetch, making re-initialization much faster.
  *
- * Uses signmag128 circuit (Sign-Magnitude with 128 values, 0-8 encoding).
+ * Uses biohash128 circuit (Binary BioHash, 0/1 values, 128 positions).
  */
 
 import { create } from 'zustand';
@@ -14,34 +14,33 @@ import type { UltraHonkBackend } from '@aztec/bb.js';
 import type { CompiledCircuit } from '@noir-lang/types';
 
 /**
- * Circuit variant - currently only signmag128 is supported
- * Sign-Magnitude encoding with 128 values (0-8 range)
+ * Circuit variant - biohash128 (binary BioHash, 0/1 per position)
  */
-export type CircuitVariant = 'signmag128';
+export type CircuitVariant = 'biohash128';
 
 /**
  * Default circuit variant
  */
-export const DEFAULT_CIRCUIT_VARIANT: CircuitVariant = 'signmag128';
+export const DEFAULT_CIRCUIT_VARIANT: CircuitVariant = 'biohash128';
 
 /**
  * Circuit configuration constants
  */
 export const CIRCUIT_CONFIG = {
-  variant: 'signmag128' as const,
+  variant: 'biohash128' as const,
   templateSize: 128,
-  path: '/circuits/ztizen_circuit_signmag128.json',
+  path: '/circuits/ztizen_circuit_biohash128.json',
 } as const;
 
 /**
- * Get the circuit path (always returns signmag128)
+ * Get the circuit path
  */
 export function getCircuitPath(): string {
   return CIRCUIT_CONFIG.path;
 }
 
 /**
- * Get expected template size (always 128 for signmag128)
+ * Get expected template size (128 for biohash128)
  */
 export function getExpectedTemplateSize(): number {
   return CIRCUIT_CONFIG.templateSize;
@@ -124,9 +123,9 @@ export function shouldInitialize(): boolean {
 
 // IndexedDB Circuit Cache
 const DB_NAME = 'ztizen-circuit-cache';
-const DB_VERSION = 3; // Bumped for signmag128-only caching
+const DB_VERSION = 5; // Bumped for beta.15 recompile
 const STORE_NAME = 'circuits';
-const CACHE_KEY = 'ztizen_circuit_signmag128';
+const CACHE_KEY = 'ztizen_circuit_biohash128';
 
 class CircuitCache {
   private db: IDBDatabase | null = null;
@@ -196,7 +195,7 @@ export const circuitCache = new CircuitCache();
  * Load circuit with IndexedDB caching
  * Checks IndexedDB first, falls back to network fetch
  *
- * @returns Compiled circuit (signmag128)
+ * @returns Compiled circuit (biohash128)
  */
 export async function loadCircuitWithCache(): Promise<CompiledCircuit> {
   try {

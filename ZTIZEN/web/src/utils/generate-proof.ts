@@ -1,6 +1,6 @@
 /**
  * Zero-Knowledge Proof Generation Utility
- * Uses signmag128 circuit (Sign-Magnitude with 128 values)
+ * Uses biohash128 circuit (Binary BioHash, 0/1 per position)
  */
 
 import type { CompiledCircuit } from '@noir-lang/types';
@@ -22,7 +22,7 @@ export interface CircuitInputs {
 
 /**
  * Circuit configuration
- * Uses signmag128 (Sign-Magnitude with 128 values, 0-8 encoding)
+ * Uses biohash128 (Binary BioHash, 0/1 per position)
  */
 export const EXPECTED_TEMPLATE_SIZE = CIRCUIT_CONFIG.templateSize; // 128
 export const CIRCUIT_PATH = CIRCUIT_CONFIG.path;
@@ -33,7 +33,7 @@ export const CIRCUIT_PATH = CIRCUIT_CONFIG.path;
 export function validateTemplateSize(templateSize: number): void {
   if (templateSize !== EXPECTED_TEMPLATE_SIZE) {
     throw new Error(
-      `Invalid template size: ${templateSize}. Expected ${EXPECTED_TEMPLATE_SIZE} for signmag128 circuit.`
+      `Invalid template size: ${templateSize}. Expected ${EXPECTED_TEMPLATE_SIZE} for biohash128 circuit.`
     );
   }
 }
@@ -54,7 +54,7 @@ export interface ProofOptions {
  * Generate ZK proof using pre-initialized circuit (FAST PATH)
  * Uses circuit already loaded by ProofProvider
  *
- * @param params - Circuit inputs (128-element templates for signmag128)
+ * @param params - Circuit inputs (128-element binary templates for biohash128)
  * @param noir - Pre-initialized Noir instance
  * @param backend - Pre-initialized UltraHonkBackend instance
  * @param options - Proof generation options (keccak format)
@@ -139,7 +139,7 @@ export async function GenerateProofWithProvider(
  * Generate ZK proof for biometric verification (SLOW PATH)
  * Loads circuit fresh from /public/circuits/ directory
  *
- * @param params - Circuit inputs (128-element templates for signmag128)
+ * @param params - Circuit inputs (128-element binary templates for biohash128)
  * @param options - Proof generation options (keccak format)
  */
 export async function GenerateProof(
@@ -153,7 +153,7 @@ export async function GenerateProof(
     validateTemplateSize(params.template.length);
 
     console.log('⏳ Circuit not initialized, loading fresh (slow path)');
-    console.log(`📊 Template size: ${params.template.length} (signmag128)`);
+    console.log(`📊 Template size: ${params.template.length} (biohash128)`);
     console.log(`🔐 Keccak format: ${useKeccak ? 'ON (on-chain)' : 'OFF (off-chain)'}`);
 
     // Dynamic imports

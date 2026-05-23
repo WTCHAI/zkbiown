@@ -237,7 +237,7 @@ function ZTIZENVerifyStaged() {
       }
 
       const matchRate = (matchCount / totalBits) * 100;
-      // Threshold for sign-mag-rank (128 values): 79.7% (102/128 match required) - signmag128 circuit
+      // Threshold for sign-mag-rank (128 values): 79.7% (102/128 match required) - biohash128 circuit
       const threshold = 79.7;
       const verified = matchRate >= threshold;
 
@@ -252,7 +252,7 @@ function ZTIZENVerifyStaged() {
 
       // ═══════════════════════════════════════════════════════════════════
       // ZK PROOF GENERATION
-      // Uses signmag128 circuit (128 values, 102/128 threshold)
+      // Uses biohash128 circuit (128 values, 102/128 threshold)
       // ═══════════════════════════════════════════════════════════════════
 
       let zkProofResult = null;
@@ -260,18 +260,18 @@ function ZTIZENVerifyStaged() {
 
       if (shouldGenerateZKProof) {
         try {
-          setStatus('Generating ZK proof (signmag128)...');
-          console.log('🔬 Starting ZK proof generation for signmag128 circuit');
+          setStatus('Generating ZK proof (biohash128)...');
+          console.log('🔬 Starting ZK proof generation for biohash128 circuit');
 
           // Compute product usage hash
           const productUsageHash = stringToFieldElement(
             `${product_id}:${service_name}:${service_type || 'authentication'}`
           ).toString();
 
-          // Prepare circuit inputs for signmag128 circuit
+          // Prepare circuit inputs for biohash128 circuit
           const circuitInputs: CircuitInputs = {
             // Private inputs (witness)
-            template: verifyTemplate.map(v => v.toString()), // 128 sign-mag-rank values (0-8)
+            template: verifyTemplate.map(v => v.toString()), // 128 binary biohash values (0 or 1)
             product_key: stringToFieldElement(productKey).toString(),
             ztizen_key: stringToFieldElement(ztizenKey).toString(),
             user_key: bytesToFieldElement(userKey).toString(),
@@ -287,7 +287,7 @@ function ZTIZENVerifyStaged() {
             templateLength: circuitInputs.template.length,
             authCommitLength: circuitInputs.auth_commit_stored.length,
             first3Template: circuitInputs.template.slice(0, 3),
-            expectedCircuit: 'signmag128',
+            expectedCircuit: 'biohash128',
           });
 
           // Generate ZK proof (auto-selects circuit based on template size)
@@ -431,7 +431,7 @@ function ZTIZENVerifyStaged() {
         // ZK Proof (if generated)
         zkProof: zkProofResult ? {
           generated: true,
-          circuitVariant: 'signmag128',
+          circuitVariant: 'biohash128',
           proofSize: zkProofResult.proofSize,
           matchCount: zkProofResult.matchCount,
           publicInputsCount: zkProofResult.publicInputs?.length,

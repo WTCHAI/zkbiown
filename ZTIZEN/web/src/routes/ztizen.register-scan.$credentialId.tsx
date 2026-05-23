@@ -29,7 +29,7 @@ const HARDCODED_ALGORITHM = 'biohashing' as const;
 
 // Hardcoded binarization method - Sign + Magnitude Rank (self-normalizing)
 // This is the only supported method for new enrollments
-const HARDCODED_BINARIZATION = 'sign-mag-rank' as const;
+const HARDCODED_BINARIZATION = 'binary' as const;
 
 import { useEnrollmentStore } from '@/stores/useEnrollmentStore';
 import { useSimulationStore, type EnrollmentStep } from '@/stores/useSimulationStore';

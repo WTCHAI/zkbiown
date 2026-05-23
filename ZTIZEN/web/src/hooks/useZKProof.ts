@@ -6,7 +6,7 @@
  * - Off-chain (local verification, faster): generateProof(inputs, { keccak: false })
  * - On-chain (Solidity verifier): generateProof(inputs, { keccak: true })
  *
- * Uses signmag128 circuit (Sign-Magnitude with 128 values, 0-8 encoding)
+ * Uses biohash128 circuit (Binary BioHash 0/1 per position, 0-8 encoding)
  */
 
 import { useProofStore } from '@/stores/useProofStore';
@@ -45,7 +45,7 @@ export function useZKProof() {
   /**
    * Generate ZK proof
    *
-   * @param inputs - Circuit inputs (128-element templates for signmag128)
+   * @param inputs - Circuit inputs (128-element templates for biohash128)
    * @param options - Proof options { keccak: boolean }
    *   - keccak: false (default) = Off-chain verification (faster, no gas)
    *   - keccak: true = On-chain verification (Solidity verifier, requires gas)
@@ -62,10 +62,10 @@ export function useZKProof() {
         keccak: useKeccak,
       });
 
-      // Validate template size matches signmag128 circuit expectation
+      // Validate template size matches biohash128 circuit expectation
       if (inputs.template.length !== EXPECTED_TEMPLATE_SIZE) {
         throw new Error(
-          `Invalid template size: ${inputs.template.length}. Expected ${EXPECTED_TEMPLATE_SIZE} for signmag128 circuit.`
+          `Invalid template size: ${inputs.template.length}. Expected ${EXPECTED_TEMPLATE_SIZE} for biohash128 circuit.`
         );
       }
 
