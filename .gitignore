@@ -80,6 +80,12 @@ ZTIZEN/experimental/data/precomputed-templates/
 # VGGFace2 dataset (if used)
 ZTIZEN/experimental/data/vggface2/
 
+# Circom trusted setup artifacts (large, reproducible — do not commit)
+# pot18 files are 96-232MB; zkey files are 100-400MB
+ZTIZEN/circuit/circom/artifacts/pot18_*.ptau
+ZTIZEN/circuit/circom/artifacts/ztizen_0000.zkey
+# Keep: ztizen.zkey (final), verification_key.json, ZtizenVerifier.sol, ztizen.r1cs, ztizen_js/
+
 # Legacy paths (deprecated but keep for backward compatibility)
 ZTIZEN/vite-demo/experiments/real-biometric-data.json
 ZTIZEN/vite-demo/experiments/data/facescrub/images/

@@ -1,0 +1,9 @@
+{
+  "name": "ztizen-circom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Circom circuit for ZTIZEN ZK biometric authentication",
+  "dependencies": {
+    "circomlib": "2.0.5"
+  }
+}
