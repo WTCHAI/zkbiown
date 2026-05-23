@@ -8,8 +8,9 @@ export default defineConfig({
     settings: {
       optimizer: {
         enabled: true,
-        runs: 2000,
+        runs: 200,
       },
+      viaIR: true,
     },
   },
   networks: {
