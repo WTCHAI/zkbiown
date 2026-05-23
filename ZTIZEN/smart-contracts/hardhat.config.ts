@@ -4,13 +4,32 @@ import { configVariable, defineConfig } from "hardhat/config";
 export default defineConfig({
   plugins: [hardhatToolboxViemPlugin],
   solidity: {
-    version: "0.8.28",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
+    compilers: [
+      {
+        version: "0.8.34",
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 2000,
+          },
+        },
       },
-      viaIR: true,
+    ],
+    overrides: {
+      // HonkVerifier (auto-generated Barretenberg assembly) has deep Yul stack
+      // usage that exceeds the limit when viaIR is enabled — compile it without
+      // the IR pipeline so its inline assembly blocks are left untouched.
+      "contracts/NoirVerifier.sol": {
+        version: "0.8.34",
+        settings: {
+          viaIR: false,
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
     },
   },
   networks: {
@@ -25,11 +44,29 @@ export default defineConfig({
     sepolia: {
       type: "http",
       chainType: "l1",
-      url: configVariable("SEPOLIA_RPC_URL"),
+      // Public RPC — no API key needed, handles large contract deployments
+      url: "https://ethereum-sepolia-rpc.publicnode.com",
       accounts: [configVariable("DEPLOYER_PRIVATE_KEY")],
-      timeout: 120000, // 2 minutes timeout for large contract deployments
-      gas: "auto", // Auto-estimate gas
-      gasPrice: "auto", // Auto-detect gas price
+      timeout: 300000, // 5 min — large contracts (HonkVerifier) take longer
+      gas: "auto",
+      gasPrice: "auto",
+    },
+    arbitrumSepolia: {
+      type: "http",
+      chainType: "l1",
+      url: "https://sepolia-rollup.arbitrum.io/rpc",
+      accounts: [configVariable("DEPLOYER_PRIVATE_KEY")],
+      timeout: 300000,
+      gas: "auto",
+      gasPrice: "auto",
+    },
+  },
+  verify: {
+    etherscan: {
+      apiKey: configVariable("ETHERSCAN_API_KEY"),
+    },
+    blockscout: {
+      enabled: true,
     },
   },
 });

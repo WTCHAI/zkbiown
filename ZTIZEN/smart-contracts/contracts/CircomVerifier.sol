@@ -434,7 +434,7 @@ contract Groth16Verifier {
     uint256 constant IC129y = 8714829798989436570084107872973549520348834050448467031781121219069078497412;
     
  
-    // Memory data
+    // Memory data 
     uint16 constant pVk = 0;
     uint16 constant pPairing = 128;
 
