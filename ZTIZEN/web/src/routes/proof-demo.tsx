@@ -700,54 +700,20 @@ function ProofDemoPage() {
           <Field label="productTxId   (bytes32)" value={PRODUCT_TX_ID} />
 
           {/* Proof params — different per backend */}
-          {(backendSel === 'circom' && circomOut) || (backendSel === 'noir' && noirOut) ? (() => {
-            const accent      = backendSel === 'circom' ? '#2a7' : '#48a'
-            const rawCalldata = backendSel === 'circom' ? circomOut!.rawCalldata : noirOut!.rawCalldata
-
-            return (
-              <>
-                {/* ── Option A: Low Level Interaction (recommended — avoids encoding issues) ── */}
-                <div style={{ marginBottom: 12, padding: '10px 12px', background: '#e8f5e9', border: '1px solid #81c784', borderRadius: 4 }}>
-                  <div style={{ fontSize: 12, fontWeight: 'bold', color: '#2e7d32', marginBottom: 6 }}>
-                    Recommended: Low level calldata (paste into Remix)
-                  </div>
-                  <ol style={{ fontSize: 11, color: '#333', margin: '0 0 8px 0', paddingLeft: 18, lineHeight: 1.8 }}>
-                    <li>In Remix <strong>Deploy & Run</strong>, make sure <strong>{contractLabel}</strong> is loaded (deployed or "At Address")</li>
-                    <li>Scroll down in that contract's panel to <strong>"Low level interactions"</strong></li>
-                    <li>Paste the hex below into the <strong>CALLDATA</strong> field</li>
-                    <li>Click <strong>Transact</strong></li>
-                  </ol>
-                  <Field label="CALLDATA" value={rawCalldata} rows={3} accent={accent} />
-                </div>
-
-                {/* ── Option B: Normal Remix form (paste each param individually) ── */}
-                <details>
-                  <summary style={{ cursor: 'pointer', fontSize: 11, color: '#666', padding: '4px 0', marginBottom: 6 }}>
-                    Alternative: fill Remix form fields individually (expand)
-                  </summary>
-                  <div style={{ paddingTop: 8 }}>
-                    <div style={{ fontSize: 11, color: '#888', marginBottom: 8 }}>
-                      In Remix, expand <code>verifyProof</code> and paste each value below into its matching field.
-                    </div>
-                    {backendSel === 'circom' && circomOut ? (
-                      <>
-                        <Field label="pA  (uint256[2])"    value={JSON.stringify(circomOut.pA)} rows={1} accent={accent} />
-                        <Field label="pB  (uint256[2][2])" value={JSON.stringify(circomOut.pB)} rows={2} accent={accent} />
-                        <Field label="pC  (uint256[2])"    value={JSON.stringify(circomOut.pC)} rows={1} accent={accent} />
-                        <Field label="pubSignals  (uint256[129])" value={JSON.stringify(circomOut.pubSignals)} rows={3} accent={accent} />
-                      </>
-                    ) : backendSel === 'noir' && noirOut ? (
-                      <>
-                        <Field label="proof  (bytes)" value={noirOut.proofHex} rows={3} accent={accent} />
-                        <Field label={`publicInputs  (bytes32[${noirOut.publicInputs.length}])`}
-                          value={JSON.stringify(noirOut.publicInputs)} rows={3} accent={accent} />
-                      </>
-                    ) : null}
-                  </div>
-                </details>
-              </>
-            )
-          })() : (
+          {backendSel === 'circom' && circomOut ? (
+            <>
+              <Field label="pA  (uint256[2])"    value={JSON.stringify(circomOut.pA)} rows={1} accent="#2a7" />
+              <Field label="pB  (uint256[2][2])" value={JSON.stringify(circomOut.pB)} rows={2} accent="#2a7" />
+              <Field label="pC  (uint256[2])"    value={JSON.stringify(circomOut.pC)} rows={1} accent="#2a7" />
+              <Field label="pubSignals  (uint256[129])" value={JSON.stringify(circomOut.pubSignals)} rows={3} accent="#2a7" />
+            </>
+          ) : backendSel === 'noir' && noirOut ? (
+            <>
+              <Field label="proof  (bytes)" value={noirOut.proofHex} rows={3} accent="#48a" />
+              <Field label={`publicInputs  (bytes32[${noirOut.publicInputs.length}])`}
+                value={JSON.stringify(noirOut.publicInputs)} rows={3} accent="#48a" />
+            </>
+          ) : (
             <div style={{ color: '#999', fontSize: 12, padding: '10px 0' }}>
               — proof calldata will appear here after generation —
             </div>
