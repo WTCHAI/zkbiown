@@ -1,0 +1,48 @@
+{
+  "library": "face-api.js (128D)",
+  "n_runs": 10,
+  "wasm_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen_js/ztizen.wasm",
+  "zkey_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen.zkey",
+  "constraint_count": 150413,
+  "proof_generation_ms": {
+    "mean": 3167.9,
+    "std": 95.57,
+    "min": 3059.01,
+    "max": 3361.67,
+    "runs": [
+      3248.84,
+      3181.07,
+      3079.24,
+      3361.67,
+      3060.68,
+      3263.51,
+      3176.92,
+      3086.81,
+      3161.25,
+      3059.01
+    ]
+  },
+  "proof_verification_ms": {
+    "mean": 7.64,
+    "std": 0.61,
+    "min": 6.88,
+    "max": 8.72,
+    "runs": [
+      7.14,
+      8.71,
+      7.3,
+      7.25,
+      7.74,
+      7.21,
+      6.88,
+      7.5,
+      8.72,
+      7.96
+    ]
+  },
+  "proof_size_bytes": 724,
+  "public_signals_count": 129,
+  "match_count_sample": 117,
+  "all_proofs_valid": true,
+  "timestamp": "2026-05-01T18:01:11.428Z"
+}

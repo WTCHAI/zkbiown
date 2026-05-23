@@ -181,9 +181,14 @@ function computeScenarioStats(scenario: ScenarioStats): void {
     rates.reduce((sum, x) => sum + Math.pow(x - scenario.mean, 2), 0) / rates.length
   )
 
-  // Min/Max
-  scenario.min = Math.min(...rates)
-  scenario.max = Math.max(...rates)
+  // Min/Max — avoid spread on large arrays (stack overflow with 2M+ elements)
+  let min = Infinity, max = -Infinity
+  for (const v of rates) {
+    if (v < min) min = v
+    if (v > max) max = v
+  }
+  scenario.min = min
+  scenario.max = max
 }
 
 /**
@@ -257,38 +262,33 @@ async function analyzeFourScenarios(
   console.log('  Computing Scenarios B & D (Different Person)...')
   const t3 = performance.now()
 
+  // Exhaustive: every cross-person pair × every capture combination
   const personIds = Array.from(templates.keys())
-  const maxPairs = 10000 // Limit to 10k pairs for speed
-  let pairCount = 0
 
-  for (let i = 0; i < personIds.length && pairCount < maxPairs; i++) {
-    for (let j = i + 1; j < personIds.length && pairCount < maxPairs; j++) {
+  for (let i = 0; i < personIds.length; i++) {
+    for (let j = i + 1; j < personIds.length; j++) {
       const person1 = templates.get(personIds[i])!
       const person2 = templates.get(personIds[j])!
 
-      // Only compare first capture (capture 0)
-      const capture1 = person1.get(0)
-      const capture2 = person2.get(0)
+      for (const capture1 of person1.values()) {
+        for (const capture2 of person2.values()) {
+          // B: Different person + Same key (Key A vs Key A)
+          const rateB = poseidonMatchRate(
+            capture1.keyA.poseidon,
+            capture2.keyA.poseidon
+          )
+          scenarios.B.matchRates.push(rateB)
+          if (rateB >= thresholdRate) scenarios.B.passed++
 
-      if (!capture1 || !capture2) continue
-
-      // B: Different person + Same key (Key A vs Key A)
-      const rateB = poseidonMatchRate(
-        capture1.keyA.poseidon,
-        capture2.keyA.poseidon
-      )
-      scenarios.B.matchRates.push(rateB)
-      if (rateB >= thresholdRate) scenarios.B.passed++
-
-      // D: Different person + Different key (Person A KeyA vs Person B KeyB)
-      const rateD = poseidonMatchRate(
-        capture1.keyA.poseidon,  // Person 1, KeyA
-        capture2.keyB.poseidon   // Person 2, KeyB (DIFFERENT!)
-      )
-      scenarios.D.matchRates.push(rateD)
-      if (rateD >= thresholdRate) scenarios.D.passed++
-
-      pairCount++
+          // D: Different person + Different key (Person A KeyA vs Person B KeyB)
+          const rateD = poseidonMatchRate(
+            capture1.keyA.poseidon,
+            capture2.keyB.poseidon
+          )
+          scenarios.D.matchRates.push(rateD)
+          if (rateD >= thresholdRate) scenarios.D.passed++
+        }
+      }
     }
   }
 

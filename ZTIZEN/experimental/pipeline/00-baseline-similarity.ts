@@ -160,24 +160,22 @@ function computeBaselineSimilarity(
   console.log(`  ✓ Same person: ${samePerson.count} comparisons in ${((t2 - t1) / 1000).toFixed(1)}s`)
 
   // ===== DIFFERENT PERSON =====
-  console.log('  Computing different-person similarities...')
+  // Exhaustive: every cross-person pair × every capture combination
+  console.log('  Computing different-person similarities (exhaustive: all person-pairs × all captures)...')
   const t3 = performance.now()
 
   const personIds = Array.from(persons.keys())
-  const maxPairs = 10000 // Limit for speed
 
-  let pairCount = 0
-  for (let i = 0; i < personIds.length && pairCount < maxPairs; i++) {
-    for (let j = i + 1; j < personIds.length && pairCount < maxPairs; j++) {
-      const person1 = persons.get(personIds[i])!
-      const person2 = persons.get(personIds[j])!
-
-      // Compare first capture of each person
-      if (person1.length > 0 && person2.length > 0) {
-        const sim = cosineSimilarity(person1[0], person2[0])
-        differentPerson.similarities.push(sim)
-        differentPerson.count++
-        pairCount++
+  for (let i = 0; i < personIds.length; i++) {
+    for (let j = i + 1; j < personIds.length; j++) {
+      const caps1 = persons.get(personIds[i])!
+      const caps2 = persons.get(personIds[j])!
+      for (const c1 of caps1) {
+        for (const c2 of caps2) {
+          const sim = cosineSimilarity(c1, c2)
+          differentPerson.similarities.push(sim)
+          differentPerson.count++
+        }
       }
     }
   }
@@ -212,20 +210,21 @@ function computeBaselineSimilarity(
  */
 function computeStats(scenario: ScenarioStats): void {
   const sims = scenario.similarities
-
   if (sims.length === 0) return
 
-  // Mean
-  scenario.mean = sims.reduce((a, b) => a + b, 0) / sims.length
+  let sum = 0, min = Infinity, max = -Infinity
+  for (const v of sims) {
+    sum += v
+    if (v < min) min = v
+    if (v > max) max = v
+  }
+  scenario.mean = sum / sims.length
 
-  // Standard deviation
-  scenario.std = Math.sqrt(
-    sims.reduce((sum, x) => sum + Math.pow(x - scenario.mean, 2), 0) / sims.length
-  )
-
-  // Min/Max
-  scenario.min = Math.min(...sims)
-  scenario.max = Math.max(...sims)
+  let variance = 0
+  for (const v of sims) variance += (v - scenario.mean) ** 2
+  scenario.std = Math.sqrt(variance / sims.length)
+  scenario.min = min
+  scenario.max = max
 }
 
 /**

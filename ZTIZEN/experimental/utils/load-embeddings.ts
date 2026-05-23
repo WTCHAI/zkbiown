@@ -42,7 +42,7 @@ export interface LoadedEmbeddings {
  * Load embeddings for a specific library from real FaceScrub data
  */
 export function loadRealEmbeddings(library: 'faceapijs' | 'facenet' | 'facenet512' | 'arcface'): LoadedEmbeddings {
-  const dataPath = join(process.cwd(), 'data', 'facescrub', 'facescrub-embeddings.backup.json')
+  const dataPath = join(process.cwd(), 'data', 'facescrub', 'facescrub-embeddings.aligned.json')
 
   console.log(`Loading ${library} embeddings from:`, dataPath)
 

@@ -1,11 +1,17 @@
 # ZKBIOWN Research Paper Tables
 
-**Generated:** 2026-04-06
+**Generated:** 2026-05-07 (updated from 2026-04-06)
 
 **Data Sources:**
 - `results/baseline-similarity/*_baseline.json`
 - `results/four-scenario-validation/*_results.json`
 - `results/pipeline-timing/*.json`
+- `results/circuit-timing/circom_{lib}_benchmark.json` — Circom Groth16 benchmarks (NEW)
+- `results/circuit-timing/noir_{lib}_benchmark.json` — Noir UltraHonk benchmarks (NEW)
+
+**New tables added 2026-05-07:**
+- `table-v-performance-metrics.md` — updated with real Circom + Noir ZK timing (replaces `[User's web data]` placeholders)
+- `table-zk-circuit-comparison.md` — new head-to-head Circom vs Noir comparison (addresses reviewer Comments #1, #9)
 
 ---
 

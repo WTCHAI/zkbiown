@@ -1,0 +1,1343 @@
+{
+  "library": "FaceNet512 (512D)",
+  "circuit": "circom_groth16",
+  "template_encoding": "binary_0_1",
+  "output_dim": 128,
+  "n_same_pairs": 50,
+  "n_diff_pairs": 50,
+  "n_proof_runs_per_pair": 3,
+  "constraint_count": 150413,
+  "wasm_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen_js/ztizen.wasm",
+  "zkey_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen.zkey",
+  "scenario_a": {
+    "pairs_tested": 50,
+    "pairs_passed": 50,
+    "proof_generation_ms": {
+      "mean": 3329.59,
+      "std": 293.86,
+      "min": 2408.72,
+      "max": 3730.29
+    },
+    "proof_verification_ms": {
+      "mean": 9.6,
+      "std": 6.18,
+      "min": 5.01,
+      "max": 30.67
+    },
+    "avg_match_count": 107,
+    "proof_size_bytes": 723,
+    "public_signals_count": 129
+  },
+  "scenario_b": {
+    "pairs_tested": 50,
+    "pairs_expected_failure": 50,
+    "pairs_unexpected_pass": 0,
+    "failure_at_witness_ms": {
+      "mean": 199.37,
+      "std": 66.67
+    }
+  },
+  "pair_results": [
+    {
+      "scenario": "A",
+      "personId": "adam_brody",
+      "proof_generation_ms": [
+        2701.6185,
+        2420.0305419999995,
+        2432.1482910000004
+      ],
+      "proof_verification_ms": [
+        5.952125000000251,
+        5.965041999999812,
+        5.198374999999942
+      ],
+      "match_count": 106,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "adam_mckay",
+      "proof_generation_ms": [
+        2408.7204999999994,
+        2453.136375,
+        2430.9561670000003
+      ],
+      "proof_verification_ms": [
+        5.084666999999172,
+        5.008334000000104,
+        5.155249999999796
+      ],
+      "match_count": 112,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "adrien_brody",
+      "proof_generation_ms": [
+        2448.481917000001,
+        2423.461916,
+        2417.5333339999997
+      ],
+      "proof_verification_ms": [
+        5.7068749999998545,
+        5.355165999997553,
+        5.027750000001106
+      ],
+      "match_count": 103,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "adrienne_barbeau",
+      "proof_generation_ms": [
+        2438.985041,
+        2445.680500000002,
+        2425.267208000001
+      ],
+      "proof_verification_ms": [
+        5.11333299999751,
+        5.081750000001193,
+        5.083791000000929
+      ],
+      "match_count": 104,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "al_pacino",
+      "proof_generation_ms": [
+        2483.976958000003,
+        2481.5261250000003,
+        2699.662541999998
+      ],
+      "proof_verification_ms": [
+        5.189458000000741,
+        5.852958000003127,
+        5.331167000003916
+      ],
+      "match_count": 114,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "alan_arkin",
+      "proof_generation_ms": [
+        3579.3383749999994,
+        3420.2347089999967,
+        3396.413916999998
+      ],
+      "proof_verification_ms": [
+        6.913416999996116,
+        9.843832999998995,
+        5.457291999999143
+      ],
+      "match_count": 106,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "alan_rickman",
+      "proof_generation_ms": [
+        3372.7940000000017,
+        3442.3977500000037,
+        3374.892749999999
+      ],
+      "proof_verification_ms": [
+        6.082665999994788,
+        5.490333000001556,
+        18.70104100000026
+      ],
+      "match_count": 108,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "alfred_molina",
+      "proof_generation_ms": [
+        3383.976125000001,
+        3462.5653329999986,
+        3381.040749999993
+      ],
+      "proof_verification_ms": [
+        10.187083999997412,
+        5.574749999999767,
+        9.97500000000582
+      ],
+      "match_count": 111,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "alyson_hannigan",
+      "proof_generation_ms": [
+        3338.5343330000032,
+        3456.7585830000025,
+        3428.8232080000016
+      ],
+      "proof_verification_ms": [
+        23.643916999993962,
+        7.3162499999889405,
+        5.737791000006837
+      ],
+      "match_count": 105,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "amanda_bearse",
+      "proof_generation_ms": [
+        3416.9749999999913,
+        3428.704291000002,
+        3418.146041
+      ],
+      "proof_verification_ms": [
+        5.340792000002693,
+        6.729500000001281,
+        5.486875000002328
+      ],
+      "match_count": 112,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "amaury_nolasco",
+      "proof_generation_ms": [
+        3458.201209000006,
+        3371.7334580000024,
+        3506.9084169999987
+      ],
+      "proof_verification_ms": [
+        5.259500000000116,
+        22.792125000007218,
+        18.384333000009065
+      ],
+      "match_count": 109,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "america_ferrera",
+      "proof_generation_ms": [
+        3351.8570000000036,
+        3391.6851250000036,
+        3351.032124999998
+      ],
+      "proof_verification_ms": [
+        24.787458000006154,
+        20.776666000005207,
+        5.7783329999947455
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "andrea_bogart",
+      "proof_generation_ms": [
+        3491.514374999999,
+        3377.2633329999953,
+        3384.6027079999913
+      ],
+      "proof_verification_ms": [
+        18.5211249999993,
+        28.178459000002476,
+        7.452499999999418
+      ],
+      "match_count": 111,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "andy_richter",
+      "proof_generation_ms": [
+        3443.1490829999966,
+        3407.089749999999,
+        3420.058416
+      ],
+      "proof_verification_ms": [
+        24.37187499999709,
+        5.479292000003625,
+        8.547332999994978
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "angell_conwell",
+      "proof_generation_ms": [
+        3439.4895000000106,
+        3343.7317500000063,
+        3404.6908330000006
+      ],
+      "proof_verification_ms": [
+        5.659625000000233,
+        5.528667000005953,
+        5.451209000020754
+      ],
+      "match_count": 104,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "annie_ilonzeh",
+      "proof_generation_ms": [
+        3424.454207999981,
+        3409.88270799999,
+        3349.3038750000123
+      ],
+      "proof_verification_ms": [
+        5.38300000000163,
+        26.275792000000365,
+        27.197750000021188
+      ],
+      "match_count": 110,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "anthony_hopkins",
+      "proof_generation_ms": [
+        3372.344542000006,
+        3323.940540999989,
+        3369.196499999991
+      ],
+      "proof_verification_ms": [
+        5.424083000019891,
+        5.38162500000908,
+        5.537624999997206
+      ],
+      "match_count": 110,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "anthony_stewart_head",
+      "proof_generation_ms": [
+        3382.946750000003,
+        3427.3601659999986,
+        3402.082208000007
+      ],
+      "proof_verification_ms": [
+        8.364166999992449,
+        5.356124999991152,
+        5.33345800000825
+      ],
+      "match_count": 121,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "arnold_vosloo",
+      "proof_generation_ms": [
+        3473.119166999997,
+        3386.856624999986,
+        3349.416125000018
+      ],
+      "proof_verification_ms": [
+        7.984166999987792,
+        5.686832999985199,
+        5.409041999984765
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "ashley_johnson",
+      "proof_generation_ms": [
+        3450.5046250000014,
+        3389.9547089999833,
+        3398.3592500000086
+      ],
+      "proof_verification_ms": [
+        5.710165999975288,
+        5.4141250000102445,
+        7.386832999996841
+      ],
+      "match_count": 107,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "audrey_landers",
+      "proof_generation_ms": [
+        3424.2751250000147,
+        3378.5402919999906,
+        3399.6865419999813
+      ],
+      "proof_verification_ms": [
+        6.450417000014568,
+        9.584624999988591,
+        7.039500000013504
+      ],
+      "match_count": 112,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "barbara_carrera",
+      "proof_generation_ms": [
+        3463.1506660000014,
+        3365.484958999994,
+        3329.185375000001
+      ],
+      "proof_verification_ms": [
+        6.1464170000108425,
+        5.4111249999841675,
+        10.020249999972293
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "ben_affleck",
+      "proof_generation_ms": [
+        3397.738624999998,
+        3347.076832999999,
+        3375.80137500001
+      ],
+      "proof_verification_ms": [
+        6.2894999999844,
+        6.210290999995777,
+        18.017958999989787
+      ],
+      "match_count": 103,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "ben_mckenzie",
+      "proof_generation_ms": [
+        3465.201207999984,
+        3436.9545000000217,
+        3466.2032500000205
+      ],
+      "proof_verification_ms": [
+        10.844791999988956,
+        17.222125000000233,
+        6.80587499999092
+      ],
+      "match_count": 107,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "ben_stiller",
+      "proof_generation_ms": [
+        3400.2580000000016,
+        3408.729000000021,
+        3390.0790419999976
+      ],
+      "proof_verification_ms": [
+        5.325666999997338,
+        5.627542000001995,
+        20.04333299997961
+      ],
+      "match_count": 105,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "benicio_del_toro",
+      "proof_generation_ms": [
+        3436.302541000012,
+        3462.658959000022,
+        3419.2277079999913
+      ],
+      "proof_verification_ms": [
+        5.448875000001863,
+        5.144250000012107,
+        7.127916999976151
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bernard_hill",
+      "proof_generation_ms": [
+        3456.537291000015,
+        3632.7094579999975,
+        3606.931666999997
+      ],
+      "proof_verification_ms": [
+        5.3390419999777805,
+        10.567459000012605,
+        13.965749999973923
+      ],
+      "match_count": 114,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bernie_mac",
+      "proof_generation_ms": [
+        3342.4530420000083,
+        3504.684583000024,
+        3408.343916999991
+      ],
+      "proof_verification_ms": [
+        8.970916000020225,
+        20.92175000003772,
+        7.270917000016198
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bill_cosby",
+      "proof_generation_ms": [
+        3408.4684169999673,
+        3470.1886669999803,
+        3428.993833000015
+      ],
+      "proof_verification_ms": [
+        7.560125000018161,
+        10.243625000002794,
+        12.390500000037719
+      ],
+      "match_count": 114,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bill_hader",
+      "proof_generation_ms": [
+        3403.67737499997,
+        3392.3242919999757,
+        3440.0153330000467
+      ],
+      "proof_verification_ms": [
+        5.440000000002328,
+        5.604749999998603,
+        7.043375000008382
+      ],
+      "match_count": 112,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bill_murray",
+      "proof_generation_ms": [
+        3481.0999590000138,
+        3355.345040999993,
+        3403.3446669999976
+      ],
+      "proof_verification_ms": [
+        5.796500000054948,
+        7.182374999974854,
+        5.350582999992184
+      ],
+      "match_count": 115,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bill_nighy",
+      "proof_generation_ms": [
+        3379.3603749999893,
+        3354.2747500000405,
+        3452.9629580000183
+      ],
+      "proof_verification_ms": [
+        17.981499999994412,
+        7.64533400000073,
+        26.577416000014637
+      ],
+      "match_count": 110,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "billy_boyd",
+      "proof_generation_ms": [
+        3354.2857080000103,
+        3314.075208000024,
+        3381.7346249999828
+      ],
+      "proof_verification_ms": [
+        7.950375000014901,
+        6.954957999987528,
+        8.039000000047963
+      ],
+      "match_count": 111,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "billy_burke",
+      "proof_generation_ms": [
+        3490.1746660000063,
+        3451.423291999963,
+        3387.747958000051
+      ],
+      "proof_verification_ms": [
+        5.661582999979146,
+        7.8209590000333264,
+        5.308041999989655
+      ],
+      "match_count": 105,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "billy_zane",
+      "proof_generation_ms": [
+        3380.3068750000093,
+        3357.018166999973,
+        3411.103999999992
+      ],
+      "proof_verification_ms": [
+        11.57512500003213,
+        17.475999999966007,
+        6.211167000001296
+      ],
+      "match_count": 104,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bonnie_franklin",
+      "proof_generation_ms": [
+        3392.6177920000046,
+        3391.3741670000018,
+        3417.8384589999914
+      ],
+      "proof_verification_ms": [
+        8.216582999972161,
+        5.494540999992751,
+        10.752000000036787
+      ],
+      "match_count": 103,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "brad_garrett",
+      "proof_generation_ms": [
+        3404.9499590000487,
+        3581.4269580000546,
+        3658.691792000027
+      ],
+      "proof_verification_ms": [
+        6.839124999998603,
+        12.28120799997123,
+        15.536041999992449
+      ],
+      "match_count": 105,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "brad_pitt",
+      "proof_generation_ms": [
+        3628.547499999986,
+        3464.4241250000196,
+        3373.7687500000466
+      ],
+      "proof_verification_ms": [
+        6.191500000015367,
+        5.392416999966372,
+        7.382207999995444
+      ],
+      "match_count": 104,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bradley_cooper",
+      "proof_generation_ms": [
+        3419.9991670000018,
+        3507.6392079999787,
+        3457.442665999988
+      ],
+      "proof_verification_ms": [
+        6.750207999954,
+        5.305875000020023,
+        6.904666999995243
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bruce_greenwood",
+      "proof_generation_ms": [
+        3432.902250000043,
+        3442.8549999999814,
+        3400.1312920000055
+      ],
+      "proof_verification_ms": [
+        6.137332999962382,
+        14.699124999984633,
+        18.893832999980077
+      ],
+      "match_count": 112,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "bruce_willis",
+      "proof_generation_ms": [
+        3463.421583999996,
+        3427.552665999974,
+        3401.92300000001
+      ],
+      "proof_verification_ms": [
+        7.873832999961451,
+        5.3411659999983385,
+        21.448833999980707
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "burt_reynolds",
+      "proof_generation_ms": [
+        3450.4479170000413,
+        3431.5084999999963,
+        3347.435959000024
+      ],
+      "proof_verification_ms": [
+        7.044791000022087,
+        5.361667000048328,
+        10.168666000012308
+      ],
+      "match_count": 106,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "candace_cameron_bure",
+      "proof_generation_ms": [
+        3375.891834000009,
+        3362.4527499999967,
+        3278.7307920000167
+      ],
+      "proof_verification_ms": [
+        8.503250000008848,
+        9.754124999977648,
+        8.544292000005953
+      ],
+      "match_count": 104,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "candice_bergen",
+      "proof_generation_ms": [
+        3472.12033299997,
+        3461.721208999981,
+        3516.804916999943
+      ],
+      "proof_verification_ms": [
+        7.075249999994412,
+        5.8304169999901205,
+        15.59233299997868
+      ],
+      "match_count": 108,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "casey_affleck",
+      "proof_generation_ms": [
+        3523.0699170000153,
+        3413.9686250000377,
+        3411.711208999972
+      ],
+      "proof_verification_ms": [
+        7.045333000016399,
+        5.551500000001397,
+        6.389790999994148
+      ],
+      "match_count": 103,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "catherine_bell",
+      "proof_generation_ms": [
+        3385.730375000043,
+        3730.292415999982,
+        3392.9240419999696
+      ],
+      "proof_verification_ms": [
+        6.960625000006985,
+        9.096250000002328,
+        17.85929200000828
+      ],
+      "match_count": 102,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "cathy_lee_crosby",
+      "proof_generation_ms": [
+        3540.969584000006,
+        3416.9812500000116,
+        3368.0212089999695
+      ],
+      "proof_verification_ms": [
+        7.40095800004201,
+        8.334457999968436,
+        23.490167000039946
+      ],
+      "match_count": 105,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "channing_tatum",
+      "proof_generation_ms": [
+        3454.033999999985,
+        3445.657708999992,
+        3393.5422499999986
+      ],
+      "proof_verification_ms": [
+        5.313374999968801,
+        28.28362499998184,
+        18.509791999997105
+      ],
+      "match_count": 104,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "charlie_day",
+      "proof_generation_ms": [
+        3450.3211669999873,
+        3465.6183329999913,
+        3568.27462500002
+      ],
+      "proof_verification_ms": [
+        7.340916999964975,
+        8.099417000019457,
+        5.481666000036057
+      ],
+      "match_count": 105,
+      "proof_valid": true
+    },
+    {
+      "scenario": "A",
+      "personId": "charlie_sheen",
+      "proof_generation_ms": [
+        3426.344792000018,
+        3382.001749999996,
+        3423.1199170000036
+      ],
+      "proof_verification_ms": [
+        7.064624999999069,
+        30.666375000029802,
+        15.273958000005223
+      ],
+      "match_count": 106,
+      "proof_valid": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "aaron_eckhart",
+      "verifyPersonId": "adam_brody",
+      "proof_generation_ms": [
+        162.23254100000486
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "adam_brody",
+      "verifyPersonId": "adam_mckay",
+      "proof_generation_ms": [
+        191.65279199997894
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "adam_mckay",
+      "verifyPersonId": "adam_sandler",
+      "proof_generation_ms": [
+        186.9376250000205
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "adam_sandler",
+      "verifyPersonId": "adrien_brody",
+      "proof_generation_ms": [
+        254.57925000000978
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "adrien_brody",
+      "verifyPersonId": "adrienne_barbeau",
+      "proof_generation_ms": [
+        139.19579199998407
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "adrienne_barbeau",
+      "verifyPersonId": "adrienne_frantz",
+      "proof_generation_ms": [
+        550.9383749999688
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "adrienne_frantz",
+      "verifyPersonId": "aisha_hinds",
+      "proof_generation_ms": [
+        325.83333399996627
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "aisha_hinds",
+      "verifyPersonId": "al_pacino",
+      "proof_generation_ms": [
+        217.98816699994495
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "al_pacino",
+      "verifyPersonId": "alan_alda",
+      "proof_generation_ms": [
+        225.14487499999814
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alan_alda",
+      "verifyPersonId": "alan_arkin",
+      "proof_generation_ms": [
+        152.39066700002877
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alan_arkin",
+      "verifyPersonId": "alan_rickman",
+      "proof_generation_ms": [
+        149.94670799997402
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alan_rickman",
+      "verifyPersonId": "alec_baldwin",
+      "proof_generation_ms": [
+        158.2027910000179
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alec_baldwin",
+      "verifyPersonId": "alfred_molina",
+      "proof_generation_ms": [
+        143.0573339999537
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alfred_molina",
+      "verifyPersonId": "allison_janney",
+      "proof_generation_ms": [
+        191.6451249999809
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "allison_janney",
+      "verifyPersonId": "alyson_hannigan",
+      "proof_generation_ms": [
+        196.12333400000352
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alyson_hannigan",
+      "verifyPersonId": "alyssa_milano",
+      "proof_generation_ms": [
+        151.4720419999794
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "alyssa_milano",
+      "verifyPersonId": "amanda_bearse",
+      "proof_generation_ms": [
+        214.21875
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "amanda_bearse",
+      "verifyPersonId": "amaury_nolasco",
+      "proof_generation_ms": [
+        232.34191600000486
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "amaury_nolasco",
+      "verifyPersonId": "america_ferrera",
+      "proof_generation_ms": [
+        235.4915420000325
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "america_ferrera",
+      "verifyPersonId": "amy_davidson",
+      "proof_generation_ms": [
+        287.7617500000051
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "amy_davidson",
+      "verifyPersonId": "andrea_anders",
+      "proof_generation_ms": [
+        158.70583300001454
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "andrea_anders",
+      "verifyPersonId": "andrea_bogart",
+      "proof_generation_ms": [
+        243.7556249999907
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "andrea_bogart",
+      "verifyPersonId": "andy_richter",
+      "proof_generation_ms": [
+        214.5364159999881
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "andy_richter",
+      "verifyPersonId": "angell_conwell",
+      "proof_generation_ms": [
+        151.41924999997718
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "angell_conwell",
+      "verifyPersonId": "angie_harmon",
+      "proof_generation_ms": [
+        144.98004200001014
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "angie_harmon",
+      "verifyPersonId": "anne_hathaway",
+      "proof_generation_ms": [
+        146.94083300000057
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "anne_hathaway",
+      "verifyPersonId": "annie_ilonzeh",
+      "proof_generation_ms": [
+        145.43812499998603
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "annie_ilonzeh",
+      "verifyPersonId": "anthony_hopkins",
+      "proof_generation_ms": [
+        138.7519579999498
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "anthony_hopkins",
+      "verifyPersonId": "anthony_stewart_head",
+      "proof_generation_ms": [
+        229.74183399998583
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "anthony_stewart_head",
+      "verifyPersonId": "antonio_banderas",
+      "proof_generation_ms": [
+        178.38658399996348
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "antonio_banderas",
+      "verifyPersonId": "arnold_vosloo",
+      "proof_generation_ms": [
+        227.85262499999953
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "arnold_vosloo",
+      "verifyPersonId": "ashley_johnson",
+      "proof_generation_ms": [
+        202.2299580000108
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "ashley_johnson",
+      "verifyPersonId": "ashton_kutcher",
+      "proof_generation_ms": [
+        285.5289579999517
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "ashton_kutcher",
+      "verifyPersonId": "audrey_landers",
+      "proof_generation_ms": [
+        186.98345800000243
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "audrey_landers",
+      "verifyPersonId": "barbara_carrera",
+      "proof_generation_ms": [
+        221.8687079999945
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "barbara_carrera",
+      "verifyPersonId": "ben_affleck",
+      "proof_generation_ms": [
+        143.46570800000336
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "ben_affleck",
+      "verifyPersonId": "ben_kingsley",
+      "proof_generation_ms": [
+        247.4867920000106
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "ben_kingsley",
+      "verifyPersonId": "ben_mckenzie",
+      "proof_generation_ms": [
+        213.85658299998613
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "ben_mckenzie",
+      "verifyPersonId": "ben_stiller",
+      "proof_generation_ms": [
+        140.32091700000456
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "ben_stiller",
+      "verifyPersonId": "benicio_del_toro",
+      "proof_generation_ms": [
+        140.84520800004248
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "benicio_del_toro",
+      "verifyPersonId": "bernard_hill",
+      "proof_generation_ms": [
+        148.95166700001573
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "bernard_hill",
+      "verifyPersonId": "bernie_mac",
+      "proof_generation_ms": [
+        140.88449999998556
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "bernie_mac",
+      "verifyPersonId": "bill_cosby",
+      "proof_generation_ms": [
+        161.4728340000147
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "bill_cosby",
+      "verifyPersonId": "bill_hader",
+      "proof_generation_ms": [
+        195.72241599997506
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "bill_hader",
+      "verifyPersonId": "bill_murray",
+      "proof_generation_ms": [
+        178.7848750000121
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "bill_murray",
+      "verifyPersonId": "bill_nighy",
+      "proof_generation_ms": [
+        216.6253339999821
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "bill_nighy",
+      "verifyPersonId": "billy_boyd",
+      "proof_generation_ms": [
+        230.0722909999895
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "billy_boyd",
+      "verifyPersonId": "billy_burke",
+      "proof_generation_ms": [
+        174.5015420000418
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "billy_burke",
+      "verifyPersonId": "billy_zane",
+      "proof_generation_ms": [
+        189.72012499999255
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    },
+    {
+      "scenario": "B",
+      "enrollPersonId": "billy_zane",
+      "verifyPersonId": "bonnie_franklin",
+      "proof_generation_ms": [
+        201.43162499996834
+      ],
+      "proof_verification_ms": [],
+      "expected_failure": true
+    }
+  ],
+  "timestamp": "2026-05-02T16:48:23.607Z"
+}

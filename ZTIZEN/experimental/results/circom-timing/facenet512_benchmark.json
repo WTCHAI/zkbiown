@@ -1,0 +1,48 @@
+{
+  "library": "FaceNet512 (512D)",
+  "n_runs": 10,
+  "wasm_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen_js/ztizen.wasm",
+  "zkey_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen.zkey",
+  "constraint_count": 150413,
+  "proof_generation_ms": {
+    "mean": 3039.21,
+    "std": 146.23,
+    "min": 2876.4,
+    "max": 3386.97,
+    "runs": [
+      2948.05,
+      2906.59,
+      3104.45,
+      3019.86,
+      3386.97,
+      3190.06,
+      3042.35,
+      2876.4,
+      2966.94,
+      2950.46
+    ]
+  },
+  "proof_verification_ms": {
+    "mean": 7.97,
+    "std": 2.71,
+    "min": 5.78,
+    "max": 15.66,
+    "runs": [
+      6.56,
+      7.78,
+      6.21,
+      15.66,
+      6.94,
+      5.78,
+      9.02,
+      7.93,
+      7.12,
+      6.7
+    ]
+  },
+  "proof_size_bytes": 719,
+  "public_signals_count": 129,
+  "match_count_sample": 106,
+  "all_proofs_valid": true,
+  "timestamp": "2026-05-01T18:00:07.205Z"
+}

@@ -13,11 +13,20 @@
     "validate": "tsx 00-validate-data.ts",
     "clean": "rm -rf results/pipeline-timing",
     "clean:all": "rm -rf results node_modules",
-    "verify": "find results -name '*.json' | wc -l"
+    "verify": "find results -name '*.json' | wc -l",
+    "benchmark:circom": "tsx pipeline/02-circom-benchmark.ts",
+    "benchmark:noir": "tsx pipeline/03-noir-benchmark.ts",
+    "benchmark:summary": "tsx pipeline/04-write-benchmark-summary.ts",
+    "benchmark:all": "npm run benchmark:circom && npm run benchmark:noir && npm run benchmark:summary"
   },
   "dependencies": {
+    "@aztec/bb.js": "^2.1.8",
+    "@noir-lang/noir_js": "1.0.0-beta.15",
+    "@noir-lang/types": "1.0.0-beta.15",
     "@types/node": "^22.18.11",
+    "circomlibjs": "0.1.7",
     "poseidon-lite": "^0.3.0",
+    "snarkjs": "0.7.5",
     "tsx": "^4.7.0",
     "typescript": "^5.8.3"
   }

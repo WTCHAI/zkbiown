@@ -83,7 +83,7 @@ export function hammingSimilarity(v1: number[], v2: number[]): number {
 
 /**
  * Circuit-accurate match - EXACT same logic as Noir circuit
- * Matches ztizen_circuit_signmag128/src/main.nr lines 67-76
+ * Matches ztizen_circuit_biohash128/src/main.nr lines 67-76
  *
  * The circuit counts exact positional matches (Hamming):
  *   if computed_commit[i] == auth_commit_stored[i] { match_count += 1; }

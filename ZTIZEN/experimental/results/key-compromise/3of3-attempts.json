@@ -1,0 +1,1322 @@
+[
+  {
+    "library": "faceapijs",
+    "threshold": 102,
+    "thresholdRate": 0.796875,
+    "outputDim": 128,
+    "totalPersons": 50,
+    "scenariosPerPersonPair": 1,
+    "scenarios": [
+      {
+        "label": "3of3-full-knowledge",
+        "description": "Attacker knows all three keys — must reproduce valid commitment",
+        "missingKeys": [],
+        "knownKeys": [
+          "Kp",
+          "Kz",
+          "Ku"
+        ],
+        "strategies": [
+          "exact"
+        ],
+        "attempts": [
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          }
+        ],
+        "totalAttempts": 50,
+        "anyPassed": 50,
+        "maxMatchRate": 1,
+        "meanMatchRate": 1
+      }
+    ],
+    "computeTimeMs": 2367.5037089999996
+  },
+  {
+    "library": "facenet",
+    "threshold": 102,
+    "thresholdRate": 0.796875,
+    "outputDim": 128,
+    "totalPersons": 50,
+    "scenariosPerPersonPair": 1,
+    "scenarios": [
+      {
+        "label": "3of3-full-knowledge",
+        "description": "Attacker knows all three keys — must reproduce valid commitment",
+        "missingKeys": [],
+        "knownKeys": [
+          "Kp",
+          "Kz",
+          "Ku"
+        ],
+        "strategies": [
+          "exact"
+        ],
+        "attempts": [
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          }
+        ],
+        "totalAttempts": 50,
+        "anyPassed": 50,
+        "maxMatchRate": 1,
+        "meanMatchRate": 1
+      }
+    ],
+    "computeTimeMs": 2326.6728329999896
+  },
+  {
+    "library": "facenet512",
+    "threshold": 102,
+    "thresholdRate": 0.796875,
+    "outputDim": 128,
+    "totalPersons": 50,
+    "scenariosPerPersonPair": 1,
+    "scenarios": [
+      {
+        "label": "3of3-full-knowledge",
+        "description": "Attacker knows all three keys — must reproduce valid commitment",
+        "missingKeys": [],
+        "knownKeys": [
+          "Kp",
+          "Kz",
+          "Ku"
+        ],
+        "strategies": [
+          "exact"
+        ],
+        "attempts": [
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          }
+        ],
+        "totalAttempts": 50,
+        "anyPassed": 50,
+        "maxMatchRate": 1,
+        "meanMatchRate": 1
+      }
+    ],
+    "computeTimeMs": 2332.2326669999748
+  },
+  {
+    "library": "arcface",
+    "threshold": 102,
+    "thresholdRate": 0.796875,
+    "outputDim": 128,
+    "totalPersons": 50,
+    "scenariosPerPersonPair": 1,
+    "scenarios": [
+      {
+        "label": "3of3-full-knowledge",
+        "description": "Attacker knows all three keys — must reproduce valid commitment",
+        "missingKeys": [],
+        "knownKeys": [
+          "Kp",
+          "Kz",
+          "Ku"
+        ],
+        "strategies": [
+          "exact"
+        ],
+        "attempts": [
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          },
+          {
+            "scenario": "3of3",
+            "strategy": "exact",
+            "matchRate": 1,
+            "passed": true
+          }
+        ],
+        "totalAttempts": 50,
+        "anyPassed": 50,
+        "maxMatchRate": 1,
+        "meanMatchRate": 1
+      }
+    ],
+    "computeTimeMs": 2325.7235420000507
+  }
+]

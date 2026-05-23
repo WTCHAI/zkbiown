@@ -262,6 +262,60 @@ Contains:
 
 ---
 
+---
+
+### 7. **Table X: Full Database Breach Security Analysis** ⭐ NEW — Addresses Comments #3 & #10
+`table-x-breach-analysis.md`
+
+**THE WORST-CASE ADVERSARIAL ANALYSIS** — proves the system survives complete server-side breach.
+
+Maps every field in every database to what an attacker learns and whether auth is possible:
+
+| Breach scope | Keys held | Auth possible? |
+|---|---|---|
+| Product DB only | Kp (1/3) | **NO** |
+| ZTIZEN DB only | Kz (1/3) | **NO** |
+| Both DBs simultaneously | Kp + Kz (2/3) | **NO** |
+| ZTIZEN acts as attacker | Kp + Kz (2/3) | **NO** |
+| Both DBs + wallet compromise | Kp + Kz + Ku (3/3) | YES (by design) |
+
+**Key structural reason:** User key Ku = `SHA-256(walletSignature ∥ PIN)` — never stored on any
+server. Wallet signature requires secp256k1 private key (2^256 security). Without Ku, attacker
+cannot recompute Poseidon hashes, satisfy ZK circuit, or replay (rolling nonce on-chain).
+
+**Experimental backing:** 19,200 partial-key attack attempts across 4 libraries → **0 passed, max match 0.00%** (Group C simulation).
+
+**Purpose:** Answers reviewer concerns about breach resilience, malicious service providers,
+and active replay attacks. Contains two ready-to-paste paper paragraphs.
+
+---
+
+### 8. **Table G: BioHash Property Preservation** ⭐ NEW — Addresses Comments #2.2 & #6
+`table-g-biohash-preservation.md`
+
+**THREE-LAYER PIPELINE ANALYSIS** — proves BioHashing properties are preserved at every stage.
+
+| Library | Layer 1 Cosine | Layer 2 Hamming | Layer 3 Poseidon |
+|---|---|---|---|
+| FaceNet | 63.94% ± 21.04% | 72.86% ± 8.80% | 72.86% |
+| ArcFace | 55.07% ± 22.79% | 69.42% ± 9.68% | 69.42% |
+
+**Diff-key rows (Scenario C):**
+
+| Library | Hamming (diff key) | Poseidon (diff key) |
+|---|---|---|
+| All 4 libs | 49.52–50.60% ≈ random | **0.00%** |
+
+**Key findings:**
+- BioHash Hamming for diff-key ≈ 50% (coin-flip randomness — revocability confirmed)
+- Poseidon reduces diff-key to 0.00% (unlinkability hardened by Avalanche)
+- Same-person Hamming exceeds cosine (FaceNet: 64% → 73%) — lossless or improving
+
+**Data:** `results/biohash-hamming/` + `PRESERVATION_ANALYSIS.md`  
+**Script:** `pipeline/02-biohash-hamming-baseline.ts`
+
+---
+
 ## 🎓 Next Steps
 
 1. ✅ **Review** `all-tables-with-descriptions.md` - Primary output

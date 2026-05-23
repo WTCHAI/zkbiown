@@ -13,18 +13,18 @@ Dataset size, distribution, and raw embedding quality (cosine similarity) before
 - **Quality Notes**: Raw cosine similarity between same-person embeddings (baseline recognition rate)
 
 **Key Evidence:**
-- All libraries use same filtered dataset (437 persons, 2,138 captures)
-- Raw same-person similarity ranges from ~60-70% (moderate baseline)
-- Large test sets (5,436 same-person, 10,000 different-person comparisons)
+- All libraries use identical aligned dataset (437 persons, 2,137 captures) — same persons, same captures
+- Raw same-person similarity ranges from ~55-95% depending on library
+- Exhaustive test sets (5,431 same-person, 2,276,885 different-person comparisons)
 - This baseline quality propagates through our pipeline (not degraded by our method)
 
 | Library | Dim | Persons | Captures | Avg/Person | Same-Person Pairs | Diff-Person Pairs | Quality Notes (Raw Cosine Similarity) |
 |---------|-----|---------|----------|------------|-------------------|-------------------|---------------------------------------|
-| FaceNet | 128 | 437 | 2138 | 4.9 | 5,436 | 10,000 | 63.94% ± 21.04% |
-| FaceNet512 | 512 | 437 | 2138 | 4.9 | 5,436 | 10,000 | 62.43% ± 20.69% |
-| ArcFace | 512 | 437 | 2138 | 4.9 | 5,436 | 10,000 | 55.07% ± 22.79% |
-| face-api.js | 128 | 466 | 2585 | 5.5 | 7,771 | 10,000 | 95.28% ± 1.92% |
+| FaceNet | 128 | 437 | 2,137 | 4.9 | 5,431 | 2,276,885 | 63.96% ± 21.03% |
+| FaceNet512 | 512 | 437 | 2,137 | 4.9 | 5,431 | 2,276,885 | 62.46% ± 20.67% |
+| ArcFace | 512 | 437 | 2,137 | 4.9 | 5,431 | 2,276,885 | 55.09% ± 22.79% |
+| face-api.js | 128 | 437 | 2,137 | 4.9 | 5,431 | 2,276,885 | 95.28% ± 1.79% |
 
 **Dataset Filtering Rationale:**
-Original FaceScrub: 530 persons, 100,000+ faces → Filtered: 437 persons (excluded persons with <2 captures) → Reason: Multiple captures per person required for intra-person validation (Scenario A).
+Original FaceScrub: 530 persons, 100,000+ faces → Aligned: 437 persons, 2,137 captures (intersection of capture IDs present in ALL 4 libraries, min 2 captures per person) → All 4 libraries use identical person and capture sets — one source of truth.
 

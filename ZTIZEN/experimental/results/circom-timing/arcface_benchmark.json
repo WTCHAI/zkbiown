@@ -1,0 +1,48 @@
+{
+  "library": "ArcFace (512D)",
+  "n_runs": 10,
+  "wasm_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen_js/ztizen.wasm",
+  "zkey_path": "/Users/wtshai/Work/Ku/SeniorProject/ZTIZEN/circuit/circom/artifacts/ztizen.zkey",
+  "constraint_count": 150413,
+  "proof_generation_ms": {
+    "mean": 3146.72,
+    "std": 146.38,
+    "min": 2910.08,
+    "max": 3402.6,
+    "runs": [
+      3252.37,
+      2969.49,
+      3257.27,
+      3132.25,
+      2910.08,
+      3061.82,
+      3028.11,
+      3183.32,
+      3402.6,
+      3269.92
+    ]
+  },
+  "proof_verification_ms": {
+    "mean": 7.61,
+    "std": 0.93,
+    "min": 6.47,
+    "max": 9.72,
+    "runs": [
+      6.47,
+      6.6,
+      9.72,
+      7.5,
+      7.34,
+      7.08,
+      8.66,
+      7.83,
+      7.79,
+      7.07
+    ]
+  },
+  "proof_size_bytes": 723,
+  "public_signals_count": 129,
+  "match_count_sample": 110,
+  "all_proofs_valid": true,
+  "timestamp": "2026-05-01T18:00:39.204Z"
+}

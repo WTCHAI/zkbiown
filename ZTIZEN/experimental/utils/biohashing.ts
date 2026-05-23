@@ -224,6 +224,27 @@ export function binarize(vector: number[]): number[] {
 }
 
 /**
+ * Project embedding using the Gaussian random matrix (before binarization).
+ *
+ * Returns raw projection floats, useful for sign-magnitude encoding in the
+ * Noir circuit which encodes each value as (sign_bit << 2) | magnitude_2bit.
+ *
+ * @param embedding Input biometric embedding
+ * @param compositeKey 32-byte composite key from SHA-256(Kp || Kz || Ku)
+ * @param outputDim Number of output dimensions (default: 128)
+ * @returns Raw projection values (float array, not binarized)
+ */
+export async function projectEmbedding(
+  embedding: number[],
+  compositeKey: Uint8Array,
+  outputDim: number = 128
+): Promise<number[]> {
+  const inputDim = embedding.length;
+  const projectionMatrix = await generateGaussianMatrix(compositeKey, outputDim, inputDim);
+  return matrixVectorMultiply(projectionMatrix, embedding);
+}
+
+/**
  * Main BioHashing Function
  *
  * Transforms a biometric embedding into a binary template using:
