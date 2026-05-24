@@ -1,0 +1,49 @@
+{
+  "network": 421614,
+  "deployer": "0x976e6aa697f860af7771c22c630cc843107e6dee",
+  "deployment": "./deployments/circom-421614-1779613655869.json",
+  "contracts": {
+    "CircomVerifier": "0xe0abf17803cad3ff0d557679487dd5d0ece5e65d",
+    "ZTIZENCircom": "0x0f976eb3d4256f8a1ce651681dad2d9c606952ef"
+  },
+  "timestamp": "2026-05-24T09:12:16.145Z",
+  "rows": [
+    {
+      "step": "addWhitelistedUser",
+      "gasUsed": "50910",
+      "gasPriceGwei": "0",
+      "costEth": "0.00000101830182",
+      "txHash": "0xcf60acf5b71f9daa9e7716e22826e4c6442eb2899778f8e24a6738834c315c03"
+    },
+    {
+      "step": "registerCredential",
+      "gasUsed": "217105",
+      "gasPriceGwei": "0",
+      "costEth": "0.0000043638105",
+      "txHash": "0x0b59558b7cd947c15ac480d723ad3d80f55fe57831f2b8209dc958d22263e75d"
+    },
+    {
+      "step": "initializeCredentialForService",
+      "gasUsed": "60638",
+      "gasPriceGwei": "0",
+      "costEth": "0.00000121336638",
+      "txHash": "0x31ef64059ed3dc4fcbd7521f68ef91b41c54606b6123b4b194f92fca0342016f"
+    },
+    {
+      "step": "setZKVerificationEnabled",
+      "gasUsed": "33256",
+      "gasPriceGwei": "0",
+      "costEth": "0.000000665652096",
+      "txHash": "0x7fc24eb28161b9ea641255fd8ee1e7c1f174473adc419680536851ef533fc7fe"
+    },
+    {
+      "step": "verifyProof",
+      "gasUsed": "1331508",
+      "gasPriceGwei": "0",
+      "costEth": "0.00002665679016",
+      "txHash": "0xeb145e067dfbd3ba5fa8daa15171bb3f72011b649ff35be1dd1a1ed71e59058a"
+    }
+  ],
+  "totalGas": "1693417",
+  "totalCostEth": "0.000033917920956"
+}

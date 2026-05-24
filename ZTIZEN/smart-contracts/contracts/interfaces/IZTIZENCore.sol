@@ -37,7 +37,22 @@ interface IZTIZENCore {
     function registerCredential(
         bytes32 credentialId,
         address userAddress,
-        uint256 version
+        uint256 version,
+        bytes32 commitmentHash
+    ) external returns (bool success);
+
+    /**
+     * @dev Update the commitment hash after each successful authentication.
+     * Oracle calls this after listening to ProofVerified event — it recomputes
+     * auth_commit[128] with the new nonce and stores keccak256 of the new set.
+     *
+     * @param credentialId Credential identifier
+     * @param newCommitmentHash keccak256(abi.encode(new_auth_commit[128]))
+     * @return success Update status
+     */
+    function updateCommitmentHash(
+        bytes32 credentialId,
+        bytes32 newCommitmentHash
     ) external returns (bool success);
 
     /**

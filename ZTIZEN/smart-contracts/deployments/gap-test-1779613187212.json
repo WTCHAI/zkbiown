@@ -1,0 +1,16 @@
+{
+  "network": "11155111",
+  "timestamp": "2026-05-24T08:59:47.211Z",
+  "contract": "0xe912e2728dd57dbad4796e0887ff917855bac37b",
+  "onChainNonce": "72978285064084340452411532655521843106491628961307392975963270551252770603416",
+  "rerolledNonce": "72978285064084340452411532655521843106491628961307392975963270551252770603416",
+  "attack": {
+    "currentNonce": "72978285064084340452411532655521843106491628961307392975963270551252770603416",
+    "proof": "Proof(nonce=1) — unchanged from successful verifyProof",
+    "pubSignals": "auth_commit_stored(nonce=1) — unchanged from successful verifyProof"
+  },
+  "result": "REJECTED",
+  "txHash": null,
+  "gasUsed": "0",
+  "revertReason": "The contract function \"verifyProof\" reverted with the following reason:\nZTIZEN: Proof already used"
+}

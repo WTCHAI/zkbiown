@@ -118,10 +118,12 @@ contract ZTIZENNoir is Ownable, ReentrancyGuard, IZTIZEN {
     function registerCredential(
         bytes32 credentialId,
         address userAddress,
-        uint256 version
+        uint256 version,
+        bytes32 commitmentHash
     ) external override onlyOwner onlyWhitelisted(userAddress) nonReentrant returns (bool) {
         require(_credentials[credentialId].owner == address(0), "ZTIZEN: Credential already exists");
         require(version > 0, "ZTIZEN: Invalid version");
+        require(commitmentHash != bytes32(0), "ZTIZEN: Commitment hash required");
 
         _credentials[credentialId] = IZTIZENCore.CredentialMeta({
             owner: userAddress,
@@ -135,6 +137,15 @@ contract ZTIZENNoir is Ownable, ReentrancyGuard, IZTIZEN {
         totalCredentials++;
 
         emit CredentialRegistered(credentialId, userAddress, version, block.timestamp);
+        return true;
+    }
+
+    function updateCommitmentHash(
+        bytes32 credentialId,
+        bytes32 newCommitmentHash
+    ) external view override onlyOwner credentialMustExist(credentialId) returns (bool) {
+        require(newCommitmentHash != bytes32(0), "ZTIZEN: Commitment hash required");
+        // Noir backend: commitment hash tracking not yet implemented on-chain
         return true;
     }
 

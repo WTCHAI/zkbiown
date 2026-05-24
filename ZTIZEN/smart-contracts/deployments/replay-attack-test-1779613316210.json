@@ -1,0 +1,18 @@
+{
+  "network": 11155111,
+  "timestamp": "2026-05-24T09:01:56.209Z",
+  "contract": "0xe912e2728dd57dbad4796e0887ff917855bac37b",
+  "originalNonce": "1",
+  "rerolledNonce": "72978285064084340452411532655521843106491628961307392975963270551252770603416",
+  "onChainNonceAtTest": "72978285064084340452411532655521843106491628961307392975963270551252770603416",
+  "layer1_contractNonceGuard": {
+    "description": "Proof(nonce=1) submitted with currentNonce=1 after roll",
+    "expectedRevert": "ZTIZEN: Invalid nonce, use current on-chain nonce",
+    "result": "REJECTED — contract nonce guard fired before Groth16 verifier"
+  },
+  "layer2_zkProofBinding": {
+    "description": "Proof(nonce=1) submitted with currentNonce=REROLLED_NONCE",
+    "expectedRevert": "ZTIZENCircom: Invalid Circom proof",
+    "result": "REJECTED — Groth16 pairing check failed (proof committed to nonce=1)"
+  }
+}

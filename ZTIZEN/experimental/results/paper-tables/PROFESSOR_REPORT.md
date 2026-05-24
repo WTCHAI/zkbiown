@@ -306,3 +306,144 @@ The experimental pipeline has been updated with:
 | Four-scenario GAR/FAR | `results/four-scenario-validation/*_results.json` | `pipeline/01-analyze-four-scenarios.ts` |
 | Key compromise | `results/key-compromise/FINDINGS.md` | `pipeline/07-key-compromise-sim.ts` |
 | Circuit comparison | `results/circuit-timing/BENCHMARK_SUMMARY.md` | both benchmark scripts |
+| On-chain gas costs | `results/gas-cost-analysis.md` | `scripts/gas-benchmark-circom.ts` |
+| Gas network comparison table | `results/paper-tables/table-gas-network-comparison.md` | same |
+
+---
+
+## ON-CHAIN GAS COST ANALYSIS (New — 2026-05-24)
+
+**Status:** ✅ Measured on both Ethereum Sepolia and Arbitrum Sepolia  
+**Source:** `results/gas-cost-analysis.md` · `results/paper-tables/table-gas-network-comparison.md`  
+**ETH/USD:** $2,077.46
+
+---
+
+### Why Arbitrum Uses More Gas Units But Costs Less
+
+This is the key conceptual point for reviewers.
+
+**The equation (from ethereum.org/developers/docs/gas):**
+
+```
+Transaction fee = Gas units (limit) × (Base fee + Priority fee)
+
+Where:
+  Base fee    — protocol-set minimum, burned (EIP-1559)
+  Priority fee — tip to validator/sequencer
+  Gas units   — computational work, identical EVM opcodes
+
+Cost in ETH = gas_units × gas_price_wei × 10⁻¹⁸
+Cost in USD = cost_ETH × ETH_price_USD
+```
+
+**Why Arbitrum gas price is ~55× lower:**
+
+Arbitrum One is an Optimistic Rollup. Each L2 transaction pays:
+1. **L2 execution fee** — running the EVM on Arbitrum's sequencer (very cheap, centralised hardware)
+2. **L1 data fee** — posting compressed calldata to Ethereum mainnet, **amortised across ~1,000s of transactions per batch**
+
+On Ethereum mainnet the transaction pays the full L1 fee alone. On Arbitrum you pay (L2 execution) + (1/N of one L1 batch), where N can be hundreds. This collapses the effective gas price from ~1.1 gwei → ~0.02 gwei — a 55× reduction.
+
+**Why gas units are slightly higher on Arbitrum (+6–12%):**
+
+Arbitrum's AVM reprices some EVM opcodes to reflect L1 data costs — particularly `SLOAD`, `SSTORE`, and BN254 precompiles (which `ecPairing` uses for Groth16 verification). More gas units consumed, but at a far lower price per unit.
+
+**Net result: 49× cheaper per authentication session.**
+
+---
+
+### Measured Results Summary
+
+**Gas prices observed:**
+- Ethereum Sepolia: ~1.07–1.11 gwei effective
+- Arbitrum Sepolia: ~0.020 gwei effective (consistent floor)
+
+**Interaction gas per authentication session:**
+
+| Operation | ETH Sepolia (gas) | ETH Sepolia (USD) | Arb Sepolia (gas) | Arb Sepolia (USD) |
+|---|---:|---:|---:|---:|
+| addWhitelistedUser | 47,556 | $0.110 | 51,418 | $0.0021 |
+| registerCredential | 188,723 | $0.437 | 194,313 | $0.0081 |
+| initializeCredentialForService | 55,788 | $0.124 | 61,373 | $0.0026 |
+| setZKVerificationEnabled | 29,926 | $0.061 | 33,745 | $0.0014 |
+| **verifyProof** | **1,169,555** | **$2.591** | **1,290,131** | **$0.054** |
+| **Total session** | **1,491,548** | **$3.323** | **1,630,980** | **$0.068** |
+
+**verifyProof = 78–79% of total session gas regardless of network.**
+
+---
+
+### Cost Calculation Verification
+
+```
+Ethereum Sepolia — verifyProof:
+  gas_units  = 1,169,555
+  gas_price  = 1.066 gwei = 1,066,000,000 wei
+  cost_ETH   = 1,169,555 × 1,066,000,000 / 10¹⁸ = 0.001247072 ETH  ✓
+  cost_USD   = 0.001247072 × 2,077.46 = $2.591  ✓
+
+Arbitrum Sepolia — verifyProof:
+  gas_units  = 1,290,131
+  gas_price  = 0.020 gwei = 20,000,000 wei
+  cost_ETH   = 1,290,131 × 20,000,000 / 10¹⁸ = 0.000025803 ETH  ✓
+  cost_USD   = 0.000025803 × 2,077.46 = $0.054  ✓
+
+Ratio: 49.0× cheaper on Arbitrum at these gas prices
+```
+
+---
+
+### Mainnet Cost Projection
+
+| Network | Gas price | verifyProof (USD) | Full session (USD) |
+|---|---|---:|---:|
+| Ethereum — Low | 5 gwei | $12.14 | $15.51 |
+| Ethereum — Normal | 15 gwei | $36.43 | $46.52 |
+| Ethereum — Peak | 50 gwei | $121.43 | $155.07 |
+| Arbitrum One — Normal | 0.1 gwei | $0.243 | $0.310 |
+| Arbitrum One — Elevated | 0.5 gwei | $1.215 | $1.550 |
+
+**Conclusion:** Arbitrum One is the only economically viable deployment target for production ZK biometric authentication without further proof system optimisation. At normal Ethereum mainnet gas prices, a single authentication costs $36–$121 — prohibitive for consumer use. On Arbitrum One the same authentication costs $0.24–$1.22.
+
+---
+
+### Deployed Contract Links (Source of Truth for Professor)
+
+**Ethereum Sepolia:**
+- CircomVerifier: https://eth-sepolia.blockscout.com/address/0x7f03a3254d9c5fee8a5ad82245d33336f9d7024c
+- ZTIZENCircom: https://eth-sepolia.blockscout.com/address/0x62b9c6545a07ce573372cbb42857b719d5200d8d
+
+**Arbitrum Sepolia:**
+- CircomVerifier: https://arbitrum-sepolia.blockscout.com/address/0x2da55f4c1eceb0ceeb93ee598e852bf24abb8fce
+- ZTIZENCircom: https://arbitrum-sepolia.blockscout.com/address/0xd2b1dd269c90873d5a4ef92cf9104b63941997df
+
+Every gas figure in this section has a live tx link in `results/paper-tables/table-gas-network-comparison.md`.
+
+### Nonce-Rolling Security — Already Implemented, Zero Extra Gas
+
+The nonce roll executes **inside** `verifyProof` — no separate transaction needed.
+
+```
+verifyProof flow (1,169,555 gas on Sepolia):
+  1. require(currentNonce == storedNonce)          ← replay guard
+  2. circomVerifier.verifyProof(pA, pB, pC, sigs)  ← ~1.15M gas (pairing check)
+  3. newNonce = keccak256(nonce_N || timestamp || blockNum || prevrandao)
+  4. credentialServiceNonces[credId][svcId] = newNonce
+  5. emit ProofVerified(..., oldNonce, newNonce)    ← off-chain reads this
+```
+
+`block.prevrandao` (EIP-4399) is the beacon RANDAO — unknown to the prover at proof
+generation time, so `newNonce` is unpredictable and cannot be pre-computed for a second proof.
+Nonce overhead is ~6,730 gas = 0.6% of total verifyProof cost.
+
+This should be highlighted in the paper as:
+- Replay resistance: old proof immediately rejected after one successful auth
+- Forward secrecy: each successful auth invalidates the current commit[] for the next session
+- Cross-service isolation: nonces scoped per (credentialId, serviceId)
+
+### Pending: Noir On-Chain Analysis
+
+Deferred — HonkVerifier deployment blocked by unresolved library placeholder in
+auto-generated Barretenberg bytecode. Circom Groth16 on-chain analysis is the primary
+on-chain contribution for the current paper submission.

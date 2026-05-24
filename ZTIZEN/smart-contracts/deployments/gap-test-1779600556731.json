@@ -1,0 +1,16 @@
+{
+  "network": "11155111",
+  "timestamp": "2026-05-24T05:29:16.730Z",
+  "contract": "0x62b9c6545a07ce573372cbb42857b719d5200d8d",
+  "onChainNonce": "8117248893073407895531543250133839622706758429127719248885037148472231688462",
+  "rerolledNonce": "8117248893073407895531543250133839622706758429127719248885037148472231688462",
+  "attack": {
+    "currentNonce": "8117248893073407895531543250133839622706758429127719248885037148472231688462",
+    "proof": "Proof(nonce=1) — unchanged from successful verifyProof",
+    "pubSignals": "auth_commit_stored(nonce=1) — unchanged from successful verifyProof"
+  },
+  "result": "ACCEPTED",
+  "txHash": "0x531d0106b8286ad3953c1bf9c0cad909c69218835131842e01b5286b8906655c",
+  "gasUsed": "1152827",
+  "revertReason": ""
+}

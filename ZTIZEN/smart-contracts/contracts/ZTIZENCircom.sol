@@ -8,8 +8,8 @@ import "./interfaces/IZTIZENAdmin.sol";
 
 /// @dev Groth16 verifier interface — implemented by CircomVerifier.sol (Groth16Verifier)
 /// pubSignals layout (129 values):
-///   [0]       = match_count  (how many of 128 Poseidon slots matched — must be ≥102)
-///   [1..128]  = computed_commit[0..127]  (Poseidon(bits, nonce_N, keys) for each slot)
+///   [0]       = match_count        (how many of 128 Poseidon slots matched — must be ≥102)
+///   [1..128]  = auth_commit_stored (enrollment Poseidon hashes, same every session for a given nonce)
 interface ICircomVerifier {
     function verifyProof(
         uint256[2] calldata pA,
@@ -24,21 +24,32 @@ interface ICircomVerifier {
  * @dev Trustless Biometric Authentication — Circom/Groth16 backend only
  *
  * Enrollment (one-time, off-chain → on-chain):
- *   face → BioHash → Poseidon(bits, nonce_0, keys) × 128 → commit[128]
- *   Oracle calls registerCredential() + initializeCredentialForService(nonce_0)
- *   nonce_0 stored on-chain via credentialServiceNonces[credentialId][serviceId]
+ *   face → BioHash → Poseidon(bits, nonce_0, keys) × 128 → auth_commit[128]
+ *   Oracle: registerCredential(credId, user, version, keccak256(auth_commit[128]))
+ *   Oracle: initializeCredentialForService(credId, svcId, nonce_0)
+ *   Oracle stores (credId, svcId, nonce_0) → auth_commit[128] in off-chain DB
  *
  * Verification (each login):
  *   face → BioHash → Poseidon(bits, nonce_N, keys) × 128 → proof input
- *   ZK circuit proves: Poseidon(bits, nonce_N, keys) == commit[i] for ≥102/128 slots
+ *   User fetches auth_commit[128] for nonce_N from oracle DB
+ *   ZK circuit proves: Poseidon(bits, nonce_N, keys) == auth_commit[i] for ≥102/128 slots
  *   User submits proof to verifyProof()
- *   Contract checks: currentNonce == storedNonce (replay guard)
- *   Contract calls Groth16Verifier.verifyProof(pA, pB, pC, pubSignals) directly
- *   On success: nonce_N → nonce_{N+1} via keccak roll (unpredictable until mined)
+ *
+ *   Contract verifyProof() checks (in order, fail-fast):
+ *     1. currentNonce == storedNonce                             (nonce guard)
+ *     2. keccak256(pubSignals[1..128]) == _commitmentHash[cred] (commit integrity)
+ *     3. !_usedProofNullifiers[keccak256(pA,pB,pC,pubSignals)]  (nullifier — no replay)
+ *     4. Groth16Verifier.verifyProof(pA, pB, pC, pubSignals)    (ZK validity)
+ *     5. Roll nonce: nonce_N → nonce_{N+1} via keccak+prevrandao
+ *     6. Store nullifier, emit ProofVerified(oldNonce, newNonce)
+ *
+ *   Oracle post-auth task (listens to ProofVerified event):
+ *     Recomputes auth_commit[128] with newNonce
+ *     Calls updateCommitmentHash(credId, keccak256(new_auth_commit[128]))
  *
  * Proof params passed directly (no ABI-encoding wrapper):
  *   pA, pB, pC    — Groth16 proof points
- *   pubSignals    — uint256[129]: [0]=match_count, [1..128]=computed_commit[0..127]
+ *   pubSignals    — uint256[129]: [0]=match_count, [1..128]=auth_commit_stored[0..127]
  */
 contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
 
@@ -48,6 +59,15 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
     /// Zero means not yet initialized for this service.
     /// Rolls to keccak-derived nonce_{N+1} after each successful verification.
     mapping(bytes32 => mapping(bytes32 => uint256)) public credentialServiceNonces;
+
+    /// @dev credentialId → keccak256(abi.encode(auth_commit_stored[128]))
+    /// Set at enrollment, updated by oracle after each successful verification.
+    /// verifyProof checks pubSignals[1..128] hash against this value.
+    mapping(bytes32 => bytes32) private _credentialCommitmentHash;
+
+    /// @dev keccak256(abi.encodePacked(pA, pB, pC, pubSignals)) → true if used
+    /// Prevents exact proof replay — a submitted proof can never be re-used.
+    mapping(bytes32 => bool) private _usedProofNullifiers;
 
     mapping(bytes32 => IZTIZENCore.CredentialMeta) private _credentials;
     mapping(address => bytes32[]) private _ownerCredentials;
@@ -79,6 +99,8 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
     );
 
     event NonceRevoked(bytes32 indexed credentialId, bytes32 indexed serviceId, uint256 oldNonce, uint256 newNonce, uint256 timestamp);
+    event CommitmentHashUpdated(bytes32 indexed credentialId, bytes32 newCommitmentHash, uint256 timestamp);
+    event ProofNullifierRecorded(bytes32 indexed nullifier, bytes32 indexed credentialId);
     event UserWhitelisted(address indexed userAddress);
     event UserRemovedFromWhitelist(address indexed userAddress);
     event ZKVerificationEnabledChanged(bool enabled);
@@ -118,16 +140,21 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
 
     /**
      * @dev Step 1 of enrollment: register a credential for a whitelisted user.
-     * Called by oracle after off-chain BioHash + commit[128] computation.
+     * Called by oracle after off-chain BioHash + auth_commit[128] computation.
      * Only registers identity — nonce is set separately via initializeCredentialForService.
+     *
+     * @param commitmentHash keccak256(abi.encode(auth_commit_stored[128])) — computed by oracle
+     *        at enrollment. Stored on-chain and verified against pubSignals on every verifyProof.
      */
     function registerCredential(
         bytes32 credentialId,
         address userAddress,
-        uint256 version
+        uint256 version,
+        bytes32 commitmentHash
     ) external override onlyOwner onlyWhitelisted(userAddress) nonReentrant returns (bool) {
         require(_credentials[credentialId].owner == address(0), "ZTIZEN: Credential already exists");
         require(version > 0, "ZTIZEN: Invalid version");
+        require(commitmentHash != bytes32(0), "ZTIZEN: Commitment hash required");
 
         _credentials[credentialId] = IZTIZENCore.CredentialMeta({
             owner: userAddress,
@@ -136,11 +163,30 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
             registeredAt: block.timestamp,
             lastVerifiedAt: 0
         });
+        _credentialCommitmentHash[credentialId] = commitmentHash;
 
         _ownerCredentials[userAddress].push(credentialId);
         totalCredentials++;
 
         emit CredentialRegistered(credentialId, userAddress, version, block.timestamp);
+        return true;
+    }
+
+    /**
+     * @dev Oracle calls this after each successful verifyProof to update the commitment hash.
+     * Flow: oracle listens to ProofVerified(newNonce) → recomputes auth_commit[128] with newNonce
+     *       → calls updateCommitmentHash(credId, keccak256(abi.encode(new_auth_commit[128])))
+     *
+     * Until this is called, the next verifyProof will fail the commitmentHash check —
+     * enforcing that the oracle must stay in sync before the next login.
+     */
+    function updateCommitmentHash(
+        bytes32 credentialId,
+        bytes32 newCommitmentHash
+    ) external override onlyOwner credentialMustExist(credentialId) credentialMustBeActive(credentialId) returns (bool) {
+        require(newCommitmentHash != bytes32(0), "ZTIZEN: Commitment hash required");
+        _credentialCommitmentHash[credentialId] = newCommitmentHash;
+        emit CommitmentHashUpdated(credentialId, newCommitmentHash, block.timestamp);
         return true;
     }
 
@@ -168,15 +214,20 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
     /**
      * @dev Verify a Circom/Groth16 biometric proof and roll nonce_N → nonce_{N+1}.
      *
-     * Flow:
-     *   1. Check currentNonce == storedNonce (replay guard)
-     *   2. Decode proof bytes as (pA, pB, pC) and decode publicInputs as pubSignals[129]
-     *   3. Forward to Groth16Verifier.verifyProof() — reverts if invalid
-     *   4. Roll nonce: newNonce = keccak(nonce_N, block.timestamp, block.number, block.prevrandao)
-     *      — unpredictable to prover at proof-generation time (prevrandao not known until mined)
-     *   5. Store newNonce on-chain
-     *   6. Emit ProofVerified(oldNonce, newNonce) — off-chain service reads newNonce here
-     *      and recomputes commit[128] = Poseidon(bits, newNonce, keys) for next login
+     * Checks (fail-fast order — cheapest first):
+     *   1. currentNonce == storedNonce                               nonce guard
+     *   2. keccak256(pubSignals[1..128]) == _commitmentHash[cred]   commit integrity
+     *   3. !_usedProofNullifiers[keccak256(pA,pB,pC,pubSignals)]    no proof replay
+     *   4. Groth16Verifier.verifyProof(pA, pB, pC, pubSignals)      ZK validity
+     *
+     * On success:
+     *   - Store nullifier (proof bytes can never be re-submitted)
+     *   - Roll nonce: nonce_N → nonce_{N+1} via keccak+prevrandao (unpredictable until mined)
+     *   - Emit ProofVerified(oldNonce, newNonce)
+     *
+     * Oracle post-auth task (off-chain):
+     *   Listen to ProofVerified → recompute auth_commit[128] with newNonce
+     *   → call updateCommitmentHash(credId, keccak256(new_auth_commit[128]))
      *
      * @param credentialId  Credential being verified
      * @param serviceId     Service requesting auth (scopes the nonce)
@@ -185,7 +236,7 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
      * @param pA            Groth16 proof point A
      * @param pB            Groth16 proof point B
      * @param pC            Groth16 proof point C
-     * @param pubSignals    uint256[129]: [0]=match_count, [1..128]=computed_commit[0..127]
+     * @param pubSignals    uint256[129]: [0]=match_count, [1..128]=auth_commit_stored[0..127]
      */
     function verifyProof(
         bytes32 credentialId,
@@ -205,21 +256,41 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
     {
         require(zkVerificationEnabled, "ZTIZEN: ZK verification not enabled");
 
-        // Replay guard
+        // 1. Nonce guard — reject if wrong session nonce
         uint256 storedNonce = credentialServiceNonces[credentialId][serviceId];
         require(storedNonce != 0, "ZTIZEN: Credential not initialized for service");
-        require(currentNonce == storedNonce, "ZTIZEN: Invalid nonce, use current on-chain nonce");
+        require(currentNonce == storedNonce, "ZTIZEN: Invalid nonce");
 
-        // Forward directly to Groth16Verifier — same param types, no decoding needed
+        // 2. Commitment integrity — pubSignals[1..128] must match enrollment auth_commit
+        //    Encodes elements 1..128 (skipping match_count at [0]) into a packed hash
+        uint256[128] memory commitSlice;
+        for (uint256 i = 0; i < 128; i++) {
+            commitSlice[i] = pubSignals[i + 1];
+        }
+        bytes32 providedHash = keccak256(abi.encode(commitSlice));
+        require(
+            providedHash == _credentialCommitmentHash[credentialId],
+            "ZTIZEN: pubSignals do not match enrollment commitment"
+        );
+
+        // 3. Proof nullifier — reject exact proof replay (cheap SLOAD before expensive pairing)
+        bytes32 nullifier = keccak256(abi.encodePacked(pA, pB, pC, pubSignals));
+        require(!_usedProofNullifiers[nullifier], "ZTIZEN: Proof already used");
+
+        // 4. Groth16 validity — 1.16M gas pairing check
         bool valid = circomVerifier.verifyProof(pA, pB, pC, pubSignals);
         require(valid, "ZTIZENCircom: Invalid Circom proof");
+
+        // Store nullifier — this proof bytes can never be submitted again
+        _usedProofNullifiers[nullifier] = true;
+        emit ProofNullifierRecorded(nullifier, credentialId);
 
         // Roll nonce: keccak(nonce_N || block context) — prevrandao ensures unpredictability
         newNonce = _rollNonce(currentNonce);
         credentialServiceNonces[credentialId][serviceId] = newNonce;
         _credentials[credentialId].lastVerifiedAt = block.timestamp;
 
-        // Off-chain service listens here to learn newNonce and re-bake commit[128]
+        // Oracle listens here: learns newNonce, recomputes auth_commit[128], calls updateCommitmentHash
         emit ProofVerified(credentialId, serviceId, productTxId, msg.sender, currentNonce, newNonce, block.timestamp);
         return (true, newNonce);
     }
@@ -232,6 +303,14 @@ contract ZTIZENCircom is Ownable, ReentrancyGuard, IZTIZENCore, IZTIZENAdmin {
 
     function isCredentialInitializedForService(bytes32 credentialId, bytes32 serviceId) external view returns (bool) {
         return credentialServiceNonces[credentialId][serviceId] != 0;
+    }
+
+    function getCommitmentHash(bytes32 credentialId) external view returns (bytes32) {
+        return _credentialCommitmentHash[credentialId];
+    }
+
+    function isProofUsed(bytes32 nullifier) external view returns (bool) {
+        return _usedProofNullifiers[nullifier];
     }
 
     /**
