@@ -13,6 +13,7 @@ import { Route as ProofDemoRouteImport } from './routes/proof-demo'
 import { Route as ParallelBenchRouteImport } from './routes/parallel-bench'
 import { Route as NoirTestRouteImport } from './routes/noir-test'
 import { Route as LfwExtractRouteImport } from './routes/lfw-extract'
+import { Route as FullDemoObservationRouteImport } from './routes/full-demo-observation'
 import { Route as FacescrubExtractRouteImport } from './routes/facescrub-extract'
 import { Route as CollectRouteImport } from './routes/collect'
 import { Route as CircomTestRouteImport } from './routes/circom-test'
@@ -47,6 +48,11 @@ const NoirTestRoute = NoirTestRouteImport.update({
 const LfwExtractRoute = LfwExtractRouteImport.update({
   id: '/lfw-extract',
   path: '/lfw-extract',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FullDemoObservationRoute = FullDemoObservationRouteImport.update({
+  id: '/full-demo-observation',
+  path: '/full-demo-observation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FacescrubExtractRoute = FacescrubExtractRouteImport.update({
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/circom-test': typeof CircomTestRoute
   '/collect': typeof CollectRoute
   '/facescrub-extract': typeof FacescrubExtractRoute
+  '/full-demo-observation': typeof FullDemoObservationRoute
   '/lfw-extract': typeof LfwExtractRoute
   '/noir-test': typeof NoirTestRoute
   '/parallel-bench': typeof ParallelBenchRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/circom-test': typeof CircomTestRoute
   '/collect': typeof CollectRoute
   '/facescrub-extract': typeof FacescrubExtractRoute
+  '/full-demo-observation': typeof FullDemoObservationRoute
   '/lfw-extract': typeof LfwExtractRoute
   '/noir-test': typeof NoirTestRoute
   '/parallel-bench': typeof ParallelBenchRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/circom-test': typeof CircomTestRoute
   '/collect': typeof CollectRoute
   '/facescrub-extract': typeof FacescrubExtractRoute
+  '/full-demo-observation': typeof FullDemoObservationRoute
   '/lfw-extract': typeof LfwExtractRoute
   '/noir-test': typeof NoirTestRoute
   '/parallel-bench': typeof ParallelBenchRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | '/circom-test'
     | '/collect'
     | '/facescrub-extract'
+    | '/full-demo-observation'
     | '/lfw-extract'
     | '/noir-test'
     | '/parallel-bench'
@@ -223,6 +233,7 @@ export interface FileRouteTypes {
     | '/circom-test'
     | '/collect'
     | '/facescrub-extract'
+    | '/full-demo-observation'
     | '/lfw-extract'
     | '/noir-test'
     | '/parallel-bench'
@@ -244,6 +255,7 @@ export interface FileRouteTypes {
     | '/circom-test'
     | '/collect'
     | '/facescrub-extract'
+    | '/full-demo-observation'
     | '/lfw-extract'
     | '/noir-test'
     | '/parallel-bench'
@@ -266,6 +278,7 @@ export interface RootRouteChildren {
   CircomTestRoute: typeof CircomTestRoute
   CollectRoute: typeof CollectRoute
   FacescrubExtractRoute: typeof FacescrubExtractRoute
+  FullDemoObservationRoute: typeof FullDemoObservationRoute
   LfwExtractRoute: typeof LfwExtractRoute
   NoirTestRoute: typeof NoirTestRoute
   ParallelBenchRoute: typeof ParallelBenchRoute
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       path: '/lfw-extract'
       fullPath: '/lfw-extract'
       preLoaderRoute: typeof LfwExtractRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/full-demo-observation': {
+      id: '/full-demo-observation'
+      path: '/full-demo-observation'
+      fullPath: '/full-demo-observation'
+      preLoaderRoute: typeof FullDemoObservationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/facescrub-extract': {
@@ -437,6 +457,7 @@ const rootRouteChildren: RootRouteChildren = {
   CircomTestRoute: CircomTestRoute,
   CollectRoute: CollectRoute,
   FacescrubExtractRoute: FacescrubExtractRoute,
+  FullDemoObservationRoute: FullDemoObservationRoute,
   LfwExtractRoute: LfwExtractRoute,
   NoirTestRoute: NoirTestRoute,
   ParallelBenchRoute: ParallelBenchRoute,

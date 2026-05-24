@@ -77,5 +77,19 @@ export default defineConfig({
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
+    proxy: {
+      // Proxy RPC calls through Vite to avoid CORS blocks on public RPC endpoints.
+      // Use RPC_URL = '/rpc/sepolia' in the demo page instead of the direct external URL.
+      '/rpc/sepolia': {
+        target: 'https://rpc.sepolia.org',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/rpc\/sepolia/, ''),
+      },
+      '/rpc/arbsep': {
+        target: 'https://sepolia-rollup.arbitrum.io/rpc',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/rpc\/arbsep/, ''),
+      },
+    },
   },
 });

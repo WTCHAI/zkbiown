@@ -32,6 +32,17 @@ export const ztizenABI = [
       { name: 'credentialId', type: 'bytes32', internalType: 'bytes32' },
       { name: 'userAddress', type: 'address', internalType: 'address' },
       { name: 'version', type: 'uint256', internalType: 'uint256' },
+      { name: 'commitmentHash', type: 'bytes32', internalType: 'bytes32' },
+    ],
+    outputs: [{ name: 'success', type: 'bool', internalType: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'updateCommitmentHash',
+    inputs: [
+      { name: 'credentialId', type: 'bytes32', internalType: 'bytes32' },
+      { name: 'newCommitmentHash', type: 'bytes32', internalType: 'bytes32' },
     ],
     outputs: [{ name: 'success', type: 'bool', internalType: 'bool' }],
     stateMutability: 'nonpayable',
@@ -112,6 +123,22 @@ export const ztizenABI = [
       { name: '', type: 'bytes32', internalType: 'bytes32' },
     ],
     outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    stateMutability: 'view',
+  },
+
+  // ============ Commitment Hash & Nullifier (Circom security additions) ============
+  {
+    type: 'function',
+    name: 'getCommitmentHash',
+    inputs: [{ name: 'credentialId', type: 'bytes32', internalType: 'bytes32' }],
+    outputs: [{ name: '', type: 'bytes32', internalType: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'isProofUsed',
+    inputs: [{ name: 'nullifier', type: 'bytes32', internalType: 'bytes32' }],
+    outputs: [{ name: '', type: 'bool', internalType: 'bool' }],
     stateMutability: 'view',
   },
 
@@ -333,8 +360,10 @@ export const zkBiownVerifierABI = ztizenABI;
 export const CONTRACT_ADDRESSES = {
   // Ethereum Sepolia testnet
   sepolia: {
-    honkVerifier: '0xcB80852fDF30F4ae407814B4c98f57a4A6c45121', // Deployed Noir verifier
-    ztizen: '0x0000000000000000000000000000000000000000', // TODO: Update after deployment
+    honkVerifier: '0xcB80852fDF30F4ae407814B4c98f57a4A6c45121',
+    ztizen: '0x0000000000000000000000000000000000000000',
+    circomVerifier: '0x659cb73ed8673df8ce4c5a620888931c63064986',
+    ztizenCircom: '0xe912e2728dd57dbad4796e0887ff917855bac37b',
   },
 
   // Ethereum Mainnet
@@ -405,3 +434,92 @@ export function getHonkVerifierAddress(chainId: number): `0x${string}` {
 export function getVerifierAddress(chainId: number): `0x${string}` {
   return getZTIZENAddress(chainId);
 }
+
+/**
+ * ZTIZENCircom ABI — Groth16/Circom backend
+ * verifyProof takes pA/pB/pC proof points + uint256[129] pubSignals (not bytes proof)
+ */
+export const ztizenCircomABI = [
+  // Enrollment
+  {
+    type: 'function', name: 'registerCredential',
+    inputs: [
+      { name: 'credentialId', type: 'bytes32' },
+      { name: 'userAddress', type: 'address' },
+      { name: 'version', type: 'uint256' },
+      { name: 'commitmentHash', type: 'bytes32' },
+    ],
+    outputs: [{ name: 'success', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function', name: 'initializeCredentialForService',
+    inputs: [
+      { name: 'credentialId', type: 'bytes32' },
+      { name: 'serviceId', type: 'bytes32' },
+      { name: 'initialNonce', type: 'uint256' },
+    ],
+    outputs: [{ name: 'success', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function', name: 'updateCommitmentHash',
+    inputs: [
+      { name: 'credentialId', type: 'bytes32' },
+      { name: 'newCommitmentHash', type: 'bytes32' },
+    ],
+    outputs: [{ name: 'success', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  // Verification — Groth16 pA/pB/pC format
+  {
+    type: 'function', name: 'verifyProof',
+    inputs: [
+      { name: 'credentialId', type: 'bytes32' },
+      { name: 'serviceId', type: 'bytes32' },
+      { name: 'currentNonce', type: 'uint256' },
+      { name: 'productTxId', type: 'bytes32' },
+      { name: 'pA', type: 'uint256[2]' },
+      { name: 'pB', type: 'uint256[2][2]' },
+      { name: 'pC', type: 'uint256[2]' },
+      { name: 'pubSignals', type: 'uint256[129]' },
+    ],
+    outputs: [
+      { name: 'success', type: 'bool' },
+      { name: 'newNonce', type: 'uint256' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  // Reads
+  { type: 'function', name: 'addWhitelistedUser', inputs: [{ name: 'userAddress', type: 'address' }], outputs: [], stateMutability: 'nonpayable' },
+  { type: 'function', name: 'setZKVerificationEnabled', inputs: [{ name: 'enabled', type: 'bool' }], outputs: [], stateMutability: 'nonpayable' },
+  { type: 'function', name: 'getNonce', inputs: [{ name: 'credentialId', type: 'bytes32' }, { name: 'serviceId', type: 'bytes32' }], outputs: [{ name: '', type: 'uint256' }], stateMutability: 'view' },
+  { type: 'function', name: 'getCommitmentHash', inputs: [{ name: 'credentialId', type: 'bytes32' }], outputs: [{ name: '', type: 'bytes32' }], stateMutability: 'view' },
+  { type: 'function', name: 'isProofUsed', inputs: [{ name: 'nullifier', type: 'bytes32' }], outputs: [{ name: '', type: 'bool' }], stateMutability: 'view' },
+  { type: 'function', name: 'isUserWhitelisted', inputs: [{ name: 'userAddress', type: 'address' }], outputs: [{ name: '', type: 'bool' }], stateMutability: 'view' },
+  { type: 'function', name: 'credentialExists', inputs: [{ name: 'credentialId', type: 'bytes32' }], outputs: [{ name: '', type: 'bool' }], stateMutability: 'view' },
+  { type: 'function', name: 'isCredentialInitializedForService', inputs: [{ name: 'credentialId', type: 'bytes32' }, { name: 'serviceId', type: 'bytes32' }], outputs: [{ name: '', type: 'bool' }], stateMutability: 'view' },
+  { type: 'function', name: 'zkVerificationEnabled', inputs: [], outputs: [{ name: '', type: 'bool' }], stateMutability: 'view' },
+  { type: 'function', name: 'owner', inputs: [], outputs: [{ name: '', type: 'address' }], stateMutability: 'view' },
+  // Events
+  {
+    type: 'event', name: 'ProofVerified',
+    inputs: [
+      { indexed: true, name: 'credentialId', type: 'bytes32' },
+      { indexed: true, name: 'serviceId', type: 'bytes32' },
+      { indexed: true, name: 'productTxId', type: 'bytes32' },
+      { indexed: false, name: 'caller', type: 'address' },
+      { indexed: false, name: 'oldNonce', type: 'uint256' },
+      { indexed: false, name: 'newNonce', type: 'uint256' },
+      { indexed: false, name: 'timestamp', type: 'uint256' },
+    ],
+  },
+  {
+    type: 'event', name: 'CommitmentHashUpdated',
+    inputs: [
+      { indexed: true, name: 'credentialId', type: 'bytes32' },
+      { indexed: false, name: 'newCommitmentHash', type: 'bytes32' },
+      { indexed: false, name: 'timestamp', type: 'uint256' },
+    ],
+  },
+] as const;
