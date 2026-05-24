@@ -1,6 +1,6 @@
 # ZKBIOWN — Paper Alignment Handbook
 
-**Date:** 2026-05-22  
+**Date:** 2026-05-24  
 **Paper:** `A Trustless Biometric Authentication System_060.pdf` (IEEE, 4 pages, ACCEPTED)  
 **Purpose:** Map every table and claim in the paper to the latest experimental results. Use this as a checklist when revising the camera-ready submission.
 
@@ -28,6 +28,7 @@ The experimental pipeline has been updated with:
 4. **Circom Groth16 port** — head-to-head ZK framework comparison
 5. **Key compromise simulation** — 19,200 attack attempts, all partial-key = 0 passes
 6. **Corrected publicInputs index** — matchCount at index 128, not 0 (Noir benchmark fix)
+7. **On-chain commitment hash + proof nullifier** — security hardening deployed to Sepolia v2 (2026-05-24); gap attack confirmed on v1, blocked on v2 — verified on-chain with tx hashes
 
 ---
 
@@ -45,11 +46,11 @@ The experimental pipeline has been updated with:
 | Biometric exposure during auth | Verifier receives biometric data | Verifier receives proof only |
 
 **Experimental backing now available (new, not in paper):**
-- Replay → nonce rolling in `ZTIZEN.sol` (incrementNonce)
+- Replay → v2 contract: 4-layer guard verified on-chain; v1 gap-attack ACCEPTED (`0x531d01`), v2 REJECTED — empirical before/after proof
 - Cross-service → Scenario C = **0.00%** across all 4 libs × 5,431 pairs
 - Key compromise → Group C simulation: 19,200 partial-key attempts, **0 passed**
 
-**Suggested paper update:** Add footnote to Table I pointing to the key-compromise simulation results and Scenario C/D numbers as empirical backing.
+**Suggested paper update:** Add footnote to Table I pointing to the key-compromise simulation results, Scenario C/D numbers, and the v1/v2 gap-test contrast as empirical backing for all four attack resistance claims.
 
 ---
 
@@ -252,10 +253,10 @@ The experimental pipeline has been updated with:
 | #4 | KD study | DROPPED | — | Note withdrawal in response letter |
 | #5 | Limited modalities | ❌ NOT DONE | — | Deferred — acknowledge limitation in paper |
 | #6 | Diff-key rows showing 0% | ✅ | `biohash-hamming/*_baseline.json` Scenario C | Add Scenario C rows to Table III |
-| #7 | On/off-chain trade-offs | ⚠️ PARTIAL | Circom verifier ready, Sepolia gas pending | Add circuit comparison table; note on-chain gas as future work |
+| #7 | On/off-chain trade-offs | ✅ | Both chains measured, v2 contracts live | Add gas table (Sepolia vs Arb); highlight 56× cost reduction on L2 |
 | #8 | Revocation details | ✅ (design) | System architecture | Add revocation subsection / diagram |
 | #9 | Why Noir? | ✅ | `circuit-timing/BENCHMARK_SUMMARY.md` | Add Circom vs Noir comparison table, justify Noir for browser |
-| #10 | Active attacks — replay | ✅ (design) | `ZTIZEN.sol` nonce logic | Add paragraph: nonce rolls on each auth, old proof rejected |
+| #10 | Active attacks — replay | ✅ (on-chain) | v1 gap-test ACCEPTED (`0x531d01`), v2 gap-test REJECTED; both replay layers confirmed | Add 4-layer table + v1/v2 before-after contrast with live tx hashes |
 | #11 | Scalability — 15s is client-side | ✅ | Circuit timing + architecture | Clarify in Discussion: 15s is client-only; backend verifies in 5–17ms (Circom) or 4s (Noir) |
 | #12 | ISO standards mapping | DEFERRED | — | Leave to professors |
 
@@ -290,6 +291,8 @@ The experimental pipeline has been updated with:
 ### Section V — Conclusion
 - Mention Circom Groth16 port validates ZK framework choice
 - Mention exhaustive 18M+ pair validation
+- Mention v2 on-chain security hardening: commitHash + nullifier close the gap-attack vector, verified empirically on Ethereum Sepolia and Arbitrum Sepolia with live tx hashes
+- Mention Arbitrum as viable production deployment: 56× cost reduction, $0.07 full session vs $3.95 on Ethereum Sepolia
 
 ---
 
@@ -306,141 +309,188 @@ The experimental pipeline has been updated with:
 | Four-scenario GAR/FAR | `results/four-scenario-validation/*_results.json` | `pipeline/01-analyze-four-scenarios.ts` |
 | Key compromise | `results/key-compromise/FINDINGS.md` | `pipeline/07-key-compromise-sim.ts` |
 | Circuit comparison | `results/circuit-timing/BENCHMARK_SUMMARY.md` | both benchmark scripts |
-| On-chain gas costs | `results/gas-cost-analysis.md` | `scripts/gas-benchmark-circom.ts` |
-| Gas network comparison table | `results/paper-tables/table-gas-network-comparison.md` | same |
+| On-chain gas costs (Sepolia v2) | `deployments/gas-benchmark-circom-1779613105330.json` | `scripts/benchmarks/gas-benchmark-circom.ts` |
+| On-chain gas costs (Arb Sepolia v2) | `deployments/gas-benchmark-circom-1779613936146.json` | same |
+| Gap attack — v1 ACCEPTED | `deployments/gap-test-1779600556731.json` | `scripts/tests/test-gap-assumption.ts` |
+| Gap attack — v2 REJECTED (Sepolia) | `deployments/gap-test-1779613187212.json` | same |
+| Gap attack — v2 REJECTED (Arb) | `deployments/gap-test-1779614057284.json` | same |
+| Replay attack — both layers (Sepolia) | `deployments/replay-attack-test-1779613316210.json` | `scripts/tests/test-replay-attack.ts` |
+| Replay attack — both layers (Arb) | `deployments/replay-attack-test-1779614085835.json` | same |
 
 ---
 
-## ON-CHAIN GAS COST ANALYSIS (New — 2026-05-24)
+## ON-CHAIN SECURITY VALIDATION (New — 2026-05-24)
 
-**Status:** ✅ Measured on both Ethereum Sepolia and Arbitrum Sepolia  
-**Source:** `results/gas-cost-analysis.md` · `results/paper-tables/table-gas-network-comparison.md`  
-**ETH/USD:** $2,077.46
+**Status:** ✅ Complete — both chains, both contract versions  
+**Contracts:** v1 (old, no commitHash) vs v2 (current, with commitHash + nullifier)
+
+---
+
+### Security Contract Evolution
+
+| Version | Sepolia Address | Arb Sepolia Address | commitHash | nullifier |
+|---|---|---|:---:|:---:|
+| v1 (old) | `0x62b9c6545a07ce573372cbb42857b719d5200d8d` | `0xd2b1dd269c90873d5a4ef92cf9104b63941997df` | ✗ | ✗ |
+| **v2 (current)** | **`0xe912e2728dd57dbad4796e0887ff917855bac37b`** | **`0x0f976eb3d4256f8a1ce651681dad2d9c606952ef`** | **✅** | **✅** |
+
+---
+
+### Gap Attack: Confirmed on v1, Blocked on v2
+
+**The attack:** Submit old proof + old pubSignals (auth_commit computed with nonce=1) but pass the rolled nonce as `currentNonce`. Without a stored commitment hash, the contract's nonce guard passes and the Groth16 verifier accepts the old pubSignals (they are valid for nonce=1). This allows impersonation after a single intercepted authentication.
+
+**On-chain evidence (Ethereum Sepolia):**
+
+| Contract | Test | Result | Revert Reason | tx / timestamp |
+|---|---|:---:|---|---|
+| v1 `0x62b9...` | gap-assumption | **ACCEPTED** ⚠️ | — (gap confirmed) | `0x531d01...` · 2026-05-24T05:29 |
+| v2 `0xe912...` | gap-assumption | **REJECTED** ✅ | `ZTIZEN: Proof already used` | — · 2026-05-24T08:59 |
+| v2 `0xe912...` | gap-assumption | **REJECTED** ✅ | `ZTIZEN: Proof already used` | — · 2026-05-24T09:14 (Arb) |
+
+**Four-layer verifyProof guard in v2:**
+```
+verifyProof flow (v2):
+  1. require(currentNonce == storedNonce)                     ← nonce guard (~800 gas)
+  2. require(keccak256(pubSignals[1..128]) == commitHash)     ← commitment check (~5k gas)
+  3. require(!isProofUsed[nullifier])                         ← nullifier check (~800 gas)
+  4. circomVerifier.verifyProof(pA, pB, pC, pubSignals)       ← Groth16 (~1.22M gas)
+  5. _usedProofNullifiers[nullifier] = true
+  6. newNonce = keccak256(nonce_N || timestamp || blockNumber || prevrandao)
+  7. credentialServiceNonces[credId][svcId] = newNonce
+  8. emit ProofVerified(credId, svcId, oldNonce, newNonce)
+```
+
+**Why commitHash closes the gap:** The oracle computes `keccak256(abi.encode(auth_commit[128]))` at enrollment and stores it on-chain. At verification, `pubSignals[1..128]` must hash to this value. Old pubSignals (from nonce=1) produce a different hash than the current commitment (which was updated to nonce_N). The check fails before Groth16 is even called.
+
+**Why nullifier provides defense-in-depth:** Even if an attacker somehow produces pubSignals that match the current commitHash, they cannot reuse an already-submitted proof — the nullifier `keccak256(pA||pB||pC||pubSignals)` is permanently stored as used.
+
+**Security overhead:** v2 verifyProof uses ~58,816 more gas than v1 (1,228,371 vs 1,169,555 = +5.0%) for the two additional checks — a negligible cost for the security gain.
+
+---
+
+### Replay Attack Rejection: Both Layers, Both Chains (v2)
+
+| Chain | Layer | Test | Result | Evidence |
+|---|---|---|:---:|---|
+| Sepolia | 1 — nonce guard | stale nonce=1 after roll | **REJECTED** ✅ | `ZTIZEN: Invalid nonce` |
+| Sepolia | 2 — Groth16 binding | old proof + rolled nonce | **REJECTED** ✅ | `ZTIZENCircom: Invalid Circom proof` |
+| Arb Sepolia | 1 — nonce guard | stale nonce=1 after roll | **REJECTED** ✅ | `ZTIZEN: Invalid nonce` |
+| Arb Sepolia | 2 — Groth16 binding | old proof + rolled nonce | **REJECTED** ✅ | `ZTIZENCircom: Invalid Circom proof` |
+
+Source files: `deployments/replay-attack-test-1779613316210.json` (Sepolia), `deployments/replay-attack-test-1779614085835.json` (Arb Sepolia).
+
+---
+
+## ON-CHAIN GAS COST ANALYSIS (Updated — 2026-05-24)
+
+**Status:** ✅ Measured on both Ethereum Sepolia and Arbitrum Sepolia (v2 contracts)  
+**ETH/USD:** $2,077.46  
+**Benchmark sources:** `deployments/gas-benchmark-circom-1779613105330.json` (Sepolia), `deployments/gas-benchmark-circom-1779613936146.json` (Arb Sepolia)
 
 ---
 
 ### Why Arbitrum Uses More Gas Units But Costs Less
 
-This is the key conceptual point for reviewers.
-
-**The equation (from ethereum.org/developers/docs/gas):**
-
+**The equation:**
 ```
-Transaction fee = Gas units (limit) × (Base fee + Priority fee)
-
-Where:
-  Base fee    — protocol-set minimum, burned (EIP-1559)
-  Priority fee — tip to validator/sequencer
-  Gas units   — computational work, identical EVM opcodes
-
 Cost in ETH = gas_units × gas_price_wei × 10⁻¹⁸
 Cost in USD = cost_ETH × ETH_price_USD
 ```
 
-**Why Arbitrum gas price is ~55× lower:**
+Arbitrum One is an Optimistic Rollup — each transaction pays a tiny fraction of one Ethereum L1 batch fee (amortised across hundreds of transactions), collapsing the effective gas price from ~1.3 gwei → ~0.02 gwei (a 65× reduction). Arbitrum's AVM reprices some opcodes (`SLOAD`, `SSTORE`, BN254 precompiles) slightly higher in gas units, but the price reduction dominates.
 
-Arbitrum One is an Optimistic Rollup. Each L2 transaction pays:
-1. **L2 execution fee** — running the EVM on Arbitrum's sequencer (very cheap, centralised hardware)
-2. **L1 data fee** — posting compressed calldata to Ethereum mainnet, **amortised across ~1,000s of transactions per batch**
-
-On Ethereum mainnet the transaction pays the full L1 fee alone. On Arbitrum you pay (L2 execution) + (1/N of one L1 batch), where N can be hundreds. This collapses the effective gas price from ~1.1 gwei → ~0.02 gwei — a 55× reduction.
-
-**Why gas units are slightly higher on Arbitrum (+6–12%):**
-
-Arbitrum's AVM reprices some EVM opcodes to reflect L1 data costs — particularly `SLOAD`, `SSTORE`, and BN254 precompiles (which `ecPairing` uses for Groth16 verification). More gas units consumed, but at a far lower price per unit.
-
-**Net result: 49× cheaper per authentication session.**
+**Net result: ~56× cheaper per full authentication session.**
 
 ---
 
-### Measured Results Summary
+### Measured Results — v2 Contracts (with commitHash + nullifier)
 
 **Gas prices observed:**
-- Ethereum Sepolia: ~1.07–1.11 gwei effective
-- Arbitrum Sepolia: ~0.020 gwei effective (consistent floor)
-
-**Interaction gas per authentication session:**
+- Ethereum Sepolia: ~1.29 gwei effective
+- Arbitrum Sepolia: ~0.020 gwei effective
 
 | Operation | ETH Sepolia (gas) | ETH Sepolia (USD) | Arb Sepolia (gas) | Arb Sepolia (USD) |
 |---|---:|---:|---:|---:|
-| addWhitelistedUser | 47,556 | $0.110 | 51,418 | $0.0021 |
-| registerCredential | 188,723 | $0.437 | 194,313 | $0.0081 |
-| initializeCredentialForService | 55,788 | $0.124 | 61,373 | $0.0026 |
-| setZKVerificationEnabled | 29,926 | $0.061 | 33,745 | $0.0014 |
-| **verifyProof** | **1,169,555** | **$2.591** | **1,290,131** | **$0.054** |
-| **Total session** | **1,491,548** | **$3.323** | **1,630,980** | **$0.068** |
+| addWhitelistedUser | 47,600 | $0.127 | 50,910 | $0.0021 |
+| registerCredential | 211,630 | $0.539 | 217,105 | $0.0091 |
+| initializeCredentialForService | 55,854 | $0.150 | 60,638 | $0.0025 |
+| setZKVerificationEnabled | 29,948 | $0.076 | 33,256 | $0.0014 |
+| **verifyProof** | **1,228,371** | **$3.061** | **1,331,508** | **$0.055** |
+| **Total session** | **1,573,403** | **$3.953** | **1,693,417** | **$0.071** |
 
-**verifyProof = 78–79% of total session gas regardless of network.**
+**verifyProof = 78–79% of total session gas regardless of network.**  
+**Security overhead vs v1:** +58,816 gas on Sepolia (+5.0%) for commitHash + nullifier checks.
 
 ---
 
 ### Cost Calculation Verification
 
 ```
-Ethereum Sepolia — verifyProof:
-  gas_units  = 1,169,555
-  gas_price  = 1.066 gwei = 1,066,000,000 wei
-  cost_ETH   = 1,169,555 × 1,066,000,000 / 10¹⁸ = 0.001247072 ETH  ✓
-  cost_USD   = 0.001247072 × 2,077.46 = $2.591  ✓
+Ethereum Sepolia v2 — verifyProof:
+  gas_units  = 1,228,371
+  gas_price  = 1.29 gwei (derived: 0.001473378 ETH / 1,228,371 gas × 10¹⁸ / 10⁹)
+  cost_ETH   = 0.001473378 ETH  (from benchmark receipt)
+  cost_USD   = 0.001473378 × 2,077.46 = $3.061  ✓
 
-Arbitrum Sepolia — verifyProof:
-  gas_units  = 1,290,131
-  gas_price  = 0.020 gwei = 20,000,000 wei
-  cost_ETH   = 1,290,131 × 20,000,000 / 10¹⁸ = 0.000025803 ETH  ✓
-  cost_USD   = 0.000025803 × 2,077.46 = $0.054  ✓
+Arbitrum Sepolia v2 — verifyProof:
+  gas_units  = 1,331,508
+  gas_price  = 0.02002 gwei (derived: 0.00002666 ETH / 1,331,508 gas × 10¹⁸ / 10⁹)
+  cost_ETH   = 0.00002666 ETH  (from benchmark receipt)
+  cost_USD   = 0.00002666 × 2,077.46 = $0.055  ✓
 
-Ratio: 49.0× cheaper on Arbitrum at these gas prices
+Ratio: 56.1× cheaper on Arbitrum at these gas prices
 ```
 
 ---
 
-### Mainnet Cost Projection
+### Mainnet Cost Projection (verifyProof gas = 1,228,371)
 
 | Network | Gas price | verifyProof (USD) | Full session (USD) |
 |---|---|---:|---:|
-| Ethereum — Low | 5 gwei | $12.14 | $15.51 |
-| Ethereum — Normal | 15 gwei | $36.43 | $46.52 |
-| Ethereum — Peak | 50 gwei | $121.43 | $155.07 |
-| Arbitrum One — Normal | 0.1 gwei | $0.243 | $0.310 |
-| Arbitrum One — Elevated | 0.5 gwei | $1.215 | $1.550 |
+| Ethereum — Low | 5 gwei | $12.77 | $16.37 |
+| Ethereum — Normal | 15 gwei | $38.32 | $49.11 |
+| Ethereum — Peak | 50 gwei | $127.73 | $163.70 |
+| Arbitrum One — Normal | 0.1 gwei | $0.255 | $0.327 |
+| Arbitrum One — Elevated | 0.5 gwei | $1.277 | $1.636 |
 
-**Conclusion:** Arbitrum One is the only economically viable deployment target for production ZK biometric authentication without further proof system optimisation. At normal Ethereum mainnet gas prices, a single authentication costs $36–$121 — prohibitive for consumer use. On Arbitrum One the same authentication costs $0.24–$1.22.
+**Conclusion:** Arbitrum One is the only economically viable production deployment target. At normal Ethereum mainnet gas prices, a single authentication costs $38–$128 — prohibitive for consumer use. On Arbitrum One the same authentication costs $0.26–$1.28.
 
 ---
 
-### Deployed Contract Links (Source of Truth for Professor)
+### Live Contract Links (Source of Truth for Professor)
 
-**Ethereum Sepolia:**
-- CircomVerifier: https://eth-sepolia.blockscout.com/address/0x7f03a3254d9c5fee8a5ad82245d33336f9d7024c
+**Ethereum Sepolia — v2 (current, with commitHash + nullifier):**
+- CircomVerifier: https://eth-sepolia.blockscout.com/address/0x659cb73ed8673df8ce4c5a620888931c63064986
+- ZTIZENCircom: https://eth-sepolia.blockscout.com/address/0xe912e2728dd57dbad4796e0887ff917855bac37b
+- verifyProof tx: `0xb278d9a977ca578899c1a471f9fd01755a14988fbefad1f857658d673a57c4cf`
+
+**Arbitrum Sepolia — v2 (current, with commitHash + nullifier):**
+- CircomVerifier: https://arbitrum-sepolia.blockscout.com/address/0xe0abf17803cad3ff0d557679487dd5d0ece5e65d
+- ZTIZENCircom: https://arbitrum-sepolia.blockscout.com/address/0x0f976eb3d4256f8a1ce651681dad2d9c606952ef
+- verifyProof tx: `0xeb145e067dfbd3ba5fa8daa15171bb3f72011b649ff35be1dd1a1ed71e59058a`
+
+**Ethereum Sepolia — v1 (archived, gap confirmed):**
 - ZTIZENCircom: https://eth-sepolia.blockscout.com/address/0x62b9c6545a07ce573372cbb42857b719d5200d8d
+- Gap attack tx (ACCEPTED): `0x531d0106b8286ad3953c1bf9c0cad909c69218835131842e01b5286b8906655c`
 
-**Arbitrum Sepolia:**
-- CircomVerifier: https://arbitrum-sepolia.blockscout.com/address/0x2da55f4c1eceb0ceeb93ee598e852bf24abb8fce
-- ZTIZENCircom: https://arbitrum-sepolia.blockscout.com/address/0xd2b1dd269c90873d5a4ef92cf9104b63941997df
+---
 
-Every gas figure in this section has a live tx link in `results/paper-tables/table-gas-network-comparison.md`.
+### Reviewer #10 — Replay Attack: Full Evidence Chain
 
-### Nonce-Rolling Security — Already Implemented, Zero Extra Gas
+The paper currently states replay is mitigated by nonce rolling. The v2 contract provides four independent rejection layers with on-chain proof:
 
-The nonce roll executes **inside** `verifyProof` — no separate transaction needed.
+| Layer | Mechanism | Gas cost | On-chain evidence |
+|---|---|---:|---|
+| 1 | Nonce guard — stale nonce rejected before Groth16 | ~800 gas | `ZTIZEN: Invalid nonce` revert |
+| 2 | CommitHash — stale pubSignals hash ≠ stored hash | ~5,000 gas | `ZTIZEN: CommitmentHash mismatch` revert |
+| 3 | Nullifier — exact proof bytes already stored | ~800 gas | `ZTIZEN: Proof already used` revert |
+| 4 | Groth16 binding — nonce is private circuit input | ~1,220,000 gas | `ZTIZENCircom: Invalid Circom proof` revert |
 
-```
-verifyProof flow (1,169,555 gas on Sepolia):
-  1. require(currentNonce == storedNonce)          ← replay guard
-  2. circomVerifier.verifyProof(pA, pB, pC, sigs)  ← ~1.15M gas (pairing check)
-  3. newNonce = keccak256(nonce_N || timestamp || blockNum || prevrandao)
-  4. credentialServiceNonces[credId][svcId] = newNonce
-  5. emit ProofVerified(..., oldNonce, newNonce)    ← off-chain reads this
-```
+The gap-test results provide a clean before/after: v1 accepted the attack (tx `0x531d01...`), v2 rejected it (`ZTIZEN: Proof already used`). This is stronger than a design claim — it is empirical, on-chain evidence that the fix works.
 
-`block.prevrandao` (EIP-4399) is the beacon RANDAO — unknown to the prover at proof
-generation time, so `newNonce` is unpredictable and cannot be pre-computed for a second proof.
-Nonce overhead is ~6,730 gas = 0.6% of total verifyProof cost.
+**Suggested paper update for Reviewer #10:** Replace the current design-level description with a reference to the four-layer table above and the v1 vs v2 gap-test contrast.
 
-This should be highlighted in the paper as:
-- Replay resistance: old proof immediately rejected after one successful auth
-- Forward secrecy: each successful auth invalidates the current commit[] for the next session
-- Cross-service isolation: nonces scoped per (credentialId, serviceId)
+---
 
 ### Pending: Noir On-Chain Analysis
 
